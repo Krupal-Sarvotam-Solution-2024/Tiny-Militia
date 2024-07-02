@@ -1403,6 +1403,10 @@ PrefabInstance:
       propertyPath: IsLocked
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5797554526111064273, guid: 9af99fb73ff486e49abf985541401a14, type: 3}
+      propertyPath: islocked
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

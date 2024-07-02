@@ -130,12 +130,15 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         return 0;
     }
-
+  
     public virtual void OnPointerUp(PointerEventData eventData)
     {
         if (islocked) 
         {
-            input = Vector2.zero;
+            Debug.Log(input);
+            input.x = input.x < 0 ? input.x + .25f : input.x - .25f;
+            input.y = input.y < 0 ? input.y + .25f : input.y - .25f;
+            Debug.Log(input);
             return;
         }
         input = Vector2.zero;
