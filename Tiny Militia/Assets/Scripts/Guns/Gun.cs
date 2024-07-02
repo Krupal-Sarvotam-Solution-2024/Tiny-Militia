@@ -13,6 +13,7 @@ public class Gun : ScriptableObject
     public int magazineSize;
     public int maxAmmo;
     public float shootCooldown;
+    public string ObjectTag;
 
     [HideInInspector]
     public int currentAmmoInMagazine;

@@ -8,6 +8,7 @@ TagManager:
   - Bot_Bullet
   - Player_Bullet
   - Bot
+  - Gun_Uzi
   layers:
   - Default
   - TransparentFX
