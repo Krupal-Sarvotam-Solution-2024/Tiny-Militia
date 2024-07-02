@@ -289,6 +289,8 @@ public class PlayerController : MonoBehaviour
             Gun botGun = collision.gameObject.GetComponent<Bullet>().gun;
             TakeDamage(botGun.damagePerBullet);
         }
+
+   
     }
 
     private void OnCollisionExit2D(Collision2D collision)
