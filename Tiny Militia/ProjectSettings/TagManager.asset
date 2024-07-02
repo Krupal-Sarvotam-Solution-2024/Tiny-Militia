@@ -9,6 +9,8 @@ TagManager:
   - Player_Bullet
   - Bot
   - Gun_Uzi
+  - playerDetails_ReloadImage
+  - Gun_MP5
   layers:
   - Default
   - TransparentFX
