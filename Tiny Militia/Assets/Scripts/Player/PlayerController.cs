@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     // Variables of Ammo and Bomb Prefeb
     public GameObject bulletPrefab;
     public GameObject bombPrefab;
-
+    public bool abletoShoot;
     // Variables for Booster
     public float jetpackForce = 5f;
     public float jetpackFuel = 100f;
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = movementJoystick.Horizontal;
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        Debug.Log(movementJoystick.Horizontal);
+     
     }
 
     void Jump()
@@ -97,8 +97,11 @@ public class PlayerController : MonoBehaviour
 
     void Aim()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 aimDirection = mousePosition - gunTransform.position;
+        Vector3 rotation = new Vector3(aimJoystick.Horizontal, aimJoystick.Vertical, 0);
+        float moveInput = movementJoystick.Vertical;
+      //  Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 aimDirection = rotation;
+       
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
@@ -111,6 +114,9 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
             gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+        }else if(aimDirection.x ==0)
+        {
+            gunTransform.localScale = Vector3.one;
         }
     }
 
@@ -118,8 +124,13 @@ public class PlayerController : MonoBehaviour
     {
         if (isReloading == false)
         {
-
-            if (Input.GetMouseButton(0) && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
+            if (aimJoystick.Horizontal > .75 || aimJoystick.Vertical > .75 || aimJoystick.Horizontal < -.75f || aimJoystick.Vertical < -.75f)
+                abletoShoot = true;
+            else
+            {
+                abletoShoot = false;
+            }
+            if (abletoShoot && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
             {
                 Gun currentGun = guns[currentGunIndex];
 
