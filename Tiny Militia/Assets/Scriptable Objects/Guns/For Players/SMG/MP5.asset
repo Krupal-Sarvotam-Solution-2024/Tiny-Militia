@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63c689c3c49a8840bab9301700861ee, type: 3}
+  m_Name: MP5
+  m_EditorClassIdentifier: 
+  GunSprite: {fileID: 21300000, guid: 84487d73ca4b791498332d8f6858417f, type: 3}
+  gunName: MP5
+  gunType: SMG
+  damagePerBullet: 6
+  damageType: Single
+  reloadTime: 3
+  magazineSize: 50
+  maxAmmo: 400
+  shootCooldown: 0.1
+  currentAmmoInMagazine: 13
+  currentTotalAmmo: 250
+  lastShotTime: 45.463734

@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - playerDetails_Health
+  - playerDetails_Booster
+  - Bot_Bullet
+  - Player_Bullet
+  - Bot
+  - playerDetails_GunImage
+  - playerDetails_AmmoInfo
+  - playerDetails_ReloadImage
   layers:
   - Default
   - TransparentFX
