@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 4982084208305369362}
   m_Layer: 5
   m_Name: Ammo Details
-  m_TagString: playerDetails_AmmoInfo
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 124913431684251073}
   m_Layer: 5
   m_Name: Reload Image
-  m_TagString: playerDetails_ReloadImage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,7 +652,7 @@ GameObject:
   - component: {fileID: 1651493092086411820}
   m_Layer: 5
   m_Name: Gun Image
-  m_TagString: playerDetails_GunImage
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

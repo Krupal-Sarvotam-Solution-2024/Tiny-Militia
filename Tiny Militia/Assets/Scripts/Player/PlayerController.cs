@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         Aim();
-        Shoot();
+        //Shoot();
         Jetpack();
         UpdateBoosterLevel();
         HandleGunSwitching();
@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = movementJoystick.Horizontal;
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-        Debug.Log(movementJoystick.Horizontal);
     }
 
     void Jump()
@@ -97,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     void Aim()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        /*Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 aimDirection = mousePosition - gunTransform.position;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
@@ -111,6 +110,31 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
             gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+        }*/
+
+        // Get joystick input for aiming
+        float aimHorizontal = aimJoystick.Horizontal;
+        float aimVertical = aimJoystick.Vertical;   
+
+        // Calculate the aim direction
+        Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        // Flip character and gun based on aim direction
+        if (aimDirection.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            gunTransform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if (aimDirection.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+        }
+        else
+        {
+            gunTransform.localScale = Vector3.one;
         }
     }
 
