@@ -135,12 +135,12 @@ public class PlayerController : MonoBehaviour
         if (aimDirection.x > 0)
         {
             transform.localScale = new Vector3(-0.15f, 0.15f, 1);
-            gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
+            gunTransform.localScale = new Vector3(-1f, 1f, 1f);
         }
         else if (aimDirection.x < 0)
         {
             transform.localScale = new Vector3(0.15f, 0.15f, 1);
-            gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
+            gunTransform.localScale = new Vector3(1f, -1f, 1f);
         }
         else if (aimDirection.x == 0)
         {
