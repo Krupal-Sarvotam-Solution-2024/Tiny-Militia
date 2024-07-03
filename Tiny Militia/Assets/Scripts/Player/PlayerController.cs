@@ -1,52 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    // Variables For Movements
+
+    #region Variables
+
+    #region Variables For Movements
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
+    #endregion
 
-    // Variables For Shooting
+    #region Variables For Shooting
     public Transform gunTransform;
     public Transform firePoint;
     public float bulletSpeed = 10f;
+    #endregion
 
-    // Variables of Ammo and Bomb Prefeb
+    #region Variables of Ammo and Bomb Prefeb
     public GameObject bulletPrefab;
     public GameObject bombPrefab;
     public bool abletoShoot;
-    // Variables for Booster
+    #endregion
+
+    #region Variables for Booster
     public float jetpackForce = 5f;
     public float jetpackFuel = 100f;
     public float jetpackFuelConsumptionRate = 10f;
     public float jetpackFuelRechargeRate = 5f;
     private float currentJetpackFuel;
+    #endregion
 
-    bool isReloading; // boolen for checking gun state is reloading or not
+    #region boolen for checking gun state is reloading or not
+    bool isReloading;
+    #endregion
 
-    // Variables For Player Health
+    #region Variables For Player Health
     public int maxHealth = 100;
     public int currentHealth;
     public float healthRecoveryRate = 2f;
+    #endregion
 
-    // Variables For Guns Scriptable Obect
+    #region Variables For Guns Scriptable Obect
     public List<Gun> guns; // List of ScriptableObject Guns
     public int currentGunIndex = 0;
     private int alternateGunIndex = -1;
+    #endregion
 
-    // Getting Player Rigidbody for Physics
+    #region Getting Player Rigidbody for Physics
     private Rigidbody2D rb;
+    #endregion
 
-    // Boolen for Chceking that Player is In Ground Or Not
+    #region Boolen for Chceking that Player is In Ground Or Not
     private bool isGrounded;
+    #endregion
 
-    // Variables For Jpoystick
+    #region Variables For Jpoystick
     public FixedJoystick movementJoystick;
     public FixedJoystick aimJoystick;
+    #endregion 
 
+
+    #endregion
+
+    #region Methods
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,6 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             gun.Initialize();
         }
+
 
         StartCoroutine(AutoHealthRecovery());
     }
@@ -82,7 +103,7 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = movementJoystick.Horizontal;
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-     
+
     }
 
     void Jump()
@@ -99,9 +120,9 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 rotation = new Vector3(aimJoystick.Horizontal, aimJoystick.Vertical, 0);
         float moveInput = movementJoystick.Vertical;
-      //  Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //  Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 aimDirection = rotation;
-       
+
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
@@ -114,7 +135,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
             gunTransform.localScale = new Vector3(-1f, -1f, 1f);
-        }else if(aimDirection.x ==0)
+        }
+        else if (aimDirection.x == 0)
         {
             gunTransform.localScale = Vector3.one;
         }
@@ -239,7 +261,7 @@ public class PlayerController : MonoBehaviour
         if (moveInput > 0 && !isGrounded && currentJetpackFuel > 0)
         {
 
-            rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput );
+            rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput);
             currentJetpackFuel -= jetpackFuelConsumptionRate * Time.deltaTime;
         }
         else if (isGrounded)
@@ -289,6 +311,24 @@ public class PlayerController : MonoBehaviour
             Gun botGun = collision.gameObject.GetComponent<Bullet>().gun;
             TakeDamage(botGun.damagePerBullet);
         }
+
+        if(collision.gameObject.CompareTag("Gun_Uzi"))
+        {
+            for (int i = 0; i < guns.Count; i++)
+            {
+                if(guns[i].ObjectTag == "Gun_Uzi")
+                {
+                    if (guns[i].currentTotalAmmo < guns[i].maxAmmo)
+                    {
+                        guns[i].currentTotalAmmo = guns[i].maxAmmo;
+                        Gun currentGun = guns[currentGunIndex];
+                        UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+                        Destroy(collision.gameObject);
+                    }
+                }
+            }
+        }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -321,7 +361,7 @@ public class PlayerController : MonoBehaviour
                 alternateGunIndex = currentGunIndex;
                 currentGunIndex = (currentGunIndex + 1) % guns.Count;
                 UIManager.instance.GunIndex = currentGunIndex;
-                Gun currentGun = guns[currentGunIndex];
+                Gun currentGun = guns[currentGunIndex];              
                 UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
             }
             else
@@ -331,6 +371,7 @@ public class PlayerController : MonoBehaviour
                 alternateGunIndex = temp;
                 UIManager.instance.GunIndex = currentGunIndex;
                 Gun currentGun = guns[currentGunIndex];
+
                 UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
             }
         }
@@ -343,4 +384,7 @@ public class PlayerController : MonoBehaviour
             ThrowBomb();
         }
     }
+
+    #endregion
+
 }
