@@ -63,12 +63,14 @@ public class PlayerController : MonoBehaviour
     public FixedJoystick aimJoystick;
     #endregion 
 
+    //Animator PlayerAnim;
 
     #endregion
 
     #region Methods
     void Start()
     {
+        //PlayerAnim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentJetpackFuel = jetpackFuel;
         currentHealth = maxHealth;
@@ -104,6 +106,10 @@ public class PlayerController : MonoBehaviour
         float moveInput = movementJoystick.Horizontal;
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
+        //if (moveInput > 0)
+        //{
+        //    PlayerAnim.Play("Walk");
+        //}
     }
 
     void Jump()
@@ -128,13 +134,13 @@ public class PlayerController : MonoBehaviour
 
         if (aimDirection.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
-            gunTransform.localScale = new Vector3(1f, 1f, 1f);
+            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+            gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
         }
         else if (aimDirection.x < 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
-            gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+            transform.localScale = new Vector3(0.15f, 0.15f, 1);
+            gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
         }
         else if (aimDirection.x == 0)
         {
@@ -198,6 +204,7 @@ public class PlayerController : MonoBehaviour
     void FireBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        //PlayerAnim.Play("Shoot");
         bullet.tag = "Player_Bullet";
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
@@ -312,11 +319,11 @@ public class PlayerController : MonoBehaviour
             TakeDamage(botGun.damagePerBullet);
         }
 
-        if(collision.gameObject.CompareTag("Gun_Uzi"))
+        if (collision.gameObject.CompareTag("Gun_Uzi"))
         {
             for (int i = 0; i < guns.Count; i++)
             {
-                if(guns[i].ObjectTag == "Gun_Uzi")
+                if (guns[i].ObjectTag == "Gun_Uzi")
                 {
                     if (guns[i].currentTotalAmmo < guns[i].maxAmmo)
                     {
@@ -361,7 +368,7 @@ public class PlayerController : MonoBehaviour
                 alternateGunIndex = currentGunIndex;
                 currentGunIndex = (currentGunIndex + 1) % guns.Count;
                 UIManager.instance.GunIndex = currentGunIndex;
-                Gun currentGun = guns[currentGunIndex];              
+                Gun currentGun = guns[currentGunIndex];
                 UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
             }
             else
