@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
 
     #region Variables For Shooting
     public Transform gunTransform;
+    public Transform rightgunTransform;
+    public Transform leftgunTransform;
+    public Transform leftgunboneTransform;
     public Transform firePoint;
     public float bulletSpeed = 10f;
     #endregion
@@ -130,22 +133,26 @@ public class PlayerController : MonoBehaviour
         Vector3 aimDirection = rotation;
 
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
         if (aimDirection.x > 0)
         {
+        leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
             transform.localScale = new Vector3(-0.15f, 0.15f, 1);
-            gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
+            //gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
+            leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
         }
         else if (aimDirection.x < 0)
         {
+        leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
             transform.localScale = new Vector3(0.15f, 0.15f, 1);
-            gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
+            //gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
+            leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
         }
-        else if (aimDirection.x == 0)
-        {
-            gunTransform.localScale = Vector3.one;
-        }
+        //else if (aimDirection.x == 0)
+        //{
+        //    gunTransform.localScale = Vector3.one;
+        //}
     }
 
     void Shoot()
@@ -209,7 +216,7 @@ public class PlayerController : MonoBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = firePoint.right * bulletSpeed;
+        bulletRb.velocity = firePoint.right * -bulletSpeed;
     }
 
     void ThrowBomb()
