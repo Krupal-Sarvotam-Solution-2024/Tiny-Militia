@@ -112,23 +112,18 @@ public class PlayerController : MonoBehaviour
         // Flip character and gun based on aim direction
         if (aimDirection.x > 0)
         {
+            leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
             transform.localScale = new Vector3(-0.15f, 0.15f, 1);
           //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
-            leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
         }
         else if (aimDirection.x < 0)
         {
+            leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
             transform.localScale = new Vector3(0.15f, 0.15f, 1);
-            leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
           //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
         }
-        //else
-        //{
-        //    gunTransform.localScale = Vector3.one;
-
-        //}
     }
 
     void Shoot()
