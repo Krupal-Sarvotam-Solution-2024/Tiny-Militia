@@ -13,11 +13,13 @@ public class PlayerController : MonoBehaviour
     public Transform gunTransform;
     public Transform firePoint;
     public float bulletSpeed = 10f;
-
+    public Transform rightgunTransform;
+    public Transform leftgunTransform;
+    public Transform leftgunboneTransform;
     // Variables of Ammo and Bomb Prefeb
     public GameObject bulletPrefab;
     public GameObject bombPrefab;
-
+    public bool abletoShoot;
     // Variables for Booster
     public float jetpackForce = 5f;
     public float jetpackFuel = 100f;
@@ -71,7 +73,7 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         Aim();
-        //Shoot();
+        Shoot();
         Jetpack();
         UpdateBoosterLevel();
         HandleGunSwitching();
@@ -97,23 +99,7 @@ public class PlayerController : MonoBehaviour
 
     void Aim()
     {
-        /*Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 aimDirection = mousePosition - gunTransform.position;
-        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-        if (aimDirection.x > 0)
-        {
-<<<<<<< Updated upstream
-            transform.localScale = new Vector3(1, 1, 1);
-            gunTransform.localScale = new Vector3(1f, 1f, 1f);
-        }
-        else if (aimDirection.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-            gunTransform.localScale = new Vector3(-1f, -1f, 1f);
-        }*/
-
+  
         // Get joystick input for aiming
         float aimHorizontal = aimJoystick.Horizontal;
         float aimVertical = aimJoystick.Vertical;   
@@ -121,36 +107,28 @@ public class PlayerController : MonoBehaviour
         // Calculate the aim direction
         Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
         // Flip character and gun based on aim direction
         if (aimDirection.x > 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
-            gunTransform.localScale = new Vector3(1f, 1f, 1f);
-        }
-        else if (aimDirection.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-            gunTransform.localScale = new Vector3(-1f, -1f, 1f);
-        }
-        else
-        {
-            gunTransform.localScale = Vector3.one;
-=======
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
             transform.localScale = new Vector3(-0.15f, 0.15f, 1);
-            //gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
+          //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
             leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
         }
         else if (aimDirection.x < 0)
         {
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
             transform.localScale = new Vector3(0.15f, 0.15f, 1);
-            //gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
             leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
->>>>>>> Stashed changes
+          //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
         }
+        //else
+        //{
+        //    gunTransform.localScale = Vector3.one;
+
+        //}
     }
 
     void Shoot()
@@ -159,63 +137,63 @@ public class PlayerController : MonoBehaviour
         if (isReloading == false)
         {
 
-<<<<<<< Updated upstream
+
             if (Input.GetMouseButton(0) && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
-=======
-            if (currentGun.currentAmmoInMagazine < currentGun.magazineSize)
             {
-                UIManager.instance.ReloadButton.interactable = true;
-            }
-            else
-            {
-                UIManager.instance.ReloadButton.interactable = false;
-            }
-
-            if (aimJoystick.Horizontal > .75 || aimJoystick.Vertical > .75 || aimJoystick.Horizontal < -.75f || aimJoystick.Vertical < -.75f)
-            {
-                abletoShoot = true;
-            }
-            else
-            {
-                abletoShoot = false;
-            }
-            if (abletoShoot && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
->>>>>>> Stashed changes
-            {
- 
-                if (currentGun.currentAmmoInMagazine > 0)
+                if (currentGun.currentAmmoInMagazine < currentGun.magazineSize)
                 {
-                    if (currentGun.gunType == "Bomb")
-                    {
-                        ThrowBomb();
-                    }
-                    else
-                    {
-                        FireBullet();
-                    }
-
-                    currentGun.lastShotTime = Time.time;
-                    currentGun.currentAmmoInMagazine--;
-                    if (currentGun.currentTotalAmmo > 0)
-                    {
-                        UIManager.instance.ReloadButton.interactable = true;
-                    }
-                    else
-                    {
-                        UIManager.instance.ReloadButton.interactable = false;
-                    }
-                    UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+                    UIManager.instance.ReloadButton.interactable = true;
                 }
-                else if (isReloading == false)
+                else
                 {
-                    if (currentGun.currentTotalAmmo > 0)
+                    UIManager.instance.ReloadButton.interactable = false;
+                }
+
+                if (aimJoystick.Horizontal > .75 || aimJoystick.Vertical > .75 || aimJoystick.Horizontal < -.75f || aimJoystick.Vertical < -.75f)
+                {
+                    abletoShoot = true;
+                }
+                else
+                {
+                    abletoShoot = false;
+                }
+                if (abletoShoot && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
+                {
+
+                    if (currentGun.currentAmmoInMagazine > 0)
                     {
-                        UIManager.instance.ReloadButton.interactable = true;
-                        StartCoroutine(Reload(currentGun));
+                        if (currentGun.gunType == "Bomb")
+                        {
+                            ThrowBomb();
+                        }
+                        else
+                        {
+                            FireBullet();
+                        }
+
+                        currentGun.lastShotTime = Time.time;
+                        currentGun.currentAmmoInMagazine--;
+                        if (currentGun.currentTotalAmmo > 0)
+                        {
+                            UIManager.instance.ReloadButton.interactable = true;
+                        }
+                        else
+                        {
+                            UIManager.instance.ReloadButton.interactable = false;
+                        }
+                        UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
                     }
-                    else
+                    else if (isReloading == false)
                     {
-                        UIManager.instance.ReloadButton.interactable = false;
+                        if (currentGun.currentTotalAmmo > 0)
+                        {
+                            UIManager.instance.ReloadButton.interactable = true;
+                            StartCoroutine(Reload(currentGun));
+                        }
+                        else
+                        {
+                            UIManager.instance.ReloadButton.interactable = false;
+                        }
                     }
                 }
             }
@@ -229,7 +207,7 @@ public class PlayerController : MonoBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = firePoint.right * bulletSpeed;
+        bulletRb.velocity = firePoint.right * -bulletSpeed;
     }
 
     void ThrowBomb()
