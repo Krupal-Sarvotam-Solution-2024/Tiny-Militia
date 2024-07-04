@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
         UpdateBoosterLevel();
         HandleGunSwitching();
         HandleBombThrowing();
+
     }
 
     void Move()
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
 
         if (aimDirection.x > 0)
         {
+<<<<<<< Updated upstream
             transform.localScale = new Vector3(1, 1, 1);
             gunTransform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -135,18 +137,52 @@ public class PlayerController : MonoBehaviour
         else
         {
             gunTransform.localScale = Vector3.one;
+=======
+            leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
+            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+            //gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
+            leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
+        }
+        else if (aimDirection.x < 0)
+        {
+            leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
+            transform.localScale = new Vector3(0.15f, 0.15f, 1);
+            //gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
+            leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
+>>>>>>> Stashed changes
         }
     }
 
     void Shoot()
     {
+        Gun currentGun = guns[currentGunIndex];
         if (isReloading == false)
         {
 
+<<<<<<< Updated upstream
             if (Input.GetMouseButton(0) && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
+=======
+            if (currentGun.currentAmmoInMagazine < currentGun.magazineSize)
             {
-                Gun currentGun = guns[currentGunIndex];
+                UIManager.instance.ReloadButton.interactable = true;
+            }
+            else
+            {
+                UIManager.instance.ReloadButton.interactable = false;
+            }
 
+            if (aimJoystick.Horizontal > .75 || aimJoystick.Vertical > .75 || aimJoystick.Horizontal < -.75f || aimJoystick.Vertical < -.75f)
+            {
+                abletoShoot = true;
+            }
+            else
+            {
+                abletoShoot = false;
+            }
+            if (abletoShoot && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
+>>>>>>> Stashed changes
+            {
+ 
                 if (currentGun.currentAmmoInMagazine > 0)
                 {
                     if (currentGun.gunType == "Bomb")
