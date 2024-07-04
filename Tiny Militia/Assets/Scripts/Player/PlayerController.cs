@@ -1,79 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-
-    #region Variables
-
-    #region Variables For Movements
+    // Variables For Movements
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
-    #endregion
 
-    #region Variables For Shooting
+    // Variables For Shooting
     public Transform gunTransform;
-    public Transform rightgunTransform;
-    public Transform leftgunTransform;
-    public Transform leftgunboneTransform;
     public Transform firePoint;
     public float bulletSpeed = 10f;
-    #endregion
 
-    #region Variables of Ammo and Bomb Prefeb
+    // Variables of Ammo and Bomb Prefeb
     public GameObject bulletPrefab;
     public GameObject bombPrefab;
-    public bool abletoShoot;
-    #endregion
 
-    #region Variables for Booster
+    // Variables for Booster
     public float jetpackForce = 5f;
     public float jetpackFuel = 100f;
     public float jetpackFuelConsumptionRate = 10f;
     public float jetpackFuelRechargeRate = 5f;
     private float currentJetpackFuel;
-    #endregion
 
-    #region boolen for checking gun state is reloading or not
-    bool isReloading;
-    #endregion
+    bool isReloading; // boolen for checking gun state is reloading or not
 
-    #region Variables For Player Health
+    // Variables For Player Health
     public int maxHealth = 100;
     public int currentHealth;
     public float healthRecoveryRate = 2f;
-    #endregion
 
-    #region Variables For Guns Scriptable Obect
+    // Variables For Guns Scriptable Obect
     public List<Gun> guns; // List of ScriptableObject Guns
     public int currentGunIndex = 0;
     private int alternateGunIndex = -1;
-    #endregion
 
-    #region Getting Player Rigidbody for Physics
+    // Getting Player Rigidbody for Physics
     private Rigidbody2D rb;
-    #endregion
 
-    #region Boolen for Chceking that Player is In Ground Or Not
+    // Boolen for Chceking that Player is In Ground Or Not
     private bool isGrounded;
-    #endregion
 
-    #region Variables For Jpoystick
+    // Variables For Jpoystick
     public FixedJoystick movementJoystick;
     public FixedJoystick aimJoystick;
-    #endregion 
 
-    //Animator PlayerAnim;
-
-    #endregion
-
-    #region Methods
     void Start()
     {
-        //PlayerAnim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         currentJetpackFuel = jetpackFuel;
         currentHealth = maxHealth;
@@ -88,7 +63,6 @@ public class PlayerController : MonoBehaviour
             gun.Initialize();
         }
 
-
         StartCoroutine(AutoHealthRecovery());
     }
 
@@ -97,22 +71,18 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         Aim();
-        Shoot();
+        //Shoot();
         Jetpack();
         UpdateBoosterLevel();
         HandleGunSwitching();
         HandleBombThrowing();
+
     }
 
     void Move()
     {
         float moveInput = movementJoystick.Horizontal;
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-
-        //if (moveInput > 0)
-        //{
-        //    PlayerAnim.Play("Walk");
-        //}
     }
 
     void Jump()
@@ -127,48 +97,92 @@ public class PlayerController : MonoBehaviour
 
     void Aim()
     {
-        Vector3 rotation = new Vector3(aimJoystick.Horizontal, aimJoystick.Vertical, 0);
-        float moveInput = movementJoystick.Vertical;
-        //  Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 aimDirection = rotation;
-
+        /*Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 aimDirection = mousePosition - gunTransform.position;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
         if (aimDirection.x > 0)
         {
-        leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
+<<<<<<< Updated upstream
+            transform.localScale = new Vector3(1, 1, 1);
+            gunTransform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if (aimDirection.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+        }*/
+
+        // Get joystick input for aiming
+        float aimHorizontal = aimJoystick.Horizontal;
+        float aimVertical = aimJoystick.Vertical;   
+
+        // Calculate the aim direction
+        Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        // Flip character and gun based on aim direction
+        if (aimDirection.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            gunTransform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if (aimDirection.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+        }
+        else
+        {
+            gunTransform.localScale = Vector3.one;
+=======
+            leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
             transform.localScale = new Vector3(-0.15f, 0.15f, 1);
             //gunTransform.localScale = new Vector3(-5.081078f, 5.081078f, 1f);
             leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
         }
         else if (aimDirection.x < 0)
         {
-        leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
+            leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
             transform.localScale = new Vector3(0.15f, 0.15f, 1);
             //gunTransform.localScale = new Vector3(5.081078f, -5.081078f, 1f);
             leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
+>>>>>>> Stashed changes
         }
-        //else if (aimDirection.x == 0)
-        //{
-        //    gunTransform.localScale = Vector3.one;
-        //}
     }
 
     void Shoot()
     {
+        Gun currentGun = guns[currentGunIndex];
         if (isReloading == false)
         {
+
+<<<<<<< Updated upstream
+            if (Input.GetMouseButton(0) && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
+=======
+            if (currentGun.currentAmmoInMagazine < currentGun.magazineSize)
+            {
+                UIManager.instance.ReloadButton.interactable = true;
+            }
+            else
+            {
+                UIManager.instance.ReloadButton.interactable = false;
+            }
+
             if (aimJoystick.Horizontal > .75 || aimJoystick.Vertical > .75 || aimJoystick.Horizontal < -.75f || aimJoystick.Vertical < -.75f)
+            {
                 abletoShoot = true;
+            }
             else
             {
                 abletoShoot = false;
             }
             if (abletoShoot && Time.time > guns[currentGunIndex].lastShotTime + guns[currentGunIndex].shootCooldown)
+>>>>>>> Stashed changes
             {
-                Gun currentGun = guns[currentGunIndex];
-
+ 
                 if (currentGun.currentAmmoInMagazine > 0)
                 {
                     if (currentGun.gunType == "Bomb")
@@ -211,12 +225,11 @@ public class PlayerController : MonoBehaviour
     void FireBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        //PlayerAnim.Play("Shoot");
         bullet.tag = "Player_Bullet";
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = firePoint.right * -bulletSpeed;
+        bulletRb.velocity = firePoint.right * bulletSpeed;
     }
 
     void ThrowBomb()
@@ -275,7 +288,7 @@ public class PlayerController : MonoBehaviour
         if (moveInput > 0 && !isGrounded && currentJetpackFuel > 0)
         {
 
-            rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput);
+            rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput );
             currentJetpackFuel -= jetpackFuelConsumptionRate * Time.deltaTime;
         }
         else if (isGrounded)
@@ -326,23 +339,7 @@ public class PlayerController : MonoBehaviour
             TakeDamage(botGun.damagePerBullet);
         }
 
-        if (collision.gameObject.CompareTag("Gun_Uzi"))
-        {
-            for (int i = 0; i < guns.Count; i++)
-            {
-                if (guns[i].ObjectTag == "Gun_Uzi")
-                {
-                    if (guns[i].currentTotalAmmo < guns[i].maxAmmo)
-                    {
-                        guns[i].currentTotalAmmo = guns[i].maxAmmo;
-                        Gun currentGun = guns[currentGunIndex];
-                        UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
-                        Destroy(collision.gameObject);
-                    }
-                }
-            }
-        }
-
+   
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -385,7 +382,6 @@ public class PlayerController : MonoBehaviour
                 alternateGunIndex = temp;
                 UIManager.instance.GunIndex = currentGunIndex;
                 Gun currentGun = guns[currentGunIndex];
-
                 UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
             }
         }
@@ -398,7 +394,4 @@ public class PlayerController : MonoBehaviour
             ThrowBomb();
         }
     }
-
-    #endregion
-
 }
