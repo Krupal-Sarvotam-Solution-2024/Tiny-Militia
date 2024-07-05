@@ -564,7 +564,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2259250102884172101}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0105a3eae2576174f90ce4802b14f51e, type: 2}
   m_CullingMode: 0
@@ -592,11 +592,11 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 10
   gunTransform: {fileID: 7049683200989846693}
+  firePoint: {fileID: 4105843490112081932}
+  bulletSpeed: 10
   rightgunTransform: {fileID: 3579584676014566644}
   leftgunTransform: {fileID: 7049683200989846693}
   leftgunboneTransform: {fileID: 8569109323530054776}
-  firePoint: {fileID: 4105843490112081932}
-  bulletSpeed: 10
   bulletPrefab: {fileID: 2793077112133411170, guid: 65a64bfbf57a6834b97448aa791a4885, type: 3}
   bombPrefab: {fileID: 0}
   abletoShoot: 0
@@ -852,7 +852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4105843490112081932
 Transform:
   m_ObjectHideFlags: 0
@@ -1661,7 +1661,7 @@ MonoBehaviour:
   axisOptions: 0
   snapX: 0
   snapY: 0
-  islocked: 0
+  islocked: 1
   background: {fileID: 1546659162317780286}
   handle: {fileID: 4884517318036499492}
 --- !u!1 &5855823573017380673
