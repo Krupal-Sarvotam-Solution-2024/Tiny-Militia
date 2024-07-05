@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// This script automatically connects to Photon (using the settings file),
 /// tries to join a random room and creates one if none was found (which is ok).
@@ -17,7 +18,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI contingtext;
     /// <summary>if we don't want to connect in Start(), we have to "remember" if we called ConnectUsingSettings()</summary>
     private bool ConnectInUpdate = true;
-
+    public PhotonView view;
 
     public virtual void Start()
     {
@@ -45,11 +46,10 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
     private void OnConnectedToServer()
     {
-        Debug.Log("Connecte");
+        Debug.Log("Connected");
     }
     public override void OnConnectedToMaster()
     {
-       PhotonNetwork.JoinRandomRoom();
         Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.");
       
     }
@@ -57,18 +57,13 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("OnJoinedLobby(). This client is connected and does get a room-list, which gets stored as PhotonNetwork.GetRoomList(). This script now calls: PhotonNetwork.JoinRandomRoom();");
-        PhotonNetwork.JoinRandomRoom();
     }
 
-
-
-    public void OnPhotonRandomJoinFailed()
+    public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log("OnPhotonRandomJoinFailed() was called by PUN. No random room available, so we create one. Calling: PhotonNetwork.CreateRoom(null, new RoomOptions() {maxPlayers = 4}, null);");
         PhotonNetwork.JoinRandomOrCreateRoom(null, maxPlayer);
     }
-
-    // the following methods are implemented to give you some context. re-implement them as needed.
 
     public virtual void OnFailedToConnectToPhoton(DisconnectCause cause)
     {
@@ -79,16 +74,36 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
     public  override void OnJoinedRoom()
     {
-
+        view.RPC("PlayerJoined", RpcTarget.All);
         Debug.Log("player joined room");
     }
+
+
+    [PunRPC]
+    void PlayerJoined()
+    {
+        Debug.Log("Other Player Joined");
+        if(PhotonNetwork.CurrentRoom.PlayerCount==2)
+        {
+            //srart the time 
+            Debug.Log("minimum player joined the room can go to play");
+            StartCoroutine("GoToFight");
+
+        }
+    }
+
     public void Battle()
     {
         PhotonNetwork.JoinRandomRoom();
         Debug.Log("player is trying to join room");
     }
-    private void OnPlayerConnected()
+  
+    IEnumerator GoToFight()
     {
-        Debug.Log("player entered");
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Survival_PVP");
+
     }
+
+
 }

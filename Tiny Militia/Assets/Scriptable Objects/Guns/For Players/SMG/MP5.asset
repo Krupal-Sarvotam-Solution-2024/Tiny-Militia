@@ -20,8 +20,9 @@ MonoBehaviour:
   reloadTime: 3
   magazineSize: 50
   maxAmmo: 400
+  maxScope: 9
   shootCooldown: 0.1
   ObjectTag: Gun_MP5
-  currentAmmoInMagazine: 28
+  currentAmmoInMagazine: 50
   currentTotalAmmo: 400
-  lastShotTime: 8.753357
+  lastShotTime: -0.1

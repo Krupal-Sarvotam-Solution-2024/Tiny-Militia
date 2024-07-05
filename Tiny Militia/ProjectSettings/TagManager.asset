@@ -9,8 +9,9 @@ TagManager:
   - Player_Bullet
   - Bot
   - Gun_Uzi
-  - playerDetails_ReloadImage
   - Gun_MP5
+  - joyStick_Aim
+  - joyStick_Movement
   layers:
   - Default
   - TransparentFX

@@ -20,8 +20,9 @@ MonoBehaviour:
   reloadTime: 3
   magazineSize: 35
   maxAmmo: 150
+  maxScope: 8
   shootCooldown: 0.3
   ObjectTag: Gun_Uzi
-  currentAmmoInMagazine: 25
+  currentAmmoInMagazine: 34
   currentTotalAmmo: 150
-  lastShotTime: 4.832851
+  lastShotTime: 3.8248022

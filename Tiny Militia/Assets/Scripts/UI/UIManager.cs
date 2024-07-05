@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    PlayerController playerController;
 
     // Variables For Showing Data in Canvas
     public Image boosterLevelImage;
@@ -16,14 +15,18 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI AmmoInfo_text;
     public Image ReloadImage;
     public Button ReloadButton;
+    public int GunIndex;
+    PlayerController playerController;
 
     private void Awake()
     {
         instance = this;
-        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        
     }
-
-    public int GunIndex;
+    private void Start()
+    {
+        playerController = GameManager.Instance.PlayerManager;
+    }
     public void ReloadGun()
     {
         Gun currentgun;
@@ -35,9 +38,9 @@ public class UIManager : MonoBehaviour
     {
         Camera cam = Camera.main;
         Gun currentgun = playerController.guns[GunIndex];
-        if(cam.orthographicSize < currentgun.magazineSize)
+        if(cam.orthographicSize < currentgun.maxScope)
         {
-            cam.orthographicSize += 2;
+            cam.orthographicSize += 1;
 
         }
         else

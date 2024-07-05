@@ -12,6 +12,7 @@ public class Gun : ScriptableObject
     public float reloadTime;
     public int magazineSize;
     public int maxAmmo;
+    public int maxScope;
     public float shootCooldown;
     public string ObjectTag;
 
