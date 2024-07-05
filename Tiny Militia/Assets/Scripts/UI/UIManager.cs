@@ -31,4 +31,19 @@ public class UIManager : MonoBehaviour
         StartCoroutine(playerController.Reload(currentgun));
     }
 
+    public void Zoom()
+    {
+        Camera cam = Camera.main;
+        Gun currentgun = playerController.guns[GunIndex];
+        if(cam.orthographicSize < currentgun.magazineSize)
+        {
+            cam.orthographicSize += 2;
+
+        }
+        else
+        {
+            cam.orthographicSize = 5;
+        }
+    }
+
 }

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     // Variables For Guns Scriptable Obect
     public List<Gun> guns; // List of ScriptableObject Guns
+    public Gun bomb;
     public int currentGunIndex = 0;
     private int alternateGunIndex = -1;
 
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
         currentJetpackFuel = jetpackFuel;
         currentHealth = maxHealth;
         Gun Gun = guns[currentGunIndex];
-
+        Camera.main.orthographicSize = Gun.magazineSize;
         UIManager.instance.AmmoInfo_text.text = Gun.currentAmmoInMagazine.ToString() + " / " + Gun.currentTotalAmmo.ToString();
         UpdateHealthImage();
 
@@ -78,7 +79,10 @@ public class PlayerController : MonoBehaviour
         UpdateBoosterLevel();
         HandleGunSwitching();
         HandleBombThrowing();
-
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ThrowBomb();
+        }
     }
 
     void Move()
@@ -208,8 +212,9 @@ public class PlayerController : MonoBehaviour
     void ThrowBomb()
     {
         GameObject bomb = Instantiate(bombPrefab, firePoint.position, firePoint.rotation);
-        bomb.tag = "Player_Bomb";
+       // bomb.tag = "Player_Bomb";
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
+        bombRb.isKinematic = false;
         bombRb.velocity = firePoint.right * bulletSpeed;
     }
 
@@ -344,19 +349,19 @@ public class PlayerController : MonoBehaviour
             {
                 alternateGunIndex = currentGunIndex;
                 currentGunIndex = (currentGunIndex + 1) % guns.Count;
-                UIManager.instance.GunIndex = currentGunIndex;
-                Gun currentGun = guns[currentGunIndex];
-                UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+               
             }
             else
             {
                 int temp = currentGunIndex;
                 currentGunIndex = alternateGunIndex;
                 alternateGunIndex = temp;
-                UIManager.instance.GunIndex = currentGunIndex;
-                Gun currentGun = guns[currentGunIndex];
-                UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+              
             }
+            UIManager.instance.GunIndex = currentGunIndex;
+            Gun currentGun = guns[currentGunIndex];
+            UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+            Camera.main.orthographicSize = currentGun.magazineSize;
         }
     }
 

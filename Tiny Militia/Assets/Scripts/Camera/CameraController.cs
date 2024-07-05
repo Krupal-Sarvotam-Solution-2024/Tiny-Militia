@@ -7,10 +7,12 @@ public class CameraController : MonoBehaviour
 {
   
     public Transform PlayerTransform;
+  
 
     private void Start()
     {
         PlayerTransform = GameObject.FindWithTag("Player").transform;
+        
     }
     private void Update()
      {
