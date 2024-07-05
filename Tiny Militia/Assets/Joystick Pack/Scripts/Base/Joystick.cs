@@ -135,10 +135,10 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         if (islocked) 
         {
-            Debug.Log(input);
+
             input.x = input.x < 0 ? input.x + .25f : input.x - .25f;
             input.y = input.y < 0 ? input.y + .25f : input.y - .25f;
-            Debug.Log(input);
+
             return;
         }
         input = Vector2.zero;
