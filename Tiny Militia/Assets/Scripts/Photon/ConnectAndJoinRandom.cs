@@ -12,7 +12,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
     public bool AutoConnect = true;
-
+    byte maxPlayer = 2;
     public byte Version = 1;
     public TextMeshProUGUI contingtext;
     /// <summary>if we don't want to connect in Start(), we have to "remember" if we called ConnectUsingSettings()</summary>
@@ -32,23 +32,29 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
             ConnectInUpdate = false;
             PhotonNetwork.ConnectUsingSettings();
-            //PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, "1", "cluster3");       // connecting to a specific cluster may be necessary, when regions get sharded and you support friends
+           
+         //   PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, "1", "cluster3");       // connecting to a specific cluster may be necessary, when regions get sharded and you support friends
         }
+
+        Debug.Log(PhotonNetwork.InRoom);
     }
 
 
     // below, we implement some callbacks of PUN
     // you can find PUN's callbacks in the class PunBehaviour or in enum PhotonNetworkingMessage
 
-
-    public virtual void OnConnectedToMaster()
+    private void OnConnectedToServer()
     {
-
-        Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
+        Debug.Log("Connecte");
+    }
+    public override void OnConnectedToMaster()
+    {
+       PhotonNetwork.JoinRandomRoom();
+        Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.");
       
     }
 
-    public virtual void OnJoinedLobby()
+    public override void OnJoinedLobby()
     {
         Debug.Log("OnJoinedLobby(). This client is connected and does get a room-list, which gets stored as PhotonNetwork.GetRoomList(). This script now calls: PhotonNetwork.JoinRandomRoom();");
         PhotonNetwork.JoinRandomRoom();
@@ -56,10 +62,10 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
 
 
-    public virtual void OnPhotonRandomJoinFailed()
+    public void OnPhotonRandomJoinFailed()
     {
         Debug.Log("OnPhotonRandomJoinFailed() was called by PUN. No random room available, so we create one. Calling: PhotonNetwork.CreateRoom(null, new RoomOptions() {maxPlayers = 4}, null);");
-        PhotonNetwork.CreateRoom("EVM check", new RoomOptions { MaxPlayers = 2 }, null);
+        PhotonNetwork.JoinRandomOrCreateRoom(null, maxPlayer);
     }
 
     // the following methods are implemented to give you some context. re-implement them as needed.
@@ -71,9 +77,18 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         Debug.LogError("Cause: " + cause);
     }
 
-    public void OnJoinedRoom()
+    public  override void OnJoinedRoom()
     {
 
-
+        Debug.Log("player joined room");
+    }
+    public void Battle()
+    {
+        PhotonNetwork.JoinRandomRoom();
+        Debug.Log("player is trying to join room");
+    }
+    private void OnPlayerConnected()
+    {
+        Debug.Log("player entered");
     }
 }
