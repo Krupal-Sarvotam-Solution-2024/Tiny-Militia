@@ -5,6 +5,8 @@ using Photon.Pun;
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     byte maxPlayer = 2;
+    public float version;
+    public float timetoLoad;
     void Start()
     {
         // Connecting To Server at Starting
@@ -13,6 +15,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+
         Debug.Log("Connected To Server Successfully");
 
     }
@@ -30,16 +33,17 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        base.OnJoinedLobby();
+        // player joined the loby can see the room
+        PhotonNetwork.JoinRandomOrCreateRoom();
     }
-
+ 
     public override void OnJoinedRoom()
     {
         if(PhotonNetwork.CountOfPlayersInRooms == maxPlayer)
         {
 
         }
-        base.OnJoinedRoom();
+   
     }
 
     public override void OnLeftRoom()
