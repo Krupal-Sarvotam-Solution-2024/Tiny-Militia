@@ -5,10 +5,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
-/// <summary>
-/// This script automatically connects to Photon (using the settings file),
-/// tries to join a random room and creates one if none was found (which is ok).
-/// </summary>
+ 
 public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
@@ -19,11 +16,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     /// <summary>if we don't want to connect in Start(), we have to "remember" if we called ConnectUsingSettings()</summary>
     private bool ConnectInUpdate = true;
     public PhotonView view;
-
-    public virtual void Start()
-    {
-     
-    }
 
     public virtual void Update()
     {
@@ -48,6 +40,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected");
     }
+
     public override void OnConnectedToMaster()
     {
         Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.");
@@ -78,7 +71,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         Debug.Log("player joined room");
     }
 
-
     [PunRPC]
     void PlayerJoined()
     {
@@ -96,8 +88,8 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRandomRoom();
         Debug.Log("player is trying to join room");
-    }
-  
+    } 
+
     IEnumerator GoToFight()
     {
         yield return new WaitForSeconds(3f);
@@ -105,5 +97,9 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
     }
 
+    public void SurvivalOpen()
+    {
+        SceneManager.LoadScene("Survival_Bot");
+    }
 
 }

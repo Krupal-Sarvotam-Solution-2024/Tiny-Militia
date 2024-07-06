@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Bomb : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Bomb : MonoBehaviour
     {
         StartCoroutine(waitTillExplode());
     }
+
+    [PunRPC]
     public IEnumerator waitTillExplode()
     {
         yield return new WaitForSeconds(timeToExplode);
@@ -23,7 +26,7 @@ public class Bomb : MonoBehaviour
             float Distance = Vector3.Distance(item.transform.position, transform.position);
             if (Distance < 3)
             {
-                item.GetComponent<PlayerController>().TakeDamage(damage / Distance);// -= damage;
+                item.GetComponent<PhotonView>().RPC("TakeDamage",RpcTarget.All,damage / Distance ,playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
             }
         }
         blast.gameObject.SetActive(true);

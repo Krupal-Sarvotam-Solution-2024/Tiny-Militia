@@ -72,7 +72,6 @@
     <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
     <Compile Include="Assets\Scripts\Bot Scripts\BotController.cs" />
     <Compile Include="Assets\Scripts\Bomb\Bomb.cs" />
-    <Compile Include="Assets\Scripts\Photon\ConnectToServer.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />

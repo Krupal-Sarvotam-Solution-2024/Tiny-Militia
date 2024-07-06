@@ -4,8 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     // Variables For Movements
     public float moveSpeed = 5f;
@@ -18,10 +19,12 @@ public class PlayerController : MonoBehaviour
     public Transform rightgunTransform;
     public Transform leftgunTransform;
     public Transform leftgunboneTransform;
+
     // Variables of Ammo and Bomb Prefeb
     public GameObject bulletPrefab;
     public GameObject bombPrefab;
     public bool abletoShoot;
+
     // Variables for Booster
     public float jetpackForce = 5f;
     public float jetpackFuel = 100f;
@@ -29,10 +32,13 @@ public class PlayerController : MonoBehaviour
     public float jetpackFuelRechargeRate = 5f;
     private float currentJetpackFuel;
 
-    bool isReloading; // boolen for checking gun state is reloading or not
+    // boolen for checking gun state is reloading or not
+    bool isReloading;
 
     // Variables For Player Health
     public int maxHealth = 100;
+
+
     public int currentHealth;
     public float healthRecoveryRate = 2f;
 
@@ -51,9 +57,14 @@ public class PlayerController : MonoBehaviour
     // Variables For Jpoystick
     public FixedJoystick movementJoystick;
     public FixedJoystick aimJoystick;
-    PhotonView view;
+    public PhotonView view;
+
+    // Variables For Changing The Gun
+    public bool isSwitching;
+
     void Start()
     {
+
         view = transform.GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
         currentJetpackFuel = jetpackFuel;
@@ -70,13 +81,22 @@ public class PlayerController : MonoBehaviour
         {
             gun.Initialize();
         }
+        Camera MainCamera = Camera.main;
+        if (PhotonNetwork.InRoom)
+        {
 
-        StartCoroutine(AutoHealthRecovery());
+            UIManager.instance.ScopeText.text = (MainCamera.orthographicSize - 4).ToString() + "x";
+
+            leftgunTransform.GetComponent<SpriteRenderer>().sprite = guns[0].GunSprite;
+            rightgunTransform.GetComponent<SpriteRenderer>().sprite = guns[1].GunSprite;
+
+            StartCoroutine(AutoHealthRecovery());
+        }
     }
 
     void Update()
     {
-        if (view.IsMine)
+        if (view.IsMine || !PhotonNetwork.InRoom)
         {
             Move();
             Jump();
@@ -85,7 +105,6 @@ public class PlayerController : MonoBehaviour
             Jetpack();
             UpdateBoosterLevel();
             HandleGunSwitching();
-            HandleBombThrowing();
         }
 
     }
@@ -108,9 +127,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     void Aim()
     {
-
         // Get joystick input for aiming
         float aimHorizontal = aimJoystick.Horizontal;
         float aimVertical = aimJoystick.Vertical;
@@ -119,6 +138,12 @@ public class PlayerController : MonoBehaviour
         Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+
+        if (PhotonNetwork.InRoom)
+        {
+            view.RPC("RPCAim", RpcTarget.Others, view.ViewID, aimDirection, angle);
+        }
 
         // Flip character and gun based on aim direction
         if (aimDirection.x > 0)
@@ -137,6 +162,35 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    void RPCAim(int Player_ID, Vector3 aimDirection, float angle)
+    {
+        PlayerController player = PhotonNetwork.GetPhotonView(Player_ID).GetComponent<PlayerController>();
+        //// Get joystick input for aiming
+        //float aimHorizontal = player.aimJoystick.Horizontal;
+        //float aimVertical = player.aimJoystick.Vertical;
+
+        //// Calculate the aim direction
+        //Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
+        //float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        ////gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        // Flip character and gun based on aim direction
+        if (aimDirection.x > 0)
+        {
+            player.leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
+            player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
+            player.transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+            //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
+        }
+        else if (aimDirection.x < 0)
+        {
+            player.leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
+            player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
+            player.transform.localScale = new Vector3(0.15f, 0.15f, 1);
+            //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+        }
+    }
 
     void Shoot()
     {
@@ -170,14 +224,26 @@ public class PlayerController : MonoBehaviour
                     {
                         if (currentGun.gunType == "Bomb")
                         {
-                            view.RPC("ThrowBomb", RpcTarget.All);
-                            
+                            if (PhotonNetwork.InRoom)
+                            {
+                                view.RPC("ThrowBomb", RpcTarget.All, view.ViewID);
+                            }
+                            else
+                            {
+                                ThrowBomb(view.ViewID);
+                            }
                         }
                         else
                         {
-                            GameObject FirePOINT;
-                            view.RPC("FireBullet",RpcTarget.All,view.ViewID);
-                            
+                            if (PhotonNetwork.InRoom)
+                            {
+                                view.RPC("FireBullet", RpcTarget.All, view.ViewID);
+                            }
+                            else
+                            {
+                                FireBullet(view.ViewID);
+                            }
+
                         }
 
                         currentGun.lastShotTime = Time.time;
@@ -212,7 +278,15 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     void FireBullet(int firePoint_ID)
     {
-        PlayerController FirePOINT = PhotonNetwork.GetPhotonView(firePoint_ID).transform.GetComponent<PlayerController>();
+        PlayerController FirePOINT;
+        if (PhotonNetwork.InRoom)
+        {
+            FirePOINT = PhotonNetwork.GetPhotonView(firePoint_ID).transform.GetComponent<PlayerController>();
+        }
+        else
+        {
+            FirePOINT = transform.GetComponent<PlayerController>();
+        }
         GameObject bullet = Instantiate(bulletPrefab, FirePOINT.firePoint.position, FirePOINT.firePoint.rotation);
         bullet.tag = "Player_Bullet";
         Bullet bulletScript = bullet.GetComponent<Bullet>();
@@ -222,8 +296,17 @@ public class PlayerController : MonoBehaviour
     }
 
     [PunRPC]
-    public void ThrowBomb()
+    public void ThrowBomb(int firePoint_ID)
     {
+        PlayerController FirePOINT;
+        if (PhotonNetwork.InRoom)
+        {
+            FirePOINT = PhotonNetwork.GetPhotonView(firePoint_ID).transform.GetComponent<PlayerController>();
+        }
+        else
+        {
+            FirePOINT = transform.GetComponent<PlayerController>();
+        }
         GameObject bomb = Instantiate(bombPrefab, firePoint.position, firePoint.rotation);
         // bomb.tag = "Player_Bomb";
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
@@ -296,16 +379,23 @@ public class PlayerController : MonoBehaviour
 
     void UpdateHealthImage()
     {
+        if(view.IsMine)
+        {
+
         float fillAmount = (float)currentHealth / maxHealth;
         UIManager.instance.healthImage.fillAmount = fillAmount;
+        }
     }
 
-    public void TakeDamage(float damageAmount)
+    [PunRPC]
+    public void TakeDamage(int damageAmount, int Health_ID)
     {
-        currentHealth -= (int)damageAmount;
+        PlayerController Health;
+        Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
+        Health.currentHealth -= damageAmount;
         UpdateHealthImage();
 
-        if (currentHealth <= 0)
+        if (Health.currentHealth <= 0)
         {
             Die();
         }
@@ -317,6 +407,7 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -327,13 +418,24 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bot_Bullet"))
         {
             Gun botGun = collision.gameObject.GetComponent<Bullet>().gun;
-            TakeDamage(botGun.damagePerBullet);
+            currentHealth -= (int)botGun.damagePerBullet;
+            UpdateHealthImage();
+
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
         }
-        
+
         if (collision.gameObject.CompareTag("Player_Bullet"))
         {
-            Gun botGun = collision.gameObject.GetComponent<Bullet>().gun;
-            TakeDamage(botGun.damagePerBullet);
+            if (view.IsMine)
+            {
+
+                Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
+                //TakeDamage(PlayerGun.damagePerBullet);
+                view.RPC("TakeDamage", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
+            }
         }
 
 
@@ -360,9 +462,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void HandleGunSwitching()
+    public void HandleGunSwitching()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+
+        if (isSwitching == true)
         {
             if (alternateGunIndex == -1)
             {
@@ -377,18 +480,28 @@ public class PlayerController : MonoBehaviour
                 alternateGunIndex = temp;
 
             }
-            UIManager.instance.GunIndex = currentGunIndex;
             Gun currentGun = guns[currentGunIndex];
+            Gun alternateGun = guns[alternateGunIndex];
+            leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
+            rightgunTransform.GetComponent<SpriteRenderer>().sprite = alternateGun.GunSprite;
+            UIManager.instance.GunIndex = currentGunIndex;
             UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+            UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = currentGun.GunSprite;
+            UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
             Camera.main.orthographicSize = currentGun.maxScope;
+            isSwitching = false;
         }
     }
 
-    void HandleBombThrowing()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            ThrowBomb();
-        }
-    }
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.IsWriting)
+    //    {
+    //        stream.SendNext(currentHealth);
+    //    }
+    //    else
+    //    {
+    //        currentHealth = (int)stream.ReceiveNext();
+    //    }
+    //}
 }

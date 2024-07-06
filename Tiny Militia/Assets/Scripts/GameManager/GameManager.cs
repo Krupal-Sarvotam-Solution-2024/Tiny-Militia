@@ -18,13 +18,29 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
         MainCamera = Camera.main;
-        if (Temp.GetComponent<PhotonView>().IsMine)
+        if (PhotonNetwork.InRoom)
         {
+            Debug.Log("InRoom");
+            GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
+            if (Temp.GetComponent<PhotonView>().IsMine)
+            {
+                MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
+                PlayerManager = Temp.GetComponent<PlayerController>();
+                UIManager.instance.playerController = PlayerManager;
+                MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
+            }
+        }
+        else
+        {
+            GameObject Temp = Instantiate(PlayerPrefeb, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
+
             MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
             PlayerManager = Temp.GetComponent<PlayerController>();
+            UIManager.instance.playerController = PlayerManager;
             MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
+
         }
+ 
     }
 }
