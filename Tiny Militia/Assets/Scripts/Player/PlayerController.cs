@@ -407,7 +407,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         Debug.Log("Player died!");
         GameManager.Instance.playerSpawn();
-        Destroy(this.gameObject);
+        PhotonNetwork.Destroy(this.gameObject);
         //death animtion play
 
         // relod the postion to spaen

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public Gun gun;
-
+    public GameObject bloodshott;
 
 
     private void Start()
@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Instantiate(bloodshott,collision.collider.transform.position,Quaternion.identity);
         Destroy(gameObject);
     }
 }
