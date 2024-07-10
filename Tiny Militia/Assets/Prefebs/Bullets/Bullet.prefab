@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
-  bloodshott: {fileID: 0}
+  bloodshott: {fileID: 989397133354838665, guid: fe6faf5060bf67b4fbfbabb3a2db2a9c, type: 3}
 --- !u!60 &6890893784002338268
 PolygonCollider2D:
   m_ObjectHideFlags: 0
