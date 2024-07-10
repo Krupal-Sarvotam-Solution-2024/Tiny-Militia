@@ -5,6 +5,14 @@ using Photon.Pun;
 
 public class Bomb : MonoBehaviour
 {
+    public enum bombtype 
+    {
+        explodebomb,
+        timebomb,
+        poisenmomb,
+    
+    }
+    public bombtype type;
     public float timeToExplode;
     public float damage;
     public GameObject blast;
@@ -12,9 +20,10 @@ public class Bomb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(type == bombtype.explodebomb || type == bombtype.timebomb)
         StartCoroutine(waitTillExplode());
     }
-
+  
     [PunRPC]
     public IEnumerator waitTillExplode()
     {
@@ -39,6 +48,30 @@ public class Bomb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(type == bombtype.poisenmomb)
+        {
+            GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (var item in allplayer)
+            {
+                float Distance = Vector3.Distance(item.transform.position, transform.position);
+                if (Distance < 3)
+                {
+                    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage / Distance, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                }
+            }
+        }else if(type == bombtype.timebomb)
+        {
+            GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (var item in allplayer)
+            {
+                float Distance = Vector3.Distance(item.transform.position, transform.position);
+                if (Distance < 1)
+                {
+                    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                }
+            }
+        }  
     }
 }

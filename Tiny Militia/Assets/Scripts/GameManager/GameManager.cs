@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         MainCamera = Camera.main;
+        playerSpawn();
+    }
+
+    public void playerSpawn()
+    {
         if (PhotonNetwork.InRoom)
         {
             Debug.Log("InRoom");
@@ -41,6 +46,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
 
         }
- 
+
     }
 }

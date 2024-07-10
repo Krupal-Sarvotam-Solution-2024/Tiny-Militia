@@ -235,6 +235,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         }
                         else
                         {
+                            leftgunTransform.GetComponentInChildren <Animator>().Play("Fire");
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
@@ -395,8 +396,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Health.currentHealth -= damageAmount;
         UpdateHealthImage();
 
-        if (Health.currentHealth <= 0)
+        if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
         {
+            
             Die();
         }
     }
@@ -404,7 +406,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void Die()
     {
         Debug.Log("Player died!");
-        SceneManager.LoadScene("Menu");
+        GameManager.Instance.playerSpawn();
+        Destroy(this.gameObject);
+        //death animtion play
+
+        // relod the postion to spaen
+       // SceneManager.LoadScene("Menu");
     }
 
 
