@@ -45,6 +45,15 @@ public class Bomb : MonoBehaviour
         //exploding animtion
 
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+       Rigidbody2D rb = transform.GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
+        rb.totalForce =Vector2.zero;
+
+    }
     // Update is called once per frame
     void Update()
     {

@@ -312,7 +312,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // bomb.tag = "Player_Bomb";
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
         bombRb.isKinematic = false;
-        bombRb.velocity = firePoint.right * bulletSpeed;
+        bombRb.velocity = FirePOINT.firePoint.right * -bulletSpeed;
     }
 
     public IEnumerator Reload(Gun gun)
