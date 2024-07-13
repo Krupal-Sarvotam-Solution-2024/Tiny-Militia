@@ -506,9 +506,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void HandleGunSwitching(int playerID)
     {
-        PlayerController player = PhotonNetwork.GetPhotonView(playerID).GetComponent<PlayerController>();
-        Debug.Log(playerID);
-        Debug.Log("Out");
+        PlayerController player = PhotonNetwork.GetPhotonView(playerID).GetComponent<PlayerController>();//getting the player id who is switching
+
 
         if (player.alternateGunIndex == -1)
         {
@@ -522,17 +521,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
             player.currentGunIndex = player.alternateGunIndex;
             player.alternateGunIndex = temp;
 
-        }
+        }//switching the gun
+
+
         Gun currentGun = player.guns[player.currentGunIndex];
         Gun alternateGun = player.guns[player.alternateGunIndex];
         player.leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
         player.rightgunTransform.GetComponent<SpriteRenderer>().sprite = alternateGun.GunSprite;
-        UIManager.instance.GunIndex = currentGunIndex;
-        UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
-        UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = currentGun.GunSprite;
-        UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
-        Camera.main.orthographicSize = currentGun.maxScope;
+        if (view.IsMine)
+        {
+           
+            UIManager.instance.GunIndex = currentGunIndex;
 
+            UIManager.instance.AmmoInfo_text.text = guns[currentGunIndex].currentAmmoInMagazine.ToString() + " / " + guns[currentGunIndex].currentTotalAmmo.ToString();
+            UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = guns[currentGunIndex].GunSprite;
+            UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
+            Camera.main.orthographicSize = guns[currentGunIndex].maxScope;
+        }
     }
 
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
