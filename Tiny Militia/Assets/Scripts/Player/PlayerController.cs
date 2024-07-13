@@ -5,6 +5,8 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Photon.Pun.Demo.Asteroids;
+using Photon.Pun.Demo.PunBasics;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -59,8 +61,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public FixedJoystick aimJoystick;
     public PhotonView view;
 
-    // Variables For Changing The Gun
-    public bool isSwitching;
+    // Variables For Punching
+    public bool isPunching;
 
     void Start()
     {
@@ -104,7 +106,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Shoot();
             Jetpack();
             UpdateBoosterLevel();
-            HandleGunSwitching();
         }
 
     }
@@ -126,7 +127,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
     }
-
 
     void Aim()
     {
@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         }
                         else
                         {
-                            leftgunTransform.GetComponentInChildren <Animator>().Play("Fire");
+                            leftgunTransform.GetComponentInChildren<Animator>().Play("Fire");
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
@@ -380,43 +380,59 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void UpdateHealthImage()
     {
-        if(view.IsMine)
+        if (PhotonNetwork.InRoom)
         {
-
-        float fillAmount = (float)currentHealth / maxHealth;
-        UIManager.instance.healthImage.fillAmount = fillAmount;
+            if (view.IsMine)
+            {
+                float fillAmount = (float)currentHealth / maxHealth;
+                UIManager.instance.healthImage.fillAmount = fillAmount;
+            }
+        }
+        else
+        {
+            float fillAmount = (float)currentHealth / maxHealth;
+            UIManager.instance.healthImage.fillAmount = fillAmount;
         }
     }
 
     [PunRPC]
     public void TakeDamage(int damageAmount, int Health_ID)
     {
-        PlayerController Health;
-        Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
-        Health.currentHealth -= damageAmount;
-        UpdateHealthImage();
-
-        if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
+        if (PhotonNetwork.InRoom)
         {
-            
-            Die();
+            PlayerController Health;
+            Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
+            Health.currentHealth -= damageAmount;
+            UpdateHealthImage();
+
+            if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
+            {
+                Die();
+            }
         }
     }
 
     void Die()
     {
-        Debug.Log("Player died!");
-        GameManager.Instance.playerSpawn();
-        PhotonNetwork.Destroy(this.gameObject);
-        //death animtion play
+        if (PhotonNetwork.InRoom)
+        {
+            GameManager.Instance.StartCoroutine("PlayerRespawn");
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+        else
+        {
 
-        // relod the postion to spaen
-       // SceneManager.LoadScene("Menu");
+            GameManager.Instance.StartCoroutine("PlayerRespawn");
+            GameObject Temp = Instantiate(gameObject);
+            Temp.transform.tag = "Player";
+            Destroy(this.gameObject);
+        }
     }
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
@@ -425,7 +441,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (collision.gameObject.CompareTag("Bot_Bullet"))
         {
             Gun botGun = collision.gameObject.GetComponent<Bullet>().gun;
-            currentHealth -= (int)botGun.damagePerBullet;
+            currentHealth -= botGun.damagePerBullet;
             UpdateHealthImage();
 
             if (currentHealth <= 0)
@@ -442,6 +458,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
                 //TakeDamage(PlayerGun.damagePerBullet);
                 view.RPC("TakeDamage", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
+            }
+        }
+
+        if (isPunching == true)
+        {
+            Debug.Log("Punching");
+            Gun currentgun;
+            currentgun = guns[currentGunIndex];
+
+
+            if (collision.gameObject.transform.TryGetComponent<BotController>(out BotController bot))
+            {
+                bot.currentHealth -= currentgun.damagePerBullet * 2;
+            }
+            else
+            {
+                view.RPC("TakeDamage", RpcTarget.All, currentgun.damagePerBullet * 2, collision.transform.GetComponent<PlayerController>().view.ViewID);
             }
         }
 
@@ -469,35 +502,37 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    public void HandleGunSwitching()
+
+    [PunRPC]
+    public void HandleGunSwitching(int playerID)
     {
+        PlayerController player = PhotonNetwork.GetPhotonView(playerID).GetComponent<PlayerController>();
+        Debug.Log(playerID);
+        Debug.Log("Out");
 
-        if (isSwitching == true)
+        if (player.alternateGunIndex == -1)
         {
-            if (alternateGunIndex == -1)
-            {
-                alternateGunIndex = currentGunIndex;
-                currentGunIndex = (currentGunIndex + 1) % guns.Count;
+            player.alternateGunIndex = player.currentGunIndex;
+            player.currentGunIndex = (player.currentGunIndex + 1) % player.guns.Count;
 
-            }
-            else
-            {
-                int temp = currentGunIndex;
-                currentGunIndex = alternateGunIndex;
-                alternateGunIndex = temp;
-
-            }
-            Gun currentGun = guns[currentGunIndex];
-            Gun alternateGun = guns[alternateGunIndex];
-            leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
-            rightgunTransform.GetComponent<SpriteRenderer>().sprite = alternateGun.GunSprite;
-            UIManager.instance.GunIndex = currentGunIndex;
-            UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
-            UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = currentGun.GunSprite;
-            UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
-            Camera.main.orthographicSize = currentGun.maxScope;
-            isSwitching = false;
         }
+        else
+        {
+            int temp = player.currentGunIndex;
+            player.currentGunIndex = player.alternateGunIndex;
+            player.alternateGunIndex = temp;
+
+        }
+        Gun currentGun = player.guns[player.currentGunIndex];
+        Gun alternateGun = player.guns[player.alternateGunIndex];
+        player.leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
+        player.rightgunTransform.GetComponent<SpriteRenderer>().sprite = alternateGun.GunSprite;
+        UIManager.instance.GunIndex = currentGunIndex;
+        UIManager.instance.AmmoInfo_text.text = currentGun.currentAmmoInMagazine.ToString() + " / " + currentGun.currentTotalAmmo.ToString();
+        UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = currentGun.GunSprite;
+        UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
+        Camera.main.orthographicSize = currentGun.maxScope;
+
     }
 
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

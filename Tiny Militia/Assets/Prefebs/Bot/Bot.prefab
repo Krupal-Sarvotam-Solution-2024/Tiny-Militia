@@ -200,12 +200,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   bulletPrefab: {fileID: 2793077112133411170, guid: 65a64bfbf57a6834b97448aa791a4885, type: 3}
-  gunTransform: {fileID: 6770127951517321962}
   firePoint: {fileID: 7280704132977565662}
-  bulletSpeed: 10
+  bulletSpeed: 0
+  player: {fileID: 0}
+  currentHealth: 0
   guns:
-  - {fileID: 11400000, guid: e73b05aed2f6a3c4a950df75a202ce52, type: 2}
-  - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
+  - {fileID: 11400000, guid: bed9b3b4791cfc847884ba99dd5762cb, type: 2}
+  - {fileID: 11400000, guid: 0b211a2250e431343a32a0797fdb632f, type: 2}
 --- !u!1 &4223617315480256152
 GameObject:
   m_ObjectHideFlags: 0

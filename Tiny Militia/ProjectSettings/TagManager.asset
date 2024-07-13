@@ -12,6 +12,8 @@ TagManager:
   - Gun_MP5
   - joyStick_Aim
   - joyStick_Movement
+  - playerDetails_ReloadImage
+  - Temp_Player
   layers:
   - Default
   - TransparentFX

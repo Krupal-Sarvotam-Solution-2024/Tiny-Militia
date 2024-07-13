@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     public Button ReloadButton;
     public int GunIndex;
     public PlayerController playerController;
+    public Canvas Pause;
 
     private void Awake()
     {
@@ -57,7 +59,6 @@ public class UIManager : MonoBehaviour
         ScopeText.text = (cam.orthographicSize - 4).ToString() + "x";
     }
 
-
     public void ThrowBomb()
     {
         PhotonView view = playerController.view;
@@ -75,7 +76,63 @@ public class UIManager : MonoBehaviour
 
     public void GunChange()
     {
-        playerController.isSwitching = true;
-        playerController.HandleGunSwitching();
+        PhotonView view = playerController.view;
+        //  playerController.
+
+
+        if (PhotonNetwork.InRoom)
+        {
+            view.RPC("HandleGunSwitching", RpcTarget.All, view.ViewID);
+        }
+        //else
+        //{
+        //    playerController.HandleGunSwitching();
+        //}
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        Pause.gameObject.SetActive(true);
+    }
+
+    public void PunchButton()
+    {
+        PhotonView view = playerController.view;
+        playerController.isPunching = true;
+        playerController.leftgunboneTransform.parent.transform.GetComponent<PolygonCollider2D>().enabled = true;
+        StartCoroutine("PunchingCoroutine", 2f);
+        if (PhotonNetwork.InRoom)
+        {
+            //playerController.TakeDamage(playerController.guns[playerController.currentGunIndex].damagePerBullet * 2,);
+        }
+        else
+        {
+            //playerController.TakeDamage(playerController.guns[playerController.currentGunIndex].damagePerBullet * 2,);
+        }
+    }
+
+    public void BombChange()
+    {
+
+    }
+
+    public void LeaveMatchButton()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ContinueMatch()
+    {
+        Time.timeScale = 1f;
+        Pause.gameObject.SetActive(false);
+    }
+
+    IEnumerator PunchingCoroutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        playerController.isPunching = false;
+        playerController.leftgunboneTransform.parent.transform.GetComponent<PolygonCollider2D>().enabled = false;
+    }
+
 }

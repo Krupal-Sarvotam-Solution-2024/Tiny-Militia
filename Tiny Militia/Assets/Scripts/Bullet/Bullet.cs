@@ -14,10 +14,20 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject obj = Instantiate(bloodshott,collision.collider.transform.position,Quaternion.EulerAngles(0,0,transform.rotation.z+180));
-        Destroy(GetComponent<Rigidbody2D>());
-        Destroy(obj, .5f);
-        Destroy(this.gameObject, .5f);
-        
+
+
+        if (collision.transform.tag == "Player")
+        {
+            GameObject obj = Instantiate(bloodshott, collision.collider.transform.position, Quaternion.EulerAngles(0, 0, transform.rotation.z + 180));
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(obj, .5f);
+            Destroy(this.gameObject, .5f); 
+        }
+        else
+        {
+            Destroy(this.gameObject); 
+        }
+
+
     }
 }
