@@ -103,14 +103,18 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Rigidbody2D rb = transform.GetComponent<Rigidbody2D>();
-        rb.simulated = false;
-        rb.isKinematic = true;
-        
-        rb.velocity = Vector2.zero;
-        
-        rb.totalForce = Vector2.zero;
-   
+        if (type == bombtype.timebomb)
+        {
+            Rigidbody2D rb = transform.GetComponent<Rigidbody2D>();
+            rb.simulated = false;
+            rb.isKinematic = true;
+
+            rb.velocity = Vector2.zero;
+
+            rb.totalForce = Vector2.zero;
+            StopAllCoroutines();
+
+        }
       
         if(collision.gameObject.tag == "Player"  && type == bombtype.timebomb)
         {
