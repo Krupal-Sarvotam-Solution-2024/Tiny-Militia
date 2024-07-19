@@ -217,6 +217,31 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<GunsData>().currentData.gunName == guns[0].gunName)
+        {
+            if (guns[0].currentTotalAmmo < guns[0].maxAmmo)
+            {
+                guns[0].currentTotalAmmo = guns[0].maxAmmo;
+                UIManager.instance.AmmoInfo_text.text = guns[0].currentAmmoInMagazine.ToString() + " / " + guns[0].currentTotalAmmo.ToString();
+            }
+        }
+        else if (collision.GetComponent<GunsData>().currentData.gunName == guns[1].gunName)
+        {
+            if (guns[1].currentTotalAmmo < guns[1].maxAmmo)
+            {
+                guns[1].currentTotalAmmo = guns[1].maxAmmo;
+                UIManager.instance.AmmoInfo_text.text = guns[1].currentAmmoInMagazine.ToString() + " / " + guns[1].currentTotalAmmo.ToString();
+            }
+        }
+        else if(collision.GetComponent<GunsData>().currentData.gunName !=  guns[0].gunName || 
+            collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
+        {
+
+        }
+    }
+
     #endregion
 
     #region Method for Updatae UI
@@ -521,6 +546,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
             UpdateHealthImage();
 
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
+            {
+                Die();
+            }
+        }
+        else
+        {
+            this.currentHealth -= damageAmount;
+            UpdateHealthImage();
+
+            if (this.currentHealth <= 0)
             {
                 Die();
             }
