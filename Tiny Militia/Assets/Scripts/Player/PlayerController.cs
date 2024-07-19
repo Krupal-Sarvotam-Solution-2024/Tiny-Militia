@@ -582,9 +582,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
-        {
-
-            GameManager.Instance.StartCoroutine("PlayerRespawn");
+        { 
+            if(GameManager.Instance.Lifes != 0)
+            { 
+                GameManager.Instance.Lifes -= 1;
+                UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
+                GameManager.Instance.StartCoroutine("PlayerRespawn");
+            }
+            else
+            {
+                SceneManager.LoadScene("Menu");   
+            }
             GameObject Temp = Instantiate(gameObject);
             Temp.transform.tag = "Player";
             Destroy(this.gameObject);

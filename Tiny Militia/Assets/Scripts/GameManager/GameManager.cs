@@ -1,16 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public static GameManager Instance;
-    public List<Gun> AllGunData;
-    public List<Transform> RespawnPoint;
-    public GameObject PlayerPrefeb;
-    public Camera MainCamera;
-    public PlayerController PlayerManager;
+    public static GameManager Instance; // Make Script Static
+    
+    public List<Gun> AllGunData; // All Guns Data
+    
+    public List<Transform> RespawnPoint; // Respawn Point For Players
+    
+    public GameObject PlayerPrefeb; // Player's Prefeb for Respwaning
+    
+    public Camera MainCamera; // Main Camera For Following
+    
+    public PlayerController PlayerManager; // Player Controller
+    
+    public float Timer = 10; // Timer which Selected by User For Multiplaying
+    
+    bool isTiming; // Booolen for checking the timing method is true or not
+
+    [HideInInspector]
+    public int Lifes = 3; // When players is in Survival Mode
+
     private void Awake()
     {
         Instance = this;
@@ -19,9 +33,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         MainCamera = Camera.main;
+        if (PhotonNetwork.InRoom)
+        {
+            StartCoroutine(GameTimer(Timer));
+        }
         playerSpawn();
     }
 
+    private void Update()
+    {
+        TimerShowing();
+    }
+
+    // Player Spawn First Time
     public void playerSpawn()
     {
         if (PhotonNetwork.InRoom)
@@ -48,32 +72,80 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // Player Respawn after Death
     IEnumerator PlayerRespawn()
     {
+        if(PhotonNetwork.InRoom)
+        {
+
+        }
+        else
+        {
+            UIManager.instance.Pause.gameObject.SetActive(true);
+            UIManager.instance.PlayerDetailsCanvas.SetActive(false);
+        }
         yield return new WaitForSeconds(4);
-        Debug.Log("In Coroutine");
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("InRoom");
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
+            
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
+                
                 PlayerManager = Temp.GetComponent<PlayerController>();
+                
                 UIManager.instance.playerController = PlayerManager;
+
+
+                
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
         }
         else
         {
+            UIManager.instance.Pause.gameObject.SetActive(false);
+
+            UIManager.instance.PlayerDetailsCanvas.SetActive(true);
+
             GameObject Temp1 = GameObject.FindGameObjectWithTag("Player");
+            
             Destroy(Temp1);
+            
             GameObject Temp = Instantiate(PlayerPrefeb, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
+            
             Temp.tag = "Player";
+            
             MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
+            
             PlayerManager = Temp.GetComponent<PlayerController>();
+            
             UIManager.instance.playerController = PlayerManager;
+            
             MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
+        }
+    }
+
+    // Enumerator For Timing
+    IEnumerator GameTimer(float time)
+    {
+        isTiming = true;
+        yield return new WaitForSeconds(time);
+        isTiming = false;
+        SceneManager.LoadScene("Menu");
+    }
+
+    // Timer Showing in UI Manageer
+    void TimerShowing()
+    {
+        if (isTiming)
+        {
+            float minutes = Timer / 60;
+
+            float seconds = Timer % 60;
+
+            UIManager.instance.Timer.text = minutes.ToString("00") + " : " + seconds.ToString("00");
+            Timer -= Time.deltaTime;
         }
     }
 }

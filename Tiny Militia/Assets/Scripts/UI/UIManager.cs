@@ -12,24 +12,43 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    public GameObject PlayerDetailsCanvas;
+
     // Variables For Showing Data in Canvas
     public GameObject Player_Life_Information; // Life Line Information of Player
+   
     public Image boosterLevelImage; // Player Booster
+    
     public Image healthImage; // Player Health
+    
     public Image GunImage; // 
+    
     public Image ReloadImage;
+    
     public Image CurrentGunImage;
+    
     public Button ReloadButton;
+    
     public Button GunChangeButton;
+    
     public int GunIndex;
+    
     public PlayerController playerController;
+    
     public Canvas Pause;
+    
     public TextMeshProUGUI AmmoInfo_text;
+    
     public TextMeshProUGUI ScopeText;
+    
     public TextMeshProUGUI Timer;
+    
     public TextMeshProUGUI LifeCount;
+    
     public TextMeshProUGUI Score;
+    
     public TextMeshProUGUI Kill;
+    
     public TextMeshProUGUI High_Score;
 
     [HideInInspector]
