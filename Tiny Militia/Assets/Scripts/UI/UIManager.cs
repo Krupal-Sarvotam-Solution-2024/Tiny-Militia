@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     public Image ReloadImage;
     public Image CurrentGunImage;
     public Button ReloadButton;
-    public Button GunChange;
+    public Button GunChangeButton;
     public int GunIndex;
     public PlayerController playerController;
     public Canvas Pause;
