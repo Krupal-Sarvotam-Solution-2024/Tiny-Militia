@@ -238,7 +238,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
         else if(collision.GetComponent<GunsData>().currentData.gunName !=  guns[0].gunName || 
             collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
         {
+            UIManager.instance.GunChangeButton.gameObject.SetActive(true);
+            UIManager.instance.GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = collision.GetComponent<GunsData>().currentData.GunSprite;
+            UIManager.instance.changingGunData = collision.GetComponent<GunsData>();
+        }
+    }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
+            collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
+        {
+            UIManager.instance.GunChangeButton.gameObject.SetActive(false);
         }
     }
 
@@ -629,10 +640,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.GunIndex = currentGunIndex;
 
-            UIManager.instance.AmmoInfo_text.text = guns[currentGunIndex].currentAmmoInMagazine.ToString() + " / " + guns[currentGunIndex].currentTotalAmmo.ToString();
-            UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = guns[currentGunIndex].GunSprite;
-            UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
-            Camera.main.orthographicSize = guns[currentGunIndex].maxScope;
+            UIManager.instance.UI_Updates();
         }
     }
 
@@ -681,10 +689,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         UIManager.instance.GunIndex = currentGunIndex;
 
-        UIManager.instance.AmmoInfo_text.text = guns[currentGunIndex].currentAmmoInMagazine.ToString() + " / " + guns[currentGunIndex].currentTotalAmmo.ToString();
-        UIManager.instance.CurrentGunImage.GetComponent<Image>().sprite = guns[currentGunIndex].GunSprite;
-        UIManager.instance.ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
-        Camera.main.orthographicSize = guns[currentGunIndex].maxScope;
+        UIManager.instance.UI_Updates();
 
     }
 

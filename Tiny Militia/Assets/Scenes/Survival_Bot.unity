@@ -5732,6 +5732,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &329560716 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7765987866614050757, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &398915181
 GameObject:
   m_ObjectHideFlags: 0
@@ -5907,6 +5918,7 @@ MonoBehaviour:
   ReloadImage: {fileID: 1978592056710772167}
   CurrentGunImage: {fileID: 981246823663781866}
   ReloadButton: {fileID: 1822104165}
+  GunChangeButton: {fileID: 329560716}
   GunIndex: 0
   playerController: {fileID: 0}
   Pause: {fileID: 2154515471939088708}
@@ -5917,6 +5929,7 @@ MonoBehaviour:
   Score: {fileID: 6854009239830656293}
   Kill: {fileID: 6854009239830656292}
   High_Score: {fileID: 6854009239830656291}
+  changingGunData: {fileID: 0}
 --- !u!4 &608553678
 Transform:
   m_ObjectHideFlags: 0
@@ -6071,10 +6084,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4459459010286073147, guid: 5140d2cb890f27840a299b9a4f2a8461, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2041288864}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5140d2cb890f27840a299b9a4f2a8461, type: 3}
 --- !u!1 &837918885
 GameObject:
@@ -11925,24 +11935,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!1 &2041288860 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4459459010286073147, guid: 5140d2cb890f27840a299b9a4f2a8461, type: 3}
-  m_PrefabInstance: {fileID: 638201890}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2041288864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041288860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3504aeef4941a7445a1df02bd73efbe8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentData: {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
 --- !u!1 &2044352238
 GameObject:
   m_ObjectHideFlags: 0
@@ -12118,6 +12110,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 608553677}
+    - target: {fileID: 1106122756545828676, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GunSwitch
+      objectReference: {fileID: 0}
     - target: {fileID: 1401903585505513674, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -12214,6 +12210,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 608553677}
+    - target: {fileID: 7765987866614050757, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 608553677}
+    - target: {fileID: 7765987866614050757, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GunChange
+      objectReference: {fileID: 0}
     - target: {fileID: 8207764532521119303, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

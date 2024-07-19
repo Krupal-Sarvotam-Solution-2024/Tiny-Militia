@@ -32,6 +32,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI Kill;
     public TextMeshProUGUI High_Score;
 
+    [HideInInspector]
+    public GunsData changingGunData;
+
     private void Awake()
     {
         instance = this;
@@ -94,7 +97,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void GunChange()
+    public void GunSwitch()
     {
         PhotonView view = playerController.view;
         //  playerController.
@@ -108,6 +111,28 @@ public class UIManager : MonoBehaviour
         {
             playerController.HandleGunSwitching();
         }
+    }
+
+    public void GunChange()
+    {
+        //changingGunData.GunSprite = playerController.guns[playerController.currentGunIndex].GunSprite;
+        changingGunData.GetComponent<SpriteRenderer>().sprite = playerController.guns[playerController.currentGunIndex].GunSprite;
+
+        Gun TempGunData;
+
+        TempGunData = playerController.guns[playerController.currentGunIndex];
+        
+        playerController.guns[playerController.currentGunIndex] = changingGunData.currentData;
+        
+        changingGunData.currentData = TempGunData;
+
+        Gun currentGun = playerController.guns[playerController.currentGunIndex];
+        
+        playerController.leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
+
+        GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = changingGunData.currentData.GunSprite;
+        
+        UI_Updates();
     }
 
     public void PauseGame()
@@ -157,6 +182,14 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Pause.gameObject.SetActive(false);
+    }
+
+    public void UI_Updates()
+    {
+        AmmoInfo_text.text = playerController.guns[playerController.currentGunIndex].currentAmmoInMagazine.ToString() + " / " + playerController.guns[playerController.currentGunIndex].currentTotalAmmo.ToString();
+        CurrentGunImage.GetComponent<Image>().sprite = playerController.guns[playerController.currentGunIndex].GunSprite;
+        ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
+        Camera.main.orthographicSize = playerController.guns[playerController.currentGunIndex].maxScope;
     }
 
     IEnumerator PunchingCoroutine(float duration)

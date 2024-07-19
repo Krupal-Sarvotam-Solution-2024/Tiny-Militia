@@ -601,7 +601,6 @@ MonoBehaviour:
   jetpackFuelRechargeRate: 10
   maxHealth: 100
   currentHealth: 0
-  healthRecoveryRate: 4
   guns:
   - {fileID: 11400000, guid: e73b05aed2f6a3c4a950df75a202ce52, type: 2}
   - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f63c689c3c49a8840bab9301700861ee, type: 3}
-  m_Name: Uzi
+  m_Name: AK47
   m_EditorClassIdentifier: 
-  GunSprite: {fileID: 21300000, guid: 5f649664a0ea1244a819f37a5a91d2be, type: 3}
-  gunName: UZI
-  gunType: SMG
-  damagePerBullet: 5
+  GunSprite: {fileID: 21300000, guid: b184d331b34c5054ea6cd65f0a23fbf8, type: 3}
+  gunName: AK47
+  gunType: AR
+  damagePerBullet: 7
   damageType: Single
-  reloadTime: 2.5
+  reloadTime: 3.5
   magazineSize: 35
-  maxAmmo: 150
-  maxScope: 8
-  shootCooldown: 0.3
-  ObjectTag: Gun_Uzi
+  maxAmmo: 350
+  maxScope: 10
+  shootCooldown: 0.2
+  ObjectTag: Gun_AK47
   currentAmmoInMagazine: 35
-  currentTotalAmmo: 150
-  lastShotTime: -0.3
+  currentTotalAmmo: 350
+  lastShotTime: -0.2
