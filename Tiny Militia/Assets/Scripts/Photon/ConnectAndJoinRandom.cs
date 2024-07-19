@@ -71,6 +71,12 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         Debug.Log("player joined room");
     }
 
+    public void CreateRoom()
+    {
+
+    }
+
+
     [PunRPC]
     void PlayerJoined()
     {
