@@ -23,6 +23,6 @@ MonoBehaviour:
   maxScope: 9
   shootCooldown: 0.1
   ObjectTag: Gun_MP5
-  currentAmmoInMagazine: 50
+  currentAmmoInMagazine: 399
   currentTotalAmmo: 400
-  lastShotTime: -0.1
+  lastShotTime: 3.8634574
