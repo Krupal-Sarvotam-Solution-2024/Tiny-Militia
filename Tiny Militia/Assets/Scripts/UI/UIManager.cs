@@ -1,7 +1,9 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,35 +13,52 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     // Variables For Showing Data in Canvas
-    public Image boosterLevelImage;
-    public Image healthImage;
-    public Image GunImage;
+    public GameObject Player_Life_Information; // Life Line Information of Player
+    public Image boosterLevelImage; // Player Booster
+    public Image healthImage; // Player Health
+    public Image GunImage; // 
     public Image ReloadImage;
     public Image CurrentGunImage;
-    public TextMeshProUGUI AmmoInfo_text;
-    public TextMeshProUGUI ScopeText;
     public Button ReloadButton;
     public int GunIndex;
     public PlayerController playerController;
     public Canvas Pause;
+    public TextMeshProUGUI AmmoInfo_text;
+    public TextMeshProUGUI ScopeText;
+    public TextMeshProUGUI Timer;
+    public TextMeshProUGUI LifeCount;
+    public TextMeshProUGUI Score;
+    public TextMeshProUGUI Kill;
+    public TextMeshProUGUI High_Score;
 
     private void Awake()
     {
         instance = this;
 
     }
+
     private void Start()
     {
         playerController = GameManager.Instance.PlayerManager;
-
+        if (SceneManager.GetActiveScene().name == "Survival_Bot")
+        {
+            Timer.gameObject.SetActive(false);
+            Player_Life_Information.SetActive(true);
+        }
+        else
+        {
+            Timer.gameObject.SetActive(true);
+            Player_Life_Information.SetActive(false);
+        }
     }
+
     public void ReloadGun()
     {
         Gun currentgun;
         currentgun = playerController.guns[GunIndex];
         if (currentgun.currentAmmoInMagazine < currentgun.magazineSize)
         {
-            StartCoroutine(playerController.Reload(currentgun));
+            playerController.reload_co = StartCoroutine(playerController.Reload(currentgun));
         }
     }
 
@@ -84,14 +103,23 @@ public class UIManager : MonoBehaviour
         {
             view.RPC("HandleGunSwitching", RpcTarget.All, view.ViewID);
         }
-        //else
-        //{
-        //    playerController.HandleGunSwitching();
-        //}
+        else
+        {
+            playerController.HandleGunSwitching();
+        }
     }
 
     public void PauseGame()
     {
+        
+        Score.text = playerController.Score_Count.ToString();
+        Kill.text = playerController.Kill_Count.ToString();
+        if (PlayerPrefs.GetInt("HighScore") > playerController.Score_Count)
+        {
+            PlayerPrefs.SetInt("HighScore", playerController.Score_Count);
+            High_Score.text = PlayerPrefs.GetInt("HighScore").ToString();
+        }
+
         Time.timeScale = 0;
         Pause.gameObject.SetActive(true);
     }
@@ -119,6 +147,8 @@ public class UIManager : MonoBehaviour
 
     public void LeaveMatchButton()
     {
+        Time.timeScale = 1f;
+
         SceneManager.LoadScene("Menu");
     }
 
@@ -131,6 +161,7 @@ public class UIManager : MonoBehaviour
     IEnumerator PunchingCoroutine(float duration)
     {
         yield return new WaitForSeconds(duration);
+        Debug.Log("Punched Successfully");
         playerController.isPunching = false;
         playerController.leftgunboneTransform.parent.transform.GetComponent<PolygonCollider2D>().enabled = false;
     }

@@ -1,3 +1,4 @@
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class BotController : MonoBehaviour
@@ -14,6 +15,8 @@ public class BotController : MonoBehaviour
 
     public Gun[] guns; // Array of guns the bot can use
     private int currentGunIndex; // Index of the currently equipped gun
+
+    public int DeathScore;
 
     void Start()
     {
@@ -56,12 +59,15 @@ public class BotController : MonoBehaviour
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
                 bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
                 Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-                bulletRb.velocity = (player.position - firePoint.position).normalized * bulletSpeed;
+                bulletRb.velocity = /*(player.position - firePoint.position).normalized * bulletSpeed*/firePoint.right * -bulletSpeed; 
             }
             lastShotTime = Time.time;
         }
-    }
 
+        /*
+        bulletRb.velocity = FirePOINT.
+         */
+    }
 
     public void SwitchGun(int gunIndex)
     {
@@ -83,6 +89,14 @@ public class BotController : MonoBehaviour
     void Die()
     {
         // Handle bot death logic here (e.g., play death animation, spawn particles)
+        PlayerController player;
+        player = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
+        player.Kill_Count += 1;
+        player.Score_Count += DeathScore;
+        if (PlayerPrefs.GetInt("HighScore") > player.Score_Count)
+        {
+            PlayerPrefs.SetInt("HighScore",player.Score_Count);
+        }
         Destroy(gameObject);
     }
 

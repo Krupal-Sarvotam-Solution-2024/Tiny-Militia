@@ -179,7 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 788425246882209137}
   m_Layer: 0
-  m_Name: bone_2
+  m_Name: LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,12 +596,12 @@ MonoBehaviour:
   bombPrefab: {fileID: 8595090941047270994, guid: 74bd1c5ea69459d4d8c55d3506421c56, type: 3}
   abletoShoot: 0
   jetpackForce: 5
-  jetpackFuel: 100
+  jetpackFuel: 50
   jetpackFuelConsumptionRate: 6
   jetpackFuelRechargeRate: 10
   maxHealth: 100
   currentHealth: 0
-  healthRecoveryRate: 2
+  healthRecoveryRate: 4
   guns:
   - {fileID: 11400000, guid: e73b05aed2f6a3c4a950df75a202ce52, type: 2}
   - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
@@ -611,6 +611,11 @@ MonoBehaviour:
   aimJoystick: {fileID: 0}
   view: {fileID: 0}
   isPunching: 0
+  Leftleg: {fileID: 788425246882209137}
+  Rightleg: {fileID: 6344348376090350017}
+  Kill_Count: 0
+  Score_Count: 0
+  High_Score: 0
 --- !u!50 &1816167822683801508
 Rigidbody2D:
   serializedVersion: 4
@@ -1016,13 +1021,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3168785737430193499}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.000000036432777, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1.3735908, y: 0.0000006762727, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 788425246882209137}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &3243383213580123867
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6344348376090350017}
   m_Layer: 0
-  m_Name: bone_3
+  m_Name: RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

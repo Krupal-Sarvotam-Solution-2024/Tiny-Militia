@@ -122,17 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &95596389 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 124913431684251073, guid: d9ca2973975f129489b28662f909088a, type: 3}
-  m_PrefabInstance: {fileID: 1978592056710772166}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &113325509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4912,6 +4901,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 0}
+--- !u!114 &564243653 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6304055130063846450, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &608553677 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
@@ -5186,6 +5186,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1285673816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 465987224865527869, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337087926
 GameObject:
   m_ObjectHideFlags: 0
@@ -5323,6 +5328,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1508328189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1587334793972832883, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1822104165 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
@@ -10824,9 +10840,17 @@ PrefabInstance:
       value: UI Manager
       objectReference: {fileID: 0}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
+      propertyPath: Timer
+      value: 
+      objectReference: {fileID: 1508328189}
+    - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: GunImage
       value: 
       objectReference: {fileID: 981246823663781866}
+    - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
+      propertyPath: LifeCount
+      value: 
+      objectReference: {fileID: 564243653}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: ScopeText
       value: 
@@ -10834,7 +10858,7 @@ PrefabInstance:
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: ReloadImage
       value: 
-      objectReference: {fileID: 95596389}
+      objectReference: {fileID: 0}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: healthImage
       value: 
@@ -10855,6 +10879,10 @@ PrefabInstance:
       propertyPath: boosterLevelImage
       value: 
       objectReference: {fileID: 5155753799936539538}
+    - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
+      propertyPath: Player_Life_Information
+      value: 
+      objectReference: {fileID: 1285673816}
     - target: {fileID: 7924421318176043268, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
