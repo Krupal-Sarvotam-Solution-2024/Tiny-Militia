@@ -1,0 +1,28 @@
+BulletHolz - Commin' at 'cha with gunz a blazing!
+Macintosh & Windows TrueType.
+
+BulletHolz Genesis . . .
+I created this useful? font after seeing a video trailer for some crappy action film which insisted on 'shooting' the names of the main protagonists onto the title screen at every given opportunity. Anyway, I liked the way the letters were spread unevenly across when written on-screen. So, here is my version of the font used (I wonder if this font even exists).
+
+Not firing all cylinders . . .
+Uppercase & Lowercase chars are all caps. Numbers 0-9 and a little punctuation !@£$&*.+=-? there is no comma, like you're going to punctuate anything with this font !!!!. No European chars, ligatures etc.
+Some chars in the Lowercase set are at slightly different angles to the Uppercase, thus giving a more random element to the font as not to make it look "typeset" when two similar chars are used together. Best used at high point sizes above 36pt.
+
+Installation . . .
+Easy. For Macintosh, just drag the suitcase to the System folder and that's it. Windows users, copy the .TTF file to C:\Windows\Fonts folder and I think thats it. Get that thank-you letter off to your auntie today!!!
+
+Licence! We don' need no steenking licence!!!
+1. This font is completely and utterly free (although donations greatly received), you can use it in any way you see fit. email me though if you use it for something useful.
+2. Please keep this archive intact along with this readme file.
+3. And if you want to put these onto a magazine floppy, CD-Rom, go ahead, as long as you follow (1,2).
+
+One last thing . . . 
+Because when you double click the BulletHolz (Mac) file in the suitcase it only previews up to 18pt. And this is no way to see the font at it’s best (unless you install it of course!). I've also included a sample GIF as well (Mac & Windows).
+
+Paul Reid,
+Oct/November '97.
+
+email: whoami@btinternet.com 
+Site: http://www.btinternet.com/~whoami
+
+'Mother is the name for God on the lips of tiny children' - Eric Draven, The Crow
