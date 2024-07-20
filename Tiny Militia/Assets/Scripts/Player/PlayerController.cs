@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("// Variables of Ammo and Bomb Prefeb")]
     [Space(2)]
     public GameObject bulletPrefab;
-    public GameObject bombPrefab;
+    public GameObject[] bombPrefab;
     public bool abletoShoot;
 
     [Space(5)]
@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public Gun bomb;
     public int currentGunIndex = 0;
     private int alternateGunIndex = -1;
+    public int maxbomb;
+    private int explosivebomb =3,timebomb=0,poisenbomb=0;
+    private int totoalmomb =3;
+    public Bomb.bombtype selectedbomb;
+   
 
     [Space(5)]
     [Header("// Getting Player Rigidbody for Physics")]
@@ -522,6 +527,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ThrowBomb(int firePoint_ID)
     {
+        if (totoalmomb <= 0)
+            return;
+        totoalmomb--;
+        if(selectedbomb == Bomb.bombtype.explodebomb)
+        {
+            explosivebomb--;
+        }
+        else if(selectedbomb == Bomb.bombtype.timebomb)
+        {
+            timebomb--; 
+        }else if(selectedbomb == Bomb.bombtype.poisionbomb)
+        {
+            poisenbomb--;
+        }
+
         PlayerController FirePOINT;
         if (PhotonNetwork.InRoom)
         {
@@ -531,11 +551,29 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             FirePOINT = transform.GetComponent<PlayerController>();
         }
-        GameObject bomb = Instantiate(bombPrefab, firePoint.position, firePoint.rotation);
+        GameObject bomb = Instantiate(bombPrefab[(int)selectedbomb], firePoint.position ,Quaternion.identity);
         // bomb.tag = "Player_Bomb";
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
         bombRb.isKinematic = false;
         bombRb.velocity = FirePOINT.firePoint.right * -bulletSpeed;
+    }
+
+    public void GetBomb(Bomb.bombtype type)
+    {
+        if (totoalmomb >= 4)
+            return;
+        totoalmomb++;
+        if(type == Bomb.bombtype.explodebomb)
+        {
+            explosivebomb++;
+        }else if (type == Bomb.bombtype.timebomb)
+        {
+            timebomb++;
+        }
+        else if (type == Bomb.bombtype.poisionbomb)
+        {
+            poisenbomb++;
+        }
     }
 
     #endregion

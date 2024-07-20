@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3921462341244875050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 16.7661, y: 16.7661, z: 16.7661}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2255064969501811711}
@@ -136,7 +136,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.373, y: -4.848, z: 0.41782185}
-  m_LocalScale: {x: 0.051021002, y: 0.051021002, z: 0.051021002}
+  m_LocalScale: {x: 0.02121108, y: 0.02121108, z: 0.02121108}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 793438791718001581}
@@ -236,6 +236,7 @@ MonoBehaviour:
   type: 1
   timeToExplode: 3
   damage: 90
+  range: 3
   blast: {fileID: 3921462341244875050}
 --- !u!58 &7604543521715702451
 CircleCollider2D:

@@ -56,6 +56,9 @@ public class UIManager : MonoBehaviour
     [HideInInspector]
     public GunsData changingGunData;
 
+
+
+
     private void Awake()
     {
         instance = this;
@@ -76,7 +79,10 @@ public class UIManager : MonoBehaviour
             Player_Life_Information.SetActive(false);
         }
     }
+    public void BombSwitch()
+    {
 
+    }
     public void ReloadGun()
     {
         Gun currentgun;
