@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 UIManager.instance.AmmoInfo_text.text = guns[1].currentAmmoInMagazine.ToString() + " / " + guns[1].currentTotalAmmo.ToString();
             }
         }
-        else if(collision.GetComponent<GunsData>().currentData.gunName !=  guns[0].gunName || 
+        else if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
             collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
         {
             UIManager.instance.GunChangeButton.gameObject.SetActive(true);
@@ -579,22 +579,45 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             GameManager.Instance.StartCoroutine("PlayerRespawn");
+
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
-        { 
-            if(GameManager.Instance.Lifes != 0)
-            { 
+        {
+            Debug.Log("hOW many");
+            if (GameManager.Instance.Lifes != 0)
+            {
                 GameManager.Instance.Lifes -= 1;
+
                 UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
+
                 GameManager.Instance.StartCoroutine("PlayerRespawn");
+
+                UIManager.instance.Pause.gameObject.SetActive(true);
+
+                UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+
+                UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                GameManager.Instance.isRespawning = true;
             }
             else
             {
-                SceneManager.LoadScene("Menu");   
+                //SceneManager.LoadScene("Menu");
+
+                UIManager.instance.Pause.gameObject.SetActive(true);
+
+                UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+
+                UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                GameManager.Instance.isDead = true;
             }
             GameObject Temp = Instantiate(gameObject);
+
             Temp.transform.tag = "Player";
+
+
             Destroy(this.gameObject);
         }
     }

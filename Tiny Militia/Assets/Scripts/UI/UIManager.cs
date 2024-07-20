@@ -12,8 +12,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    public GameObject PlayerDetailsCanvas;
-
     // Variables For Showing Data in Canvas
     public GameObject Player_Life_Information; // Life Line Information of Player
    
@@ -30,6 +28,8 @@ public class UIManager : MonoBehaviour
     public Button ReloadButton;
     
     public Button GunChangeButton;
+
+    public Button PauseExitButton;
     
     public int GunIndex;
     
@@ -50,6 +50,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI Kill;
     
     public TextMeshProUGUI High_Score;
+
+    public TextMeshProUGUI RespawnTime_Text;
 
     [HideInInspector]
     public GunsData changingGunData;
@@ -167,6 +169,8 @@ public class UIManager : MonoBehaviour
 
         Time.timeScale = 0;
         Pause.gameObject.SetActive(true);
+        PauseExitButton.gameObject.SetActive(true);
+        RespawnTime_Text.gameObject.SetActive(false);
     }
 
     public void PunchButton()

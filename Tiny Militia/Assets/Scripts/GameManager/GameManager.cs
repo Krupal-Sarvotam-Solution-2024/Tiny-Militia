@@ -7,23 +7,34 @@ using Photon.Pun;
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance; // Make Script Static
-    
+
     public List<Gun> AllGunData; // All Guns Data
-    
+
     public List<Transform> RespawnPoint; // Respawn Point For Players
-    
+
     public GameObject PlayerPrefeb; // Player's Prefeb for Respwaning
-    
+
     public Camera MainCamera; // Main Camera For Following
-    
+
     public PlayerController PlayerManager; // Player Controller
-    
+
     public float Timer = 10; // Timer which Selected by User For Multiplaying
-    
+
+    float RespawnTime = 4; // Float for Respawn time text
+
     bool isTiming; // Booolen for checking the timing method is true or not
 
     [HideInInspector]
+    public bool isRespawning; // Boolen for reducing the timing of respawn time for text
+
+    [HideInInspector]
+    public bool isDead; // Boolen for checking that player life line is over not
+
+    [HideInInspector]
     public int Lifes = 3; // When players is in Survival Mode
+
+
+    /* *-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----* */
 
     private void Awake()
     {
@@ -43,6 +54,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void Update()
     {
         TimerShowing();
+        RespawningTimeShowing();
     }
 
     // Player Spawn First Time
@@ -55,8 +67,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
+
                 PlayerManager = Temp.GetComponent<PlayerController>();
+
                 UIManager.instance.playerController = PlayerManager;
+
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
         }
@@ -65,8 +80,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject Temp1 = Instantiate(PlayerPrefeb, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
 
             MainCamera.transform.position = new Vector3(Temp1.transform.position.x, Temp1.transform.position.y, Temp1.transform.position.z - 10);
+
             PlayerManager = Temp1.GetComponent<PlayerController>();
+
             UIManager.instance.playerController = PlayerManager;
+
             MainCamera.GetComponent<CameraController>().PlayerTransform = Temp1.transform;
 
         }
@@ -75,14 +93,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Player Respawn after Death
     IEnumerator PlayerRespawn()
     {
-        if(PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom)
         {
 
         }
         else
         {
             UIManager.instance.Pause.gameObject.SetActive(true);
-            UIManager.instance.PlayerDetailsCanvas.SetActive(false);
         }
         yield return new WaitForSeconds(4);
         if (PhotonNetwork.InRoom)
@@ -90,39 +107,37 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
-            
+
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
-                
+
                 PlayerManager = Temp.GetComponent<PlayerController>();
-                
+
                 UIManager.instance.playerController = PlayerManager;
 
 
-                
+
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
-        }   
+        }
         else
         {
             UIManager.instance.Pause.gameObject.SetActive(false);
 
-            UIManager.instance.PlayerDetailsCanvas.SetActive(true);
-
             GameObject Temp1 = GameObject.FindGameObjectWithTag("Player");
-            
+
             Destroy(Temp1);
-            
+
             GameObject Temp = Instantiate(PlayerPrefeb, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
-            
+
             Temp.tag = "Player";
-            
+
             MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
-            
+
             PlayerManager = Temp.GetComponent<PlayerController>();
-            
-            UIManager.instance.playerController = PlayerManager;
-            
+
             MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
+
+            UIManager.instance.playerController = PlayerManager;
         }
     }
 
@@ -146,6 +161,33 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             UIManager.instance.Timer.text = minutes.ToString("00") + " : " + seconds.ToString("00");
             Timer -= Time.deltaTime;
+            
+        }
+    }
+
+    void RespawningTimeShowing()
+    {
+        if(isRespawning)
+        {
+            UIManager.instance.RespawnTime_Text.text = "Respawn in " + RespawnTime.ToString("00") + " Second";
+            RespawnTime -= Time.deltaTime;
+            if(RespawnTime <= 0)
+            {
+                isRespawning = false;
+                RespawnTime = 4;
+            }
+        }
+
+        if (isDead)
+        {
+            UIManager.instance.RespawnTime_Text.text = "Open Menu in " + RespawnTime.ToString("00") + " Second";
+            RespawnTime -= Time.deltaTime;
+            if (RespawnTime <= 0)
+            {
+                isDead = false;
+                SceneManager.LoadScene("Menu");
+                RespawnTime = 4;
+            }
         }
     }
 }

@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-  
+
     public Transform PlayerTransform;
-  
+
     private void Update()
-     {
-         this.transform.position = new Vector3(PlayerTransform.position.x, PlayerTransform.position.y, -10);
-     }
+    {
+        if (PlayerTransform != null)
+        {
+        this.transform.position = new Vector3(PlayerTransform.position.x, PlayerTransform.position.y, -10);
+        }
+    }
 }
