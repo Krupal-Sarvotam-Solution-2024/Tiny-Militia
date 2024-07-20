@@ -39,7 +39,6 @@ public class Bomb : MonoBehaviour
         yield return new WaitForSeconds(timeToExplode);
 
         GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log(allplayer.Length);
         GameObject[] allBot = GameObject.FindGameObjectsWithTag("Bot");
 
 
@@ -81,7 +80,6 @@ public class Bomb : MonoBehaviour
             foreach (var item in allplayer)
             {
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
-                Debug.Log(Distance);
                 if (Distance < 3)
                 {
                     float damageCount = damage / Distance;

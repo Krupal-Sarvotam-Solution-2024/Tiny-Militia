@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     float RespawnTime = 4; // Float for Respawn time text
 
+
     bool isTiming; // Booolen for checking the timing method is true or not
 
     [HideInInspector]

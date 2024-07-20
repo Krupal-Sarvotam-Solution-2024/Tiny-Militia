@@ -14,41 +14,41 @@ public class UIManager : MonoBehaviour
 
     // Variables For Showing Data in Canvas
     public GameObject Player_Life_Information; // Life Line Information of Player
-   
+
     public Image boosterLevelImage; // Player Booster
-    
+
     public Image healthImage; // Player Health
-    
+
     public Image GunImage; // 
-    
+
     public Image ReloadImage;
-    
+
     public Image CurrentGunImage;
-    
+
     public Button ReloadButton;
-    
+
     public Button GunChangeButton;
 
     public Button PauseExitButton;
-    
+
     public int GunIndex;
-    
+
     public PlayerController playerController;
-    
+
     public Canvas Pause;
-    
+
     public TextMeshProUGUI AmmoInfo_text;
-    
+
     public TextMeshProUGUI ScopeText;
-    
+
     public TextMeshProUGUI Timer;
-    
+
     public TextMeshProUGUI LifeCount;
-    
+
     public TextMeshProUGUI Score;
-    
+
     public TextMeshProUGUI Kill;
-    
+
     public TextMeshProUGUI High_Score;
 
     public TextMeshProUGUI RespawnTime_Text;
@@ -142,35 +142,36 @@ public class UIManager : MonoBehaviour
         Gun TempGunData;
 
         TempGunData = playerController.guns[playerController.currentGunIndex];
-        
+
         playerController.guns[playerController.currentGunIndex] = changingGunData.currentData;
-        
+
         changingGunData.currentData = TempGunData;
 
         Gun currentGun = playerController.guns[playerController.currentGunIndex];
-        
+
         playerController.leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
 
         GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = changingGunData.currentData.GunSprite;
-        
+
         UI_Updates();
     }
 
     public void PauseGame()
     {
-        
-        Score.text = playerController.Score_Count.ToString();
-        Kill.text = playerController.Kill_Count.ToString();
-        if (PlayerPrefs.GetInt("HighScore") > playerController.Score_Count)
+        if(PhotonNetwork.InRoom)
         {
-            PlayerPrefs.SetInt("HighScore", playerController.Score_Count);
-            High_Score.text = PlayerPrefs.GetInt("HighScore").ToString();
-        }
 
-        Time.timeScale = 0;
-        Pause.gameObject.SetActive(true);
-        PauseExitButton.gameObject.SetActive(true);
-        RespawnTime_Text.gameObject.SetActive(false);
+        }
+        else
+        {
+            Score.text = playerController.Score_Count.ToString();
+            Kill.text = playerController.Kill_Count.ToString();
+            High_Score.text = PlayerPrefs.GetInt("HighScore").ToString();
+            Time.timeScale = 0;
+            Pause.gameObject.SetActive(true);
+            PauseExitButton.gameObject.SetActive(true);
+            RespawnTime_Text.gameObject.SetActive(false); 
+        }
     }
 
     public void PunchButton()

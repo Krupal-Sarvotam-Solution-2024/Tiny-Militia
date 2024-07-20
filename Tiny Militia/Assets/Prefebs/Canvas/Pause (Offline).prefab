@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7577559507757962735}
   - component: {fileID: 1384181053864092716}
   m_Layer: 5
-  m_Name: ExitGame
+  m_Name: ExitPausePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +254,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7577559507757962735}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ContinueMatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1608109508448611837
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +387,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7421122655446441587}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: LeaveMatchButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1896584678733092991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,12 +1915,12 @@ GameObject:
   - component: {fileID: 2750837845445369755}
   - component: {fileID: 8036359366532849823}
   m_Layer: 5
-  m_Name: Pause
+  m_Name: Pause (Offline)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7002248749082273217
 RectTransform:
   m_ObjectHideFlags: 0
