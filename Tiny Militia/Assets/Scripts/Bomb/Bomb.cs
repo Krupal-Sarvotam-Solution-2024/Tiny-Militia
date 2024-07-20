@@ -15,7 +15,7 @@ public class Bomb : MonoBehaviour
 
     }
     public bombtype type;
-
+    public float damagetime =.07f;
     public float timeToExplode;
 
     public float damage;
@@ -25,6 +25,7 @@ public class Bomb : MonoBehaviour
     PlayerController playerController;
     bool readtoExplode;
     bool explotion_Started;
+    bool exploded;
 
     // Start is called before the first frame update
 
@@ -43,7 +44,7 @@ public class Bomb : MonoBehaviour
         GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
         Debug.Log(allplayer.Length);
         GameObject[] allBot = GameObject.FindGameObjectsWithTag("Bot");
-
+        exploded = true;
         Debug.Log("called");
         //  PhotonView view = playerController.view;
         if (PhotonNetwork.InRoom)
@@ -60,11 +61,9 @@ public class Bomb : MonoBehaviour
 
                 }
             }
-            blast.gameObject.SetActive(true);
+            //blast.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(0.7f);
-
-            Destroy(this.gameObject);
+          
         }
         else
         {
@@ -92,13 +91,14 @@ public class Bomb : MonoBehaviour
                 }
             }
 
-            blast.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(0.7f);
-
-            Destroy(this.gameObject);
+          
         }
+        blast.gameObject.SetActive(true);
+        yield return new WaitForSeconds(damagetime);
 
+       
+        Destroy(this.gameObject);
         //exploding animtion
 
     }
@@ -153,17 +153,35 @@ public class Bomb : MonoBehaviour
             return;
         }
 
-        if (type == bombtype.poisionbomb)
+        if (type == bombtype.poisionbomb )
         {
-            GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
-
-            foreach (var item in allplayer)
+            if (exploded)
             {
-                float Distance = Vector3.Distance(item.transform.position, transform.position);
+                GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
 
-                if (Distance < range)
+                foreach (var item in allplayer)
                 {
-                    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage / Distance, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+
+                    float Distance = Vector3.Distance(item.transform.position, transform.position);
+
+                    //  item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                    if (Distance < range)
+                    {
+                        if (PhotonNetwork.InRoom)
+                        {
+
+                            item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                        }
+                        else
+                        {
+                            item.GetComponent<PlayerController>().TakeDamage((int)damage, item.GetComponent<PhotonView>().ViewID);
+
+                        }
+                    }
+                    //if (Distance < range)
+                    //{
+                    //  //  item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage / Distance, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                    //}
                 }
             }
         }
