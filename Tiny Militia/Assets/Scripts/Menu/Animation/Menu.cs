@@ -4,8 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 public class Menu : MonoBehaviour
 {
-    public Transform battlebutton;
-   
+    [SerializeField]private Transform battlebutton,customBattle,Servivalmode;
+
+    [SerializeField] private Transform Playbutton;
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +15,10 @@ public class Menu : MonoBehaviour
     }
     public void playButton()
     {
-        battlebutton.DOMoveY(battlebutton.position.y+125,1f);
+        Playbutton.DOScale(Vector3.zero,.5f);
+        battlebutton.DOMoveY(Playbutton.position.y,1f);
+        customBattle.DOMoveY(Playbutton.position.y,1f);
+        Servivalmode.DOMoveY(Playbutton.position.y,1f);
     }
     // Update is called once per frame
     void Update()
