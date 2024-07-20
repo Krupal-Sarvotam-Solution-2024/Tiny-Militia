@@ -615,6 +615,30 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             GameManager.Instance.StartCoroutine("PlayerRespawn");
 
+            UIManager.instance.Pause.gameObject.SetActive(true);
+
+            UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+
+            UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+            UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+
+            GameManager.Instance.isRespawning = true;
+
+             /* 
+             * Add All Player Information 
+             * Ex.1 Player Name                     Kill
+             *      Krupal                          10
+             *      Kaushik                         8
+             *      Tiny Militia                    6
+             *      Mini Militia                    4
+             *      Tiny                            2
+             *      Mini                            0
+             *      
+             *     ------------------------------------
+             *     NOTE :- Players Poaition is Set According to Their Kill Count
+             */
+
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
@@ -633,6 +657,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
                 UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
                 GameManager.Instance.isRespawning = true;
             }

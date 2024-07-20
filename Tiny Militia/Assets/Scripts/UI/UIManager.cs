@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
 
     public Button PauseExitButton;
 
+    public Button LeaveMatch;
+
     public int GunIndex;
 
     public PlayerController playerController;
@@ -79,10 +81,12 @@ public class UIManager : MonoBehaviour
             Player_Life_Information.SetActive(false);
         }
     }
+
     public void BombSwitch()
     {
 
     }
+
     public void ReloadGun()
     {
         Gun currentgun;
@@ -166,6 +170,24 @@ public class UIManager : MonoBehaviour
     {
         if(PhotonNetwork.InRoom)
         {
+            Pause.gameObject.SetActive(true);
+            LeaveMatch.gameObject.SetActive(true);
+            RespawnTime_Text.gameObject.SetActive(false);
+            PauseExitButton.gameObject.SetActive(true);
+
+            /* 
+             * Add All Player Information 
+             * Ex.1 Player Name                     Kill
+             *      Krupal                          10
+             *      Kaushik                         8
+             *      Tiny Militia                    6
+             *      Mini Militia                    4
+             *      Tiny                            2
+             *      Mini                            0
+             *      
+             *     ------------------------------------
+             *     NOTE :-  Players Poaition is Set According to Their Kill Count
+             */
 
         }
         else
@@ -176,7 +198,8 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 0;
             Pause.gameObject.SetActive(true);
             PauseExitButton.gameObject.SetActive(true);
-            RespawnTime_Text.gameObject.SetActive(false); 
+            RespawnTime_Text.gameObject.SetActive(false);
+            LeaveMatch.gameObject.SetActive(true);
         }
     }
 
