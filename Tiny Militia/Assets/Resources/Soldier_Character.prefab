@@ -593,7 +593,9 @@ MonoBehaviour:
   leftgunTransform: {fileID: 7049683200989846693}
   leftgunboneTransform: {fileID: 8569109323530054776}
   bulletPrefab: {fileID: 2793077112133411170, guid: 65a64bfbf57a6834b97448aa791a4885, type: 3}
-  bombPrefab: {fileID: 8595090941047270994, guid: 74bd1c5ea69459d4d8c55d3506421c56, type: 3}
+  bombPrefab:
+  - {fileID: 8595090941047270994, guid: 95b315d38f438d44bb1ec32fb615d355, type: 3}
+  - {fileID: 8595090941047270994, guid: 74bd1c5ea69459d4d8c55d3506421c56, type: 3}
   abletoShoot: 0
   jetpackForce: 5
   jetpackFuel: 50
@@ -606,6 +608,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
   bomb: {fileID: 0}
   currentGunIndex: 0
+  maxbomb: 0
+  selectedbomb: 0
   movementJoystick: {fileID: 0}
   aimJoystick: {fileID: 0}
   view: {fileID: 0}

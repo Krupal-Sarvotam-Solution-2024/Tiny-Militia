@@ -19,10 +19,12 @@ public class Bomb : MonoBehaviour
     public float timeToExplode;
 
     public float damage;
-
+    public float range;
     public GameObject blast;
 
     PlayerController playerController;
+    bool readtoExplode;
+    bool explotion_Started;
 
     // Start is called before the first frame update
 
@@ -32,7 +34,7 @@ public class Bomb : MonoBehaviour
         if (type == bombtype.explodebomb || type == bombtype.timebomb)
             StartCoroutine(waitTillExplode());
     }
-
+    
     [PunRPC]
     public IEnumerator waitTillExplode()
     {
@@ -42,7 +44,7 @@ public class Bomb : MonoBehaviour
         Debug.Log(allplayer.Length);
         GameObject[] allBot = GameObject.FindGameObjectsWithTag("Bot");
 
-
+        Debug.Log("called");
         //  PhotonView view = playerController.view;
         if (PhotonNetwork.InRoom)
         {
@@ -70,7 +72,7 @@ public class Bomb : MonoBehaviour
             {
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
 
-                if (Distance < 3)
+                if (Distance < range)
                 {
                     float damageCount = damage / Distance;
 
@@ -82,7 +84,7 @@ public class Bomb : MonoBehaviour
             {
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
                 Debug.Log(Distance);
-                if (Distance < 3)
+                if (Distance < range)
                 {
                     float damageCount = damage / Distance;
 
@@ -103,31 +105,54 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (type == bombtype.timebomb)
+        if (type == bombtype.timebomb && collision.gameObject.tag != "Player")
         {
+            readtoExplode = true;
             Rigidbody2D rb = transform.GetComponent<Rigidbody2D>();
             rb.simulated = false;
             rb.isKinematic = true;
 
             rb.velocity = Vector2.zero;
-
+            rb.angularVelocity = 0;
+            rb.rotation = 0;
             rb.totalForce = Vector2.zero;
             StopAllCoroutines();
-            rb.simulated = true;
+           
 
         }
 
         if (collision.gameObject.tag == "Player" && type == bombtype.timebomb)
         {
-            StopAllCoroutines();
-            timeToExplode = .1f;
-            StartCoroutine(waitTillExplode());
+            if (readtoExplode && !explotion_Started)
+            {
+              
+            }
+            else if(!readtoExplode)
+            {
+               // readtoExplode = true;
+            }
 
         }
+        transform.GetComponent<Rigidbody2D>().simulated = true;
     }
     // Update is called once per frame
     void Update()
     {
+        if (!readtoExplode || explotion_Started)//explotion stated or insde the player range
+        {
+            
+            if(!readtoExplode)
+            {
+                GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
+                float Distance = Vector3.Distance(allplayer[0].transform.position, transform.position);
+                if(Distance> range)
+                {
+                    readtoExplode = true;
+                }
+            }
+            return;
+        }
+
         if (type == bombtype.poisionbomb)
         {
             GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
@@ -136,7 +161,7 @@ public class Bomb : MonoBehaviour
             {
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
 
-                if (Distance < 3)
+                if (Distance < range)
                 {
                     item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage / Distance, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
                 }
@@ -150,10 +175,26 @@ public class Bomb : MonoBehaviour
             {
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
 
-                //if (Distance < 1)
-                //{
-                //    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
-                //}
+
+                //  item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                if (Distance < range)
+                {
+                    if (PhotonNetwork.InRoom)
+                    {
+
+                        item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                    }
+                    else
+                    {
+
+                        explotion_Started = true;
+                     ///  readtoExplode = false;
+                        //  StopAllCoroutines();
+                        timeToExplode = .01f;
+                        StartCoroutine(waitTillExplode());
+                    }
+                }
+
             }
         }
     }
