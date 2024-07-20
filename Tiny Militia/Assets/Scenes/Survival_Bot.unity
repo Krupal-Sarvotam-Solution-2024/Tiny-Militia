@@ -5911,6 +5911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1295fd60d9af0da4191c9134a9cd19b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerDetailsCanvas: {fileID: 0}
   Player_Life_Information: {fileID: 1275691930}
   boosterLevelImage: {fileID: 5155753799936539538}
   healthImage: {fileID: 7671742285463736468}
@@ -7034,6 +7035,8 @@ MonoBehaviour:
   PlayerPrefeb: {fileID: 2259250102884172101, guid: df8d09f1d97d32749a2aefe0e5d95cfb, type: 3}
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
+  Timer: 10
+  Lifes: 3
 --- !u!1 &1275691930 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 465987224865527869, guid: d9ca2973975f129489b28662f909088a, type: 3}
@@ -12389,6 +12392,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 424005891427971488, guid: 1638d100e1864124e960da70bc9de7f9, type: 3}
+      propertyPath: m_Name
+      value: ExitPausePanel
+      objectReference: {fileID: 0}
     - target: {fileID: 1384181053864092716, guid: 1638d100e1864124e960da70bc9de7f9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -12416,6 +12423,10 @@ PrefabInstance:
     - target: {fileID: 1384181053864092716, guid: 1638d100e1864124e960da70bc9de7f9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3529750907893494844, guid: 1638d100e1864124e960da70bc9de7f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5736606192613717959, guid: 1638d100e1864124e960da70bc9de7f9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -12535,7 +12546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8254216737272608342, guid: 1638d100e1864124e960da70bc9de7f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

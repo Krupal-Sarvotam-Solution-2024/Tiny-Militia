@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
-        }
+        }   
         else
         {
             UIManager.instance.Pause.gameObject.SetActive(false);
