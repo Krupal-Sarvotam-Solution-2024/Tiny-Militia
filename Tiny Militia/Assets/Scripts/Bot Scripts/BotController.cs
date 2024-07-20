@@ -93,7 +93,7 @@ public class BotController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
         player.Kill_Count += 1;
         player.Score_Count += DeathScore;
-        if (PlayerPrefs.GetInt("HighScore") > player.Score_Count)
+        if (PlayerPrefs.GetInt("HighScore") < player.Score_Count)
         {
             PlayerPrefs.SetInt("HighScore",player.Score_Count);
         }

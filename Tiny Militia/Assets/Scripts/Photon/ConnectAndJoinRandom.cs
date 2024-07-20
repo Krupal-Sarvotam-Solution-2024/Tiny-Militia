@@ -36,16 +36,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     // below, we implement some callbacks of PUN
     // you can find PUN's callbacks in the class PunBehaviour or in enum PhotonNetworkingMessage
 
-    private void OnConnectedToServer()
-    {
-        Debug.Log("Connected");
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.");
-      
-    }
+    
 
     public override void OnJoinedLobby()
     {

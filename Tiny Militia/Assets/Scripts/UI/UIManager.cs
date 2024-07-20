@@ -142,7 +142,7 @@ public class UIManager : MonoBehaviour
         {
             playerController.ThrowBomb(view.ViewID);
         }
-        
+      //  BombAmount.text = playerController.bom
     }
 
     public void GunSwitch()

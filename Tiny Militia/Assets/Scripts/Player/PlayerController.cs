@@ -109,7 +109,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public int Kill_Count;
     public int Score_Count;
-    public int High_Score;
 
 
     #region Unity Predefine Method with Own Functionality
@@ -334,14 +333,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
         float moveInput = movementJoystick.Vertical;
         if (moveInput < 0 && isGrounded == true)
         {
-            Debug.Log("Down Now");
             Leftleg.GetChild(0).transform.rotation = Quaternion.identity;
             Rightleg.GetChild(0).transform.rotation = Quaternion.identity;
             moveSpeed = 2.5f;
         }
         else if (moveInput > 0 || moveInput == 0 || !isGrounded)
         {
-            Debug.Log("Up Now ");
             Leftleg.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90f));
             Rightleg.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90f));
             moveSpeed = 5f;
@@ -618,6 +615,30 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             GameManager.Instance.StartCoroutine("PlayerRespawn");
 
+            UIManager.instance.Pause.gameObject.SetActive(true);
+
+            UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+
+            UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+            UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+
+            GameManager.Instance.isRespawning = true;
+
+             /* 
+             * Add All Player Information 
+             * Ex.1 Player Name                     Kill
+             *      Krupal                          10
+             *      Kaushik                         8
+             *      Tiny Militia                    6
+             *      Mini Militia                    4
+             *      Tiny                            2
+             *      Mini                            0
+             *      
+             *     ------------------------------------
+             *     NOTE :- Players Poaition is Set According to Their Kill Count
+             */
+
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
@@ -636,6 +657,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
                 UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
                 GameManager.Instance.isRespawning = true;
             }

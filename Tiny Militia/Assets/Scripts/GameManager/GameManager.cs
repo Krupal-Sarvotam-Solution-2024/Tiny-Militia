@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     float RespawnTime = 4; // Float for Respawn time text
 
+
     bool isTiming; // Booolen for checking the timing method is true or not
 
     [HideInInspector]
@@ -95,7 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-
+            UIManager.instance.Pause.gameObject.SetActive(true);
         }
         else
         {
@@ -104,6 +105,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(4);
         if (PhotonNetwork.InRoom)
         {
+            UIManager.instance.Pause.gameObject.SetActive(false);
+
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
@@ -113,8 +116,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 PlayerManager = Temp.GetComponent<PlayerController>();
 
                 UIManager.instance.playerController = PlayerManager;
-
-
 
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
