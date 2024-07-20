@@ -20,7 +20,9 @@ public class UIManager : MonoBehaviour
     public Image healthImage; // Player Health
     
     public Image GunImage; // 
-    
+
+    public Image bomb_inage;
+
     public Image ReloadImage;
     
     public Image CurrentGunImage;
@@ -53,6 +55,9 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI RespawnTime_Text;
 
+   
+    public TextMeshProUGUI BombAmount;
+
     [HideInInspector]
     public GunsData changingGunData;
 
@@ -81,6 +86,21 @@ public class UIManager : MonoBehaviour
     }
     public void BombSwitch()
     {
+        int crrent_bombtype = (int)playerController.selectedbomb;
+        switch (crrent_bombtype)
+        {
+            case 0:
+                playerController.selectedbomb = Bomb.bombtype.timebomb;
+                break;
+            case 1:
+                playerController.selectedbomb = Bomb.bombtype.poisionbomb;
+                break;
+            case 2:
+                playerController.selectedbomb = Bomb.bombtype.explodebomb;
+                break;
+
+        }
+
 
     }
     public void ReloadGun()
@@ -122,6 +142,7 @@ public class UIManager : MonoBehaviour
         {
             playerController.ThrowBomb(view.ViewID);
         }
+        
     }
 
     public void GunSwitch()
