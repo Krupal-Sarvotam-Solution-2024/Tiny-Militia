@@ -621,7 +621,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.PauseExitButton.gameObject.SetActive(false);
 
-            UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+       //     UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
             GameManager.Instance.isRespawning = true;
 

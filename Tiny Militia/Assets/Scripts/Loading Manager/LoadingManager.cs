@@ -13,8 +13,8 @@ public class LoadingManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Random.Range(0, LoadingList.Count);
-        Instantiate(LoadingList[LoadingList.Count],Vector3.zero,Quaternion.identity,Canvas.transform);
-
+        GameObject obj = Instantiate(LoadingList[LoadingList.Count],Vector3.zero,Quaternion.identity,Canvas.transform);
+    //    obj.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
 
     private void OnConnectedToServer()

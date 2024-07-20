@@ -32,6 +32,8 @@ public class UIManager : MonoBehaviour
     public Button GunChangeButton;
 
     public Button PauseExitButton;
+
+    public Button LeaveMatch;
     
     public int GunIndex;
     
@@ -185,21 +187,41 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
-        
-        Score.text = playerController.Score_Count.ToString();
-        Kill.text = playerController.Kill_Count.ToString();
-        if (PlayerPrefs.GetInt("HighScore") > playerController.Score_Count)
+        if (PhotonNetwork.InRoom)
         {
-            PlayerPrefs.SetInt("HighScore", playerController.Score_Count);
-            High_Score.text = PlayerPrefs.GetInt("HighScore").ToString();
+            Pause.gameObject.SetActive(true);
+            LeaveMatch.gameObject.SetActive(true);
+            RespawnTime_Text.gameObject.SetActive(false);
+            PauseExitButton.gameObject.SetActive(true);
+
+            /* 
+             * Add All Player Information 
+             * Ex.1 Player Name                     Kill
+             *      Krupal                          10
+             *      Kaushik                         8
+             *      Tiny Militia                    6
+             *      Mini Militia                    4
+             *      Tiny                            2
+             *      Mini                            0
+             *      
+             *     ------------------------------------
+             *     NOTE :-  Players Poaition is Set According to Their Kill Count
+             */
+
         }
-
-        Time.timeScale = 0;
-        Pause.gameObject.SetActive(true);
-        PauseExitButton.gameObject.SetActive(true);
-        RespawnTime_Text.gameObject.SetActive(false);
+        else
+        {
+            Score.text = playerController.Score_Count.ToString();
+            Kill.text = playerController.Kill_Count.ToString();
+            High_Score.text = PlayerPrefs.GetInt("HighScore").ToString();
+            Time.timeScale = 0;
+            Pause.gameObject.SetActive(true);
+            PauseExitButton.gameObject.SetActive(true);
+            RespawnTime_Text.gameObject.SetActive(false);
+            LeaveMatch.gameObject.SetActive(true);
+        }
     }
-
+        
     public void PunchButton()
     {
         PhotonView view = playerController.view;
