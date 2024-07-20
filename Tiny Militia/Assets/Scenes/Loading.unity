@@ -329,7 +329,7 @@ MonoBehaviour:
   - {fileID: 100018, guid: 999dee95d1b1d494d8ae692a9e5339fb, type: 3}
   - {fileID: 100004, guid: 2649502504bc9184d9f4cb368e7b27f8, type: 3}
   - {fileID: 100002, guid: d6acbcaaf0d98e34e8d95dc9e8ec0b5a, type: 3}
-  Canvas: {fileID: 7083135499404370514}
+  Canvas: {fileID: 917276769}
 --- !u!1 &917276769
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 560746959}
-  - {fileID: 1638752333}
   - {fileID: 6515154064783097234}
   - {fileID: 917276773}
   - {fileID: 727869116}
+  - {fileID: 1638752333}

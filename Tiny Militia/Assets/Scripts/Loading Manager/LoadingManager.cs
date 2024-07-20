@@ -10,11 +10,13 @@ public class LoadingManager : MonoBehaviourPunCallbacks
     [SerializeField] List<GameObject> LoadingList;
     [SerializeField] GameObject Canvas;
 
-    private void Awake()
+    private void Start()
     {
-        Random.Range(0, LoadingList.Count);
-        Instantiate(LoadingList[LoadingList.Count],Vector3.zero,Quaternion.identity,Canvas.transform);
-
+        PhotonNetwork.ConnectUsingSettings();
+        int Temp = Random.Range(0, LoadingList.Count);
+        GameObject Temo1 = Instantiate(LoadingList[Temp]);
+        Temo1.transform.parent = Canvas.transform;
+        Temo1.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     private void OnConnectedToServer()
