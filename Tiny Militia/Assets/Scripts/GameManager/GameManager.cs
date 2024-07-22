@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     float RespawnTime = 4; // Float for Respawn time text
 
+    public GameObject direction_Sound_Arrow;// the place where the opponet is shooting shows the direction
 
     bool isTiming; // Booolen for checking the timing method is true or not
 

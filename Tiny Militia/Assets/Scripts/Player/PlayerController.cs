@@ -193,11 +193,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (view.IsMine)
             {
                 Debug.Log("this player id :-" + view.ViewID + "other player id :-" + collision.gameObject.GetComponent<Bullet>().Id);
-
+                
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
+                if (collision.gameObject.GetComponent<Bullet>().Id == view.ViewID)
+                    return;
 
                 //TakeDamage(PlayerGun.damagePerBullet);
-                view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).ViewID);
+                view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, collision.gameObject.GetComponent<Bullet>().Id);
 
             }
         }
@@ -484,6 +486,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
+                                photonView.RPC("ShowingDirection", RpcTarget.All);
                             }
                             else
                             {
@@ -520,6 +523,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
     }
+
+
+    [PunRPC]
+    void ShowingDirection()
+    {
+        Debug.Log(photonView.ViewID);
+
+    }
+
 
     // Method for shooting in offilne and online mode
     [PunRPC]
@@ -632,7 +644,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 else
                 {
 
-                    UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated by " + view.Controller.NickName;
+                    UIManager.instance.killing_text.text = view.Controller.NickName + " Eliminated by " +  PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
                     UIManager.instance.killing_text.color = Color.white;
                 }
 

@@ -14,7 +14,8 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        if (collision.gameObject.GetComponent<PlayerController>() && Id == collision.gameObject.GetComponent<PlayerController>().view.ViewID)
+            return;
 
         if (collision.transform.tag == "Player")
         {
