@@ -614,13 +614,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Hiterplayer.Kill_Count++;
                 if (this.view.IsMine)
                 {
-                    UIManager.instance.killing_text.text = "You were killed by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
+                   // UIManager.instance.killing_text.text = "You were killed by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
                     Die();
                 }
-                else
-                {
-                    UIManager.instance.killing_text.text = "You killed " + view.Controller.NickName;
-                }
+               
+                    UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " killed " + view.Controller.NickName;
+                    UIManager.instance.killing_text.color = Color.green;
+                
             }
         }
 
