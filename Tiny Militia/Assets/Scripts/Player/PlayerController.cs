@@ -190,13 +190,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Debug.Log("this player id :-" + view.ViewID + "other player id :-" + collision.gameObject.GetComponent<Bullet>().Id);
 
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
-                //TakeDamage(PlayerGun.damagePerBullet);
-                PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).RPC("TakeDamage", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
-                if (currentHealth <= 0)
-                {
 
-                   // Debug.Log("playerded " + PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id) + " "+ PhotonNetwork.PlayerList[].NickName);
-                }
+                //TakeDamage(PlayerGun.damagePerBullet);
+                PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
+              
             }
         }
 
@@ -596,6 +593,26 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #endregion
 
     #region Methods for Taking Damage and Death Function
+
+    [PunRPC]
+    public void TakeDamageFromHit(int damageAmount, int hitedplayer_id)// called from shooted player
+    {
+        if (PhotonNetwork.InRoom)
+        {
+
+            PlayerController hitedplayer;
+            hitedplayer = PhotonNetwork.GetPhotonView(hitedplayer_id).transform.GetComponent<PlayerController>();
+            hitedplayer.currentHealth -= damageAmount;
+            hitedplayer.UpdateHealthImage();
+            if (hitedplayer.currentHealth <= 0)
+            {
+                Kill_Count++;
+                hitedplayer.Die();
+            }
+        }
+
+    }
+
 
     // Method For Taking damage in offline and online mode
     [PunRPC]
