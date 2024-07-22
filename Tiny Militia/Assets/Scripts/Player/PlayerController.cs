@@ -65,10 +65,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public int currentGunIndex = 0;
     private int alternateGunIndex = -1;
     public int maxbomb;
-    private int explosivebomb =3,timebomb=0,poisenbomb=0;
-    private int totoalmomb =3;
+    private int explosivebomb = 3, timebomb = 0, poisenbomb = 0;
+    private int totoalmomb = 3;
     public Bomb.bombtype selectedbomb;
-   
+
 
     [Space(5)]
     [Header("// Getting Player Rigidbody for Physics")]
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public int Kill_Count;
     public int Score_Count;
-   
+
 
     #region Unity Predefine Method with Own Functionality
 
@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 //TakeDamage(PlayerGun.damagePerBullet);
                 PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
-              
+
             }
         }
 
@@ -300,7 +300,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     #endregion
 
-
     #region Methods for Movement
 
     // Methos for Movement
@@ -374,6 +373,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
+        UIManager.instance.AimObject.transform.position = firePoint.transform.position;
+
 
         if (PhotonNetwork.InRoom)
         {
@@ -385,6 +386,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 5f));
             transform.localScale = new Vector3(-0.15f, 0.15f, 1);
             //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -392,6 +394,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 6f));
             transform.localScale = new Vector3(0.15f, 0.15f, 1);
             //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
         }
@@ -402,29 +405,29 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void RPCAim(int Player_ID, Vector3 aimDirection, float angle)
     {
         PlayerController player = PhotonNetwork.GetPhotonView(Player_ID).GetComponent<PlayerController>();
-        //// Get joystick input for aiming
-        //float aimHorizontal = player.aimJoystick.Horizontal;
-        //float aimVertical = player.aimJoystick.Vertical;
-
-        //// Calculate the aim direction
-        //Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
-        //float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        ////gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        // Get joystick input for aiming
 
         // Flip character and gun based on aim direction
+
+        UIManager.instance.AimObject.transform.position = firePoint.transform.position;
+
         if (aimDirection.x > 0)
         {
             player.leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 5f));
+
+
             player.transform.localScale = new Vector3(-0.15f, 0.15f, 1);
-            //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
         }
         else if (aimDirection.x < 0)
         {
             player.leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 6f));
+
+
             player.transform.localScale = new Vector3(0.15f, 0.15f, 1);
-            //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
         }
     }
 
@@ -544,14 +547,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (totoalmomb <= 0)
             return;
         totoalmomb--;
-        if(selectedbomb == Bomb.bombtype.explodebomb)
+        if (selectedbomb == Bomb.bombtype.explodebomb)
         {
             explosivebomb--;
         }
-        else if(selectedbomb == Bomb.bombtype.timebomb)
+        else if (selectedbomb == Bomb.bombtype.timebomb)
         {
-            timebomb--; 
-        }else if(selectedbomb == Bomb.bombtype.poisionbomb)
+            timebomb--;
+        }
+        else if (selectedbomb == Bomb.bombtype.poisionbomb)
         {
             poisenbomb--;
         }
@@ -565,7 +569,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             FirePOINT = transform.GetComponent<PlayerController>();
         }
-        GameObject bomb = Instantiate(bombPrefab[(int)selectedbomb], firePoint.position ,Quaternion.identity);
+        GameObject bomb = Instantiate(bombPrefab[(int)selectedbomb], firePoint.position, Quaternion.identity);
         // bomb.tag = "Player_Bomb";
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
         bombRb.isKinematic = false;
@@ -577,10 +581,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (totoalmomb >= 4)
             return;
         totoalmomb++;
-        if(type == Bomb.bombtype.explodebomb)
+        if (type == Bomb.bombtype.explodebomb)
         {
             explosivebomb++;
-        }else if (type == Bomb.bombtype.timebomb)
+        }
+        else if (type == Bomb.bombtype.timebomb)
         {
             timebomb++;
         }
@@ -625,7 +630,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Health.currentHealth -= damageAmount;
             UpdateHealthImage();
 
-            Debug.Log(view.ViewID +" this id player shoot the bullet to "+ Health_ID+ " this id player ");
+            Debug.Log(view.ViewID + " this id player shoot the bullet to " + Health_ID + " this id player ");
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
             {
                 Health.Kill_Count++;
@@ -657,23 +662,23 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.PauseExitButton.gameObject.SetActive(false);
 
-           UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+            UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
             GameManager.Instance.isRespawning = true;
 
-             /* 
-             * Add All Player Information 
-             * Ex.1 Player Name                     Kill
-             *      Krupal                          10
-             *      Kaushik                         8
-             *      Tiny Militia                    6
-             *      Mini Militia                    4
-             *      Tiny                            2
-             *      Mini                            0
-             *      
-             *     ------------------------------------
-             *     NOTE :- Players Poaition is Set According to Their Kill Count
-             */
+            /* 
+            * Add All Player Information 
+            * Ex.1 Player Name                     Kill
+            *      Krupal                          10
+            *      Kaushik                         8
+            *      Tiny Militia                    6
+            *      Mini Militia                    4
+            *      Tiny                            2
+            *      Mini                            0
+            *      
+            *     ------------------------------------
+            *     NOTE :- Players Poaition is Set According to Their Kill Count
+            */
 
             PhotonNetwork.Destroy(this.gameObject);
         }
