@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             if (view.IsMine)
             {
-
+                Debug.Log("this player id :-" + view.ViewID + "other player id :-" + collision.gameObject.GetComponent<Bullet>().Id);
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
                 //TakeDamage(PlayerGun.damagePerBullet);
                 view.RPC("TakeDamage", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
@@ -515,8 +515,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
             FirePOINT = transform.GetComponent<PlayerController>();
         }
         GameObject bullet = Instantiate(bulletPrefab, FirePOINT.firePoint.position, FirePOINT.firePoint.rotation);
+
         bullet.tag = "Player_Bullet";
         Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.Id = view.ViewID;
         bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
         bulletRb.velocity = FirePOINT.firePoint.right * -bulletSpeed;
@@ -591,8 +593,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Health.currentHealth -= damageAmount;
             UpdateHealthImage();
 
+            Debug.Log(view.ViewID +" this id player shoot the bullet to "+ Health_ID+ " this id player ");
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
             {
+
                 Die();
             }
         }
@@ -621,7 +625,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.PauseExitButton.gameObject.SetActive(false);
 
-       //     UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+           UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
             GameManager.Instance.isRespawning = true;
 

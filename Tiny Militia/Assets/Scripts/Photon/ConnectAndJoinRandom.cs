@@ -72,7 +72,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     void PlayerJoined()
     {
         Debug.Log("Other Player Joined");
-        if(PhotonNetwork.CurrentRoom.PlayerCount==1)
+        if(PhotonNetwork.CurrentRoom.PlayerCount==2)
         {
             //srart the time 
             Debug.Log("minimum player joined the room can go to play");

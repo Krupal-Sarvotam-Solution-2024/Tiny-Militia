@@ -4,7 +4,7 @@ public class Bullet : MonoBehaviour
 {
     public Gun gun;
     public GameObject bloodshott;
-
+    public int Id;
 
     private void Start()
     {
