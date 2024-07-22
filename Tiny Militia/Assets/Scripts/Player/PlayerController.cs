@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using JetBrains.Annotations;
 using Photon.Realtime;
 
 
@@ -528,7 +525,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         Debug.Log(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
         this.arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-        
+
     }
 
 
@@ -682,6 +679,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
+    public List<PlayerController> allPlayer;
     // Method for Checking the health and apply the Death Function To Player
     void Die()
     {
@@ -702,17 +700,34 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             GameManager.Instance.isRespawning = true;
 
-            for (int k = 0; k < GameManager.Instance.InRoomPlayer.Count; k++)
+            // Get the dictionary of players in the current room
+            Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+            allPlayer.Clear();
+            foreach (var playerEntry in players)
             {
-                Debug.Log("Before : K[" + k + "]" + GameManager.Instance.InRoomPlayer[k].Kill_Count);
+                Player player = playerEntry.Value;
+                GameObject playerObject = GetPlayerGameObject(player);
+                if (playerObject != null)
+                {
+                    PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
+                    if (playerControllers != null)
+                    {
+                        Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
+                    }
+                    allPlayer.Add(playerControllers);
+                }
             }
 
-            GameManager.Instance.InRoomPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(y.GetComponent<PlayerController>().Kill_Count));
-
-            for (int k = 0; k < GameManager.Instance.InRoomPlayer.Count; k++)
+            for (int k = 0; k < allPlayer.Count; k++)
             {
-                Debug.Log("After : K[" + k + "]" + GameManager.Instance.InRoomPlayer[k].Kill_Count);
+                Debug.Log("Before K[" + k + "]" + $"Nickname: {allPlayer[k].view.Controller.NickName}, KillCount: {allPlayer[k].Kill_Count}");
             }
+            allPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(y.GetComponent<PlayerController>().Kill_Count));
+            for (int k = 0; k < allPlayer.Count; k++)
+            {
+                Debug.Log("After K[" + k + "]" + $"Nickname: {allPlayer[k].view.Controller.NickName}, KillCount: {allPlayer[k].Kill_Count}");
+            }
+
 
             /* 
             * Add All Player Information 
@@ -729,11 +744,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
             *     
             */
 
-            ///////
-            /// Note :- 
 
 
-            //PhotonNetwork.Destroy(this.gameObject);
+            PhotonNetwork.Destroy(this.gameObject);
         }
         else
         {
@@ -774,6 +787,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             Destroy(this.gameObject);
         }
+    }
+
+    GameObject GetPlayerGameObject(Player player)
+    {
+        // Get the player's game object by their actor number
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PhotonView photonView = obj.GetComponent<PhotonView>();
+            if (photonView != null && photonView.Owner == player)
+            {
+                return obj;
+            }
+        }
+        return null;
     }
 
     #endregion
