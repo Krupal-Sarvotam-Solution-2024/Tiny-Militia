@@ -618,7 +618,6 @@ MonoBehaviour:
   Rightleg: {fileID: 6344348376090350017}
   Kill_Count: 0
   Score_Count: 0
-  High_Score: 0
 --- !u!50 &1816167822683801508
 Rigidbody2D:
   serializedVersion: 4

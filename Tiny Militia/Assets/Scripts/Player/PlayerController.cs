@@ -194,6 +194,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
 
+        if (collision.gameObject.CompareTag("Up/Down_Border"))
+        {
+
+            currentHealth = 0;
+            UpdateHealthImage();
+            Die();
+        }
+
+
         if (isPunching == true)
         {
             Gun currentgun;
