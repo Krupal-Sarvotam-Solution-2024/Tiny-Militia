@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
 
                 //TakeDamage(PlayerGun.damagePerBullet);
-                PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
+                view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id));
 
             }
         }
@@ -600,19 +600,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #region Methods for Taking Damage and Death Function
 
     [PunRPC]
-    public void TakeDamageFromHit(int damageAmount, int hitedplayer_id)// called from shooted player
+    public void TakeDamageFromHit(int damageAmount, int hitedplayer_id)// called hiter
     {
         if (PhotonNetwork.InRoom)
         {
 
-            PlayerController hitedplayer;
-            hitedplayer = PhotonNetwork.GetPhotonView(hitedplayer_id).transform.GetComponent<PlayerController>();
-            hitedplayer.currentHealth -= damageAmount;
-            hitedplayer.UpdateHealthImage();
-            if (hitedplayer.currentHealth <= 0)
+            PlayerController Hiterplayer;
+            Hiterplayer = PhotonNetwork.GetPhotonView(hitedplayer_id).transform.GetComponent<PlayerController>();// shooter
+            currentHealth -= damageAmount;
+            UpdateHealthImage();
+            if (currentHealth <= 0)
             {
-                Kill_Count++;
-                hitedplayer.Die();
+                Hiterplayer.Kill_Count++;
+                Die();
             }
         }
 
