@@ -526,8 +526,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     void ShowingDirection()
     {
-        arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-
+        Debug.Log(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
+        this.arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
+        
     }
 
 
