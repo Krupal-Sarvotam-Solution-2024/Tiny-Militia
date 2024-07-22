@@ -612,8 +612,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (currentHealth <= 0)
             {
                 Hiterplayer.Kill_Count++;
-                if(this.view.IsMine)
+                if (this.view.IsMine)
+                {
+                    UIManager.instance.killing_text.text = "You were killed by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
                     Die();
+                }
+                else
+                {
+                    UIManager.instance.killing_text.text = "You killed " + view.Controller.NickName;
+                }
             }
         }
 
@@ -659,6 +666,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.Pause.gameObject.SetActive(true);
 
+            
             UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
             UIManager.instance.PauseExitButton.gameObject.SetActive(false);

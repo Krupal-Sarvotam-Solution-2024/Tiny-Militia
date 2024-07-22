@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class UIManager : MonoBehaviour
 
     // Variables For Showing Data in Canvas
     public GameObject Player_Life_Information; // Life Line Information of Player
+
+    public TextMeshPro killing_text;
 
     public GameObject AimObject;
 
