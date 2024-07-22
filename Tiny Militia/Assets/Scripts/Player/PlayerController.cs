@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private int explosivebomb = 3, timebomb = 0, poisenbomb = 0;
     private int totoalmomb = 3;
     public Bomb.bombtype selectedbomb;
+    public GameObject[] arrow;
 
 
     [Space(5)]
@@ -528,7 +529,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     void ShowingDirection()
     {
-        Debug.Log(photonView.ViewID);
+        arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
 
     }
 
