@@ -5,6 +5,8 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using JetBrains.Annotations;
+using Photon.Realtime;
 
 
 public class PlayerController : MonoBehaviourPunCallbacks
@@ -109,6 +111,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public int Kill_Count;
     public int Score_Count;
+            
+    
+    List<PhotonView> Test;
 
 
     #region Unity Predefine Method with Own Functionality
@@ -684,6 +689,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
             UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
             GameManager.Instance.isRespawning = true;
+
+            for (int k = 0;k > PhotonNetwork.CurrentRoom.PlayerCount;k++)
+            {
+                //Test.Add();
+                Debug.Log(PhotonNetwork.CurrentRoom.Players[k].UserId);
+            }
+
+            //Test.Sort((x,y)=>y.GetComponent<PlayerController>().Kill_Count.CompareTo(y.GetComponent<PlayerController>().Kill_Count));
 
             /* 
             * Add All Player Information 
