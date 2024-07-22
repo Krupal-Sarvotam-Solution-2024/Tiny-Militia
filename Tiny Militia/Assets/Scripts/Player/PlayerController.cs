@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
 
                 //TakeDamage(PlayerGun.damagePerBullet);
-                view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id));
+                view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).ViewID);
 
             }
         }
@@ -612,7 +612,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (currentHealth <= 0)
             {
                 Hiterplayer.Kill_Count++;
-                Die();
+                if(this.view.IsMine)
+                    Die();
             }
         }
 
