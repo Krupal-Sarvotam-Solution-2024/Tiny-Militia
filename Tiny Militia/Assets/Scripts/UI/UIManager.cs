@@ -17,7 +17,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject AimObject;
 
-
     public Image boosterLevelImage; // Player Booster
     
     public Image healthImage; // Player Health

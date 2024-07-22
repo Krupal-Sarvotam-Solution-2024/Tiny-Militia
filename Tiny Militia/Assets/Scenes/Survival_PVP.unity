@@ -1165,6 +1165,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1978592056710772169 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8957883207775488888, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2059908160946413962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1581,7 +1592,7 @@ PrefabInstance:
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: ReloadImage
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1978592056710772169}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: healthImage
       value: 
