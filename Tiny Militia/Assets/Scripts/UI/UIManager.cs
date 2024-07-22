@@ -45,6 +45,8 @@ public class UIManager : MonoBehaviour
     public PlayerController playerController;
     
     public Canvas Pause;
+
+    public Canvas Info;
     
     public TextMeshProUGUI AmmoInfo_text;
     

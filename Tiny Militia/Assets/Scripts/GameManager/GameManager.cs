@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     bool isTiming; // Booolen for checking the timing method is true or not
 
-    public List<GameObject> InRoomPlayer; // List for the Collecting Player's Data
+    public List<PlayerController> InRoomPlayer; // List for the Collecting Player's Data
 
     [HideInInspector]
     public bool isRespawning; // Boolen for reducing the timing of respawn time for text
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("InRoom");
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
-            InRoomPlayer.Add(Temp);
+            InRoomPlayer.Add(Temp.transform.GetComponent<PlayerController>());
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     // Player Respawn after Death
-    IEnumerator PlayerRespawn()
+    IEnumerator PlayerRespawn(PlayerController PlayerObject)
     {
         if (PhotonNetwork.InRoom)
         {
@@ -112,7 +112,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIManager.instance.Pause.gameObject.SetActive(false);
 
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
-            InRoomPlayer.Add(Temp);
+            
+            InRoomPlayer.Remove(PlayerObject);
+            
+            PhotonNetwork.Destroy(PlayerObject.gameObject);
+
+            UIManager.instance.Info.gameObject.SetActive(false);
+
+            InRoomPlayer.Add(Temp.transform.GetComponent<PlayerController>());
+            
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
 

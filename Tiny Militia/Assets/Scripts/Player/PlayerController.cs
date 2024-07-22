@@ -112,9 +112,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public int Kill_Count;
     public int Score_Count;
-            
-    
-    List<PhotonView> Test;
 
 
     #region Unity Predefine Method with Own Functionality
@@ -194,7 +191,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (view.IsMine)
             {
                 Debug.Log("this player id :-" + view.ViewID + "other player id :-" + collision.gameObject.GetComponent<Bullet>().Id);
-                
+
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
                 if (collision.gameObject.GetComponent<Bullet>().Id == view.ViewID)
                     return;
@@ -632,11 +629,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Hiterplayer.Kill_Count++;
                 if (this.view.IsMine)
                 {
-                   // UIManager.instance.killing_text.text = "You were killed by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
+                    // UIManager.instance.killing_text.text = "You were killed by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
                     Die();
                 }
-               
-                if(view.Controller.NickName == PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName)
+
+                if (view.Controller.NickName == PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName)
                 {
                     UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated";
                     UIManager.instance.killing_text.color = Color.white;
@@ -645,7 +642,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 else
                 {
 
-                    UIManager.instance.killing_text.text = view.Controller.NickName + " Eliminated by " +  PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
+                    UIManager.instance.killing_text.text = view.Controller.NickName + " Eliminated by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
                     UIManager.instance.killing_text.color = Color.white;
                 }
 
@@ -666,7 +663,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Health.currentHealth -= damageAmount;
             UpdateHealthImage();
 
-            Debug.Log(view.ViewID + " this id player shoot the bullet to " + Health_ID + " this id player ");
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
             {
                 Health.Kill_Count++;
@@ -690,11 +686,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            GameManager.Instance.StartCoroutine("PlayerRespawn");
+
+            GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.GetComponent<PlayerController>());
 
             UIManager.instance.Pause.gameObject.SetActive(true);
 
-            
+            UIManager.instance.Info.gameObject.SetActive(false);
+
             UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
             UIManager.instance.PauseExitButton.gameObject.SetActive(false);
@@ -703,13 +701,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             GameManager.Instance.isRespawning = true;
 
-            for (int k = 0;k > PhotonNetwork.CurrentRoom.PlayerCount;k++)
+            for (int k = 0; k < GameManager.Instance.InRoomPlayer.Count; k++)
             {
-                //Test.Add();
-                Debug.Log(PhotonNetwork.CurrentRoom.Players[k].UserId);
+                Debug.Log("Before : K[" + k + "]" + GameManager.Instance.InRoomPlayer[k].Kill_Count);
             }
 
-            //Test.Sort((x,y)=>y.GetComponent<PlayerController>().Kill_Count.CompareTo(y.GetComponent<PlayerController>().Kill_Count));
+            GameManager.Instance.InRoomPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(y.GetComponent<PlayerController>().Kill_Count));
+
+            for (int k = 0; k < GameManager.Instance.InRoomPlayer.Count; k++)
+            {
+                Debug.Log("After : K[" + k + "]" + GameManager.Instance.InRoomPlayer[k].Kill_Count);
+            }
 
             /* 
             * Add All Player Information 
@@ -723,20 +725,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
             *      
             *     ------------------------------------
             *     NOTE :- Players Poaition is Set According to Their Kill Count
+            *     
             */
 
-            PhotonNetwork.Destroy(this.gameObject);
+            ///////
+            /// Note :- 
+
+
+            //PhotonNetwork.Destroy(this.gameObject);
         }
         else
         {
-            Debug.Log("hOW many");
             if (GameManager.Instance.Lifes != 0)
             {
                 GameManager.Instance.Lifes -= 1;
 
                 UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
 
-                GameManager.Instance.StartCoroutine("PlayerRespawn");
+                GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.transform.GetComponent<PlayerController>());
 
                 UIManager.instance.Pause.gameObject.SetActive(true);
 

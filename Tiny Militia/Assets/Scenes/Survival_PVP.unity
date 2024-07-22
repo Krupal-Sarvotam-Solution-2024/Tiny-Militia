@@ -995,6 +995,8 @@ MonoBehaviour:
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
   Timer: 10
+  direction_Sound_Arrow: {fileID: 0}
+  InRoomPlayer: []
   isRespawning: 0
   isDead: 0
   Lifes: 3
@@ -1402,6 +1404,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4667477370517959083, guid: d9ca2973975f129489b28662f909088a, type: 3}
   m_PrefabInstance: {fileID: 1978592056710772166}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &1978592056710772171 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2154515472693255485, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2059908160946413962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1791,6 +1798,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
+      propertyPath: Info
+      value: 
+      objectReference: {fileID: 1978592056710772171}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: Pause
       value: 
