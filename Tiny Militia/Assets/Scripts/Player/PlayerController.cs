@@ -618,9 +618,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     Die();
                 }
                
-                    UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " killed " + view.Controller.NickName;
+                if(view.Controller.NickName == PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName)
+                {
+                    UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated";
                     UIManager.instance.killing_text.color = Color.white;
-                
+
+                }
+                else
+                {
+
+                    UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated by " + view.Controller.NickName;
+                    UIManager.instance.killing_text.color = Color.white;
+                }
+
             }
         }
 
