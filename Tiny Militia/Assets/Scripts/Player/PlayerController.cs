@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public int Kill_Count;
     public int Score_Count;
-
+   
 
     #region Unity Predefine Method with Own Functionality
 
@@ -188,9 +188,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (view.IsMine)
             {
                 Debug.Log("this player id :-" + view.ViewID + "other player id :-" + collision.gameObject.GetComponent<Bullet>().Id);
+
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
                 //TakeDamage(PlayerGun.damagePerBullet);
-                view.RPC("TakeDamage", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
+                PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id).RPC("TakeDamage", RpcTarget.All, PlayerGun.damagePerBullet, view.ViewID);
+                if (currentHealth <= 0)
+                {
+
+                   // Debug.Log("playerded " + PhotonNetwork.GetPhotonView(collision.gameObject.GetComponent<Bullet>().Id) + " "+ PhotonNetwork.PlayerList[].NickName);
+                }
             }
         }
 
@@ -605,7 +611,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Debug.Log(view.ViewID +" this id player shoot the bullet to "+ Health_ID+ " this id player ");
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
             {
-
+                Health.Kill_Count++;
                 Die();
             }
         }
