@@ -619,7 +619,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
                
                     UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " killed " + view.Controller.NickName;
-                    UIManager.instance.killing_text.color = Color.green;
+                    UIManager.instance.killing_text.color = Color.white;
                 
             }
         }
