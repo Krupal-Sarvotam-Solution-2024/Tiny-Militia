@@ -13,12 +13,11 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    // Variables For Showing Data in Canvas
     public GameObject Player_Life_Information; // Life Line Information of Player
 
-    public TextMeshProUGUI killing_text;
-
     public GameObject AimObject;
+
+    public List<GameObject> PlayersData;
 
     public Image boosterLevelImage; // Player Booster
     
@@ -41,12 +40,12 @@ public class UIManager : MonoBehaviour
     public Button LeaveMatch;
     
     public int GunIndex;
-    
-    public PlayerController playerController;
-    
+      
     public Canvas Pause;
 
     public Canvas Info;
+
+    public TextMeshProUGUI killing_text; // Text Which Show Who killed Whom
     
     public TextMeshProUGUI AmmoInfo_text;
     
@@ -64,8 +63,9 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI RespawnTime_Text;
 
-   
     public TextMeshProUGUI BombAmount;
+
+    public PlayerController playerController;
 
     [HideInInspector]
     public GunsData changingGunData;

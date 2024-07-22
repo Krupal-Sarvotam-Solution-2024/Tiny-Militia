@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
+using TMPro;
 
 
 public class PlayerController : MonoBehaviourPunCallbacks
@@ -481,7 +482,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
-                                photonView.RPC("ShowingDirection", RpcTarget.All);
+                                photonView.RPC("ShowingDirection", RpcTarget.All, view.ViewID);
                             }
                             else
                             {
@@ -521,7 +522,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    void ShowingDirection()
+    void ShowingDirection(int id)
     {
         Debug.Log(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
         this.arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
@@ -690,7 +691,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.Pause.gameObject.SetActive(true);
 
-            UIManager.instance.Info.gameObject.SetActive(false);
+            //UIManager.instance.Info.gameObject.SetActive(false);
 
             UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
@@ -718,14 +719,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
             }
 
+
+            // Sort players by Kill_Count in descending order
+            allPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(x.GetComponent<PlayerController>().Kill_Count));
+
+            // Update UI with sorted player data
             for (int k = 0; k < allPlayer.Count; k++)
             {
-                Debug.Log("Before K[" + k + "]" + $"Nickname: {allPlayer[k].view.Controller.NickName}, KillCount: {allPlayer[k].Kill_Count}");
-            }
-            allPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(y.GetComponent<PlayerController>().Kill_Count));
-            for (int k = 0; k < allPlayer.Count; k++)
-            {
-                Debug.Log("After K[" + k + "]" + $"Nickname: {allPlayer[k].view.Controller.NickName}, KillCount: {allPlayer[k].Kill_Count}");
+                PlayerController playerController = allPlayer[k].GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    UIManager.instance.PlayersData[k].GetComponent<TextMeshProUGUI>().text = allPlayer[k].GetComponent<PhotonView>().Owner.NickName;
+                    UIManager.instance.PlayersData[k].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerController.Kill_Count.ToString("00");
+                }
             }
 
 

@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
                         
-            UIManager.instance.Info.gameObject.SetActive(false);
+            //UIManager.instance.Info.gameObject.SetActive(false);
             
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
