@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public Bomb.bombtype selectedbomb;
     public GameObject[] arrow;
 
+    public float SoundDistance;
 
     [Space(5)]
     [Header("// Getting Player Rigidbody for Physics")]
@@ -92,6 +93,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("// Variables For Punching")]
     [Space(2)]
     public bool isPunching;
+
 
 
     [Space(5)]
@@ -159,11 +161,34 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Jetpack();
             Sitting();
             UpdateBoosterLevel();
+            ArrowDirectionShowing();
         }
 
 
     }
+    public void ArrowDirectionShowing()
+    {
 
+        for (int i = 0; i < PhotonNetwork.PhotonViews.Length; i++)
+        {
+            if (PhotonNetwork.PhotonViews[i].IsMine)
+            {
+                for (int j = 0; j < PhotonNetwork.PhotonViews.Length; j++)
+                {
+
+                    float distance = Vector3.Distance(PhotonNetwork.PhotonViews[i].gameObject.transform.position, this.gameObject.transform.position);
+                    Debug.Log(distance);
+                    PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
+                    PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<Image>().color = new Color(82, 100, 100, distance);
+
+
+                }
+
+            }
+
+
+        }
+    }
     // Collision Enter Method for CHecking the Player is in Which State
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -482,7 +507,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
-                                photonView.RPC("ShowingDirection", RpcTarget.All, view.ViewID);
+                             //   photonView.RPC("ShowingDirection", RpcTarget.All, view.ViewID);
                             }
                             else
                             {
@@ -521,25 +546,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
 
 
-    [PunRPC]
-    void ShowingDirection(int id)
-    {
-        Debug.Log(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-       // this.arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-
-        for (int i = 0; i < PhotonNetwork.PhotonViews.Length; i++)
-        {
-            if (PhotonNetwork.PhotonViews[i].IsMine)
-            {
-
-                PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[i].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-            
-            }
-
-
-        }
-
-    }
 
 
     // Method for shooting in offilne and online mode
