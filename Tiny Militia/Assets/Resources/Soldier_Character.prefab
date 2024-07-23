@@ -1047,6 +1047,7 @@ MonoBehaviour:
   - {fileID: 5009372752762662792}
   - {fileID: 39497822477437748}
   - {fileID: 8279892365413245392}
+  SoundDistance: 0
   movementJoystick: {fileID: 0}
   aimJoystick: {fileID: 0}
   view: {fileID: 0}

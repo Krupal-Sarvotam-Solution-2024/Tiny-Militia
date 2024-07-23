@@ -176,11 +176,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 for (int j = 0; j < PhotonNetwork.PhotonViews.Length; j++)
                 {
 
-                    float distance = Vector3.Distance(PhotonNetwork.PhotonViews[i].gameObject.transform.position, this.gameObject.transform.position);
+                    float distance = Vector3.Distance(PhotonNetwork.PhotonViews[j].gameObject.transform.position, this.gameObject.transform.position);
                     Debug.Log(distance);
-                    PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-                    PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<Image>().color = new Color(82, 100, 100, distance);
-
+                    PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(PhotonNetwork.PhotonViews[j].gameObject.transform.position);
+                    if (distance > 40 || distance < 10)
+                    {
+                        PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(0, 82, 100, 0);
+                    }
+                    else
+                    {
+                        PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(0, 82, 100, 5 / (distance * 2));
+                    }
 
                 }
 
