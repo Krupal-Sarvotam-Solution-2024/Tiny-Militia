@@ -525,7 +525,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void ShowingDirection(int id)
     {
         Debug.Log(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
-        this.arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
+       // this.arrow[0].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
+
+        for (int i = 0; i < PhotonNetwork.PhotonViews.Length; i++)
+        {
+            if (PhotonNetwork.PhotonViews[i].IsMine)
+            {
+
+                PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[i].transform.LookAt(PhotonNetwork.GetPhotonView(photonView.ViewID).gameObject.transform.position);
+            
+            }
+
+
+        }
 
     }
 
