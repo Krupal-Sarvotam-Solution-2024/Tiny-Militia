@@ -7,7 +7,7 @@ using Photon.Realtime;
 using TMPro;
 
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks , IPunObservable
 {
     #region All Variables
  
@@ -1005,19 +1005,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     #region Methods which is Secoandary for Photon Which is not In Use
 
-    /*
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(currentHealth);
+            stream.SendNext(Kill_Count);
         }
         else
         {
-            currentHealth = (int)stream.ReceiveNext();
+            Kill_Count = (int)stream.ReceiveNext();
         }
     }
-    */
 
     #endregion
 }
