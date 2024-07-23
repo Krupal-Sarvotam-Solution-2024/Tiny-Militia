@@ -769,8 +769,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             *      Player2                          08
             *      Player3                          06
             *      Player4                          04
-            *      Tiny                            2
-            *      Mini                            0
+            *      Player5                          02
+            *      Player6                          00
             *      
             *     ------------------------------------
             *     NOTE :- Players Position is Set According to Their Kill Count
@@ -778,7 +778,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
             */
 
 
-            GameManager.Instance.data.Kill = Kill_Count;
+            //GameManager.Instance.data.Kill = Kill_Count;
+            for (int k = 0;k < PhotonNetwork.CurrentRoom.PlayerCount;k++)
+            {
+                //PlayersData playerData = new PlayersData();
+                GameManager.Instance.data[k].NickName = allPlayer[k].photonView.Controller.NickName;
+                GameManager.Instance.data[k].Kill = allPlayer[k].Kill_Count;
+            }
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
@@ -1010,7 +1016,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #endregion
 }
 
-
+[System.Serializable]
 public class PlayersData
 {
     public int Kill;

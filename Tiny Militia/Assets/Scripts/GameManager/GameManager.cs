@@ -35,8 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [HideInInspector]
     public int Lifes = 3; // When players is in Survival Mode
 
-    public PlayersData data = new PlayersData();
-
+    public List<PlayersData> data = new List<PlayersData>();
     /* *-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----* */
 
     private void Awake()
@@ -92,13 +91,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
-    public void KillCountCheck(int KillCount,int ID)
-    {
-        Debug.Log("kill couuunt checker" + KillCount + "  " + ID);
-        PhotonNetwork.GetPhotonView(ID).GetComponent<PlayerController>().Kill_Count = KillCount;
-    }
-
     // Player Respawn after Death
     IEnumerator PlayerRespawn(PlayerController PlayerObject)
     {
@@ -116,13 +108,21 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIManager.instance.Pause.gameObject.SetActive(false);
 
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
-            
-            //UIManager.instance.Info.gameObject.SetActive(false);
-            
+
+
+            for (int k = 0; k < PhotonNetwork.CurrentRoom.PlayerCount; k++)
+            {
+                if (Temp.GetComponent<PlayerController>().photonView.Controller.NickName == data[k].NickName)
+                {
+                    Debug.Log(Temp.GetComponent<PlayerController>().photonView.Controller.NickName);
+                    Temp.GetComponent<PlayerController>().Kill_Count = data[k].Kill;
+                    Debug.Log(Temp.GetComponent<PlayerController>().Kill_Count);
+                }
+
+            }
+
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
-                Temp.GetComponent<PlayerController>().Kill_Count = data.Kill;
-                Temp.GetComponent<PhotonView>().RPC("KillCountCheck", RpcTarget.All, data.Kill, Temp.GetComponent<PhotonView>().ViewID);
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
 
                 PlayerManager = Temp.GetComponent<PlayerController>();
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
-           
+
         }
         else
         {
@@ -175,17 +175,17 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             UIManager.instance.Timer.text = minutes.ToString("00") + " : " + seconds.ToString("00");
             Timer -= Time.deltaTime;
-            
+
         }
     }
 
     void RespawningTimeShowing()
     {
-        if(isRespawning)
+        if (isRespawning)
         {
             UIManager.instance.RespawnTime_Text.text = "Respawn in " + RespawnTime.ToString("00") + " Second";
             RespawnTime -= Time.deltaTime;
-            if(RespawnTime <= 0)
+            if (RespawnTime <= 0)
             {
                 isRespawning = false;
                 RespawnTime = 4;

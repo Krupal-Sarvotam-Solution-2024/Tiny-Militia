@@ -966,6 +966,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1413188013}
   - component: {fileID: 1413188012}
+  - component: {fileID: 1413188014}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -985,7 +986,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcaad1e2ffbe80b4083d006bf84a7866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllGunData: []
+  AllGunData:
+  - {fileID: 11400000, guid: e73b05aed2f6a3c4a950df75a202ce52, type: 2}
+  - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
+  - {fileID: 11400000, guid: 1d8f7a4281b08884293696bfc62622fa, type: 2}
   RespawnPoint:
   - {fileID: 6786385287471506075}
   - {fileID: 2124932735}
@@ -999,6 +1003,19 @@ MonoBehaviour:
   isRespawning: 0
   isDead: 0
   Lifes: 3
+  data:
+  - Kill: 0
+    NickName: 
+  - Kill: 0
+    NickName: 
+  - Kill: 0
+    NickName: 
+  - Kill: 0
+    NickName: 
+  - Kill: 0
+    NickName: 
+  - Kill: 0
+    NickName: 
 --- !u!4 &1413188013
 Transform:
   m_ObjectHideFlags: 0
@@ -1014,6 +1031,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413188014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413188011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &1508328189 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1587334793972832883, guid: d9ca2973975f129489b28662f909088a, type: 3}
