@@ -92,6 +92,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
+    public void KillCountCheck(int KillCount,int ID)
+    {
+        Debug.Log("kill couuunt checker" + KillCount + "  " + ID);
+        PhotonNetwork.GetPhotonView(ID).GetComponent<PlayerController>().Kill_Count = KillCount;
+    }
+
     // Player Respawn after Death
     IEnumerator PlayerRespawn(PlayerController PlayerObject)
     {
@@ -109,12 +116,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIManager.instance.Pause.gameObject.SetActive(false);
 
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
-            Temp.GetComponent<PlayerController>().Kill_Count = data.Kill;
+            
             //UIManager.instance.Info.gameObject.SetActive(false);
             
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
-
+                Temp.GetComponent<PlayerController>().Kill_Count = data.Kill;
+                photonView.RPC("KillCountCheck", RpcTarget.All, data.Kill, Temp.GetComponent<PhotonView>().ViewID);
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
 
                 PlayerManager = Temp.GetComponent<PlayerController>();
@@ -123,6 +131,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
             }
+           
         }
         else
         {
