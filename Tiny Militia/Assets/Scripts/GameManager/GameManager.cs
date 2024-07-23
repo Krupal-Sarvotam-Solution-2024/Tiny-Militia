@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
                 Temp.GetComponent<PlayerController>().Kill_Count = data.Kill;
-                photonView.RPC("KillCountCheck", RpcTarget.All, data.Kill, Temp.GetComponent<PhotonView>().ViewID);
+                Temp.GetComponent<PhotonView>().RPC("KillCountCheck", RpcTarget.All, data.Kill, Temp.GetComponent<PhotonView>().ViewID);
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
 
                 PlayerManager = Temp.GetComponent<PlayerController>();
