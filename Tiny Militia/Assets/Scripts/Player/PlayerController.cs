@@ -9,6 +9,8 @@ using TMPro;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
+    #region All Variables
+ 
     [Space(5)]
     [Header("// Variables For Movements")]
     [Space(2)]
@@ -111,8 +113,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("// Variables for Score Counter")]
     [Space(2)]
     public int Kill_Count;
-    public int Score_Count;
+    public int Score_Count; 
 
+    #endregion
 
     #region Unity Predefine Method with Own Functionality
 
@@ -762,20 +765,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
             /* 
             * Add All Player Information 
             * Ex.1 Player Name                     Kill
-            *      Krupal                          10
-            *      Kaushik                         8
-            *      Tiny Militia                    6
-            *      Mini Militia                    4
+            *      Player1                          10
+            *      Player2                          08
+            *      Player3                          06
+            *      Player4                          04
             *      Tiny                            2
             *      Mini                            0
             *      
             *     ------------------------------------
-            *     NOTE :- Players Poaition is Set According to Their Kill Count
+            *     NOTE :- Players Position is Set According to Their Kill Count
             *     
             */
 
 
-
+            GameManager.Instance.data.Kill = Kill_Count;
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
@@ -1017,4 +1020,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     */
 
     #endregion
+}
+
+
+public class PlayersData
+{
+    public int Kill;
+    public string NickName;
 }
