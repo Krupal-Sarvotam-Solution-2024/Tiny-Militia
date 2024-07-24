@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [HideInInspector]
     public int Lifes = 3; // When players is in Survival Mode
-
-    public List<PlayersData> data = new List<PlayersData>();
     /* *-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----* */
 
     private void Awake()
@@ -108,18 +106,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             UIManager.instance.Pause.gameObject.SetActive(false);
 
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
-
-
-            for (int k = 0; k < PhotonNetwork.CurrentRoom.PlayerCount; k++)
-            {
-                if (Temp.GetComponent<PlayerController>().photonView.Controller.NickName == data[k].NickName)
-                {
-                    Debug.Log(Temp.GetComponent<PlayerController>().photonView.Controller.NickName);
-                    Temp.GetComponent<PlayerController>().Kill_Count = data[k].Kill;
-                    Debug.Log(Temp.GetComponent<PlayerController>().Kill_Count);
-                }
-
-            }
 
             if (Temp.GetComponent<PhotonView>().IsMine)
             {

@@ -777,14 +777,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             *     
             */
 
-
-            //GameManager.Instance.data.Kill = Kill_Count;
-            for (int k = 0;k < PhotonNetwork.CurrentRoom.PlayerCount;k++)
-            {
-                //PlayersData playerData = new PlayersData();
-                GameManager.Instance.data[k].NickName = allPlayer[k].photonView.Controller.NickName;
-                GameManager.Instance.data[k].Kill = allPlayer[k].Kill_Count;
-            }
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
