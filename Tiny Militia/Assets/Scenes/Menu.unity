@@ -12463,8 +12463,9 @@ MonoBehaviour:
   Servivalmode: {fileID: 1888478332}
   Playbutton: {fileID: 1036681428}
   Player_name: {fileID: 1578417002}
-  Playername_panel: {fileID: 2010300219}
   player_nametext: {fileID: 433567744}
+  Playername_panel: {fileID: 2010300219}
+  nameErrorText: {fileID: 0}
 --- !u!1 &924840901
 GameObject:
   m_ObjectHideFlags: 0
@@ -20290,7 +20291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2010300220
 RectTransform:
   m_ObjectHideFlags: 0

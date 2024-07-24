@@ -27,26 +27,11 @@ public class LoadingManager : MonoBehaviourPunCallbacks
 
     }
 
-    private void resultSucess(LoginResult obj)
-    {
-        Debug.Log("Login SucessFull");
-    }
-
-    private void resulterror(PlayFabError obj)
-    {
-        Debug.Log("login failed");
-        throw new System.NotImplementedException();
-    }
+   
 
     public override void OnConnectedToMaster()
     {
-        var requst = new LoginWithCustomIDRequest
-        {
-            CustomId = SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true
-
-        };
-        PlayFabClientAPI.LoginWithCustomID(requst, resultSucess, resulterror);
+        
         SceneManager.LoadScene("Menu");
         Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.");
 

@@ -8,6 +8,7 @@ using DG.Tweening;
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
+using System.Threading.Tasks;
 
 public class Menu : MonoBehaviour
 {
@@ -15,19 +16,19 @@ public class Menu : MonoBehaviour
 
     [SerializeField] private Transform Playbutton;
     [SerializeField] private TMP_InputField Player_name;
-    [SerializeField] private GameObject Playername_panel;
     [SerializeField] private TextMeshProUGUI player_nametext;
+    [SerializeField] private GameObject Playername_panel;
+    [SerializeField] private GameObject nameErrorText;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        if (PhotonNetwork.NickName == "")
+        var requst = new LoginWithCustomIDRequest
         {
+            CustomId = SystemInfo.deviceUniqueIdentifier,
+            CreateAccount = true
 
-            Playername_panel.SetActive(true);
-
-        }
-        Debug.Log(PhotonNetwork.NickName);
+        };
+        PlayFabClientAPI.LoginWithCustomID(requst, loginSuccess, PlayFab_Error);
     }
 
     public void playButton()
@@ -38,6 +39,7 @@ public class Menu : MonoBehaviour
         Servivalmode.DOMoveY(Playbutton.position.y, 1f);
 
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -46,14 +48,23 @@ public class Menu : MonoBehaviour
 
     public void NamingUser()
     {
-        PhotonNetwork.NickName = Player_name.text;
-        Playername_panel.SetActive(false);
-        player_nametext.text = PhotonNetwork.NickName;
-        var request = new UpdateUserTitleDisplayNameRequest
+        if (Player_name.text.Length > 3 || Player_name.text.Length < 15)
         {
-            DisplayName = Player_name.text
+            PhotonNetwork.NickName = Player_name.text;
+            Playername_panel.SetActive(false);
+            player_nametext.text = PhotonNetwork.NickName;
+            var request = new UpdateUserTitleDisplayNameRequest
+            {
+                DisplayName = Player_name.text
 
-        };PlayFabClientAPI.UpdateUserTitleDisplayName(request, NameData_addedSuccessfully, PlayFab_Error);
+            }; PlayFabClientAPI.UpdateUserTitleDisplayName(request, NameData_addedSuccessfully, PlayFab_Error);
+
+        }
+        else
+        {
+
+            nameErrorText.SetActive(true);
+        }
 
     }
 
@@ -70,7 +81,26 @@ public class Menu : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    
-}
+    private void loginSuccess(LoginResult obj)
+    {
+        string name;
+        name = null;
+        Debug.Log(obj.InfoResultPayload);
+        if (obj.InfoResultPayload != null)
+        {
+            name = obj.InfoResultPayload.PlayerProfile.DisplayName;
+        }
 
- 
+        if (name == null)
+        {
+            Playername_panel.SetActive(true);
+            PhotonNetwork.NickName = name;
+        }
+        else
+        {
+            Playername_panel.SetActive(false);
+        }
+        Debug.Log("Login Sucessfull");
+    }
+
+}
