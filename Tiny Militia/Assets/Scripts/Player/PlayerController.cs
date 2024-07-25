@@ -188,16 +188,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
 
                     float distance = Vector3.Distance(photonViews[j].gameObject.transform.position, this.gameObject.transform.position);
-                    photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(photonViews[j].gameObject.transform.position);
-                    if (distance > 40 || distance < 10)
+                    if (photonViews[i].gameObject.TryGetComponent<PlayerController>(out PlayerController obj))
                     {
-                        photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+                        obj.arrow[j].transform.LookAt(photonViews[j].gameObject.transform.position);
+                        if (distance > 40 || distance < 10)
+                        {
+                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+                        }
+                        else
+                        {
+                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1F / (distance * 2));
+                        }
                     }
-                    else
-                    {
-                        photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1F / (distance * 2));
-                    }
-
                 }
 
             }
@@ -462,13 +464,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // Flip character and gun based on aim direction
 
-        UIManager.instance.AimObject.transform.position = firePoint.transform.position;
+      //  UIManager.instance.AimObject.transform.position = firePoint.transform.position;
 
         if (aimDirection.x > 0)
         {
             player.leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
-            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 5f));
+         //   UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 5f));
 
 
             player.transform.localScale = new Vector3(-0.15f, 0.15f, 1);
@@ -477,7 +479,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             player.leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
-            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 6f));
+           // UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 6f));
 
 
             player.transform.localScale = new Vector3(0.15f, 0.15f, 1);
@@ -676,6 +678,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
+            Debug.Log("damage tager  " +Health_ID +" damage giver  "+ view.ViewID);
             PlayerController Health;
             Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
             Health.currentHealth -= damageAmount;
@@ -683,8 +686,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
             {
-                Health.Kill_Count++;
-                Die();
+               
+                Kill_Count++;
+                Debug.Log("im dying");
+                Health.Die();
             }
         }
         else
