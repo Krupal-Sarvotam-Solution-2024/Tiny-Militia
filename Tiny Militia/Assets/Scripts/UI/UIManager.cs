@@ -95,17 +95,30 @@ public class UIManager : MonoBehaviour
     }
     public void BombSwitch()
     {
-        int crrent_bombtype = (int)playerController.selectedbomb;
-        switch (crrent_bombtype)
+        int corrent_bombtype = (int)playerController.selectedbomb;
+       
+        for (int i = corrent_bombtype+1 % 3; i < playerController.bombsamount.Length; i++)
+        {
+            if(playerController.bombsamount[i] > 0)
+            {
+                corrent_bombtype = i;
+                break;
+            }
+
+        }
+
+        //playerController.selectedbomb = (corrent_bombtype)Bomb.bombtype;
+        switch (corrent_bombtype)
         {
             case 0:
-                playerController.selectedbomb = Bomb.bombtype.timebomb;
+                playerController.selectedbomb = Bomb.bombtype.explodebomb;
                 break;
             case 1:
-                playerController.selectedbomb = Bomb.bombtype.poisionbomb;
+                playerController.selectedbomb = Bomb.bombtype.timebomb;
                 break;
             case 2:
-                playerController.selectedbomb = Bomb.bombtype.explodebomb;
+                playerController.selectedbomb =Bomb.bombtype.poisionbomb;
+
                 break;
 
         }

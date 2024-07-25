@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public int currentGunIndex = 0;
     private int alternateGunIndex = -1;
     public int maxbomb;
-    private int explosivebomb = 3, timebomb = 0, poisenbomb = 0;
+    public int[] bombsamount;
     private int totoalmomb = 3;
     public Bomb.bombtype selectedbomb;
     public GameObject[] arrow;
@@ -588,18 +588,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (totoalmomb <= 0)
             return;
         totoalmomb--;
-        if (selectedbomb == Bomb.bombtype.explodebomb)
-        {
-            explosivebomb--;
-        }
-        else if (selectedbomb == Bomb.bombtype.timebomb)
-        {
-            timebomb--;
-        }
-        else if (selectedbomb == Bomb.bombtype.poisionbomb)
-        {
-            poisenbomb--;
-        }
+        bombsamount[(int)selectedbomb]--;
 
         PlayerController FirePOINT;
         if (PhotonNetwork.InRoom)
@@ -622,18 +611,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (totoalmomb >= 4)
             return;
         totoalmomb++;
-        if (type == Bomb.bombtype.explodebomb)
-        {
-            explosivebomb++;
-        }
-        else if (type == Bomb.bombtype.timebomb)
-        {
-            timebomb++;
-        }
-        else if (type == Bomb.bombtype.poisionbomb)
-        {
-            poisenbomb++;
-        }
+        bombsamount[(int)type]++;
+      
     }
 
     #endregion
@@ -844,13 +823,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         StopCoroutine(reload_co);
 
-        // Ensure final fillAmount is exactly 0
-
         UIManager.instance.ReloadImage.fillAmount = 0f;
 
         UIManager.instance.ReloadButton.interactable = true;
 
-        //UIManager.instance.ReloadImage.gameObject.SetActive(false);
 
         UIManager.instance.ReloadImage.fillAmount = 1;
 

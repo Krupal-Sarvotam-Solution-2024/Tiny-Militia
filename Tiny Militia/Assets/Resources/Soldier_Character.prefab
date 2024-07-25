@@ -1039,6 +1039,7 @@ MonoBehaviour:
   bomb: {fileID: 0}
   currentGunIndex: 0
   maxbomb: 0
+  bombsamount: 030000000000000000000000
   selectedbomb: 0
   arrow:
   - {fileID: 8480680010508388217}
