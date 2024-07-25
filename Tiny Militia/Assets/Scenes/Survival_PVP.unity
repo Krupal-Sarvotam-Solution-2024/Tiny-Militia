@@ -218,15 +218,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7083135498984061329, guid: c1c2409138736764d94908d597f12c81, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1c2409138736764d94908d597f12c81, type: 3}
+--- !u!114 &47817430 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6850146786124184412, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &240845359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,8 +1012,10 @@ MonoBehaviour:
   Timer: 10
   direction_Sound_Arrow: {fileID: 0}
   isRespawning: 0
+  isLifeLineOver: 0
   isDead: 0
   Lifes: 3
+  TempPlayer: {fileID: 0}
 --- !u!4 &1413188013
 Transform:
   m_ObjectHideFlags: 0
@@ -1112,17 +1121,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91f6aea0c8e46264f93b32c3b05b1773, type: 3}
---- !u!114 &1563284865 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7047356676665729658, guid: d9ca2973975f129489b28662f909088a, type: 3}
-  m_PrefabInstance: {fileID: 1978592056710772166}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1822104165 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
@@ -1283,7 +1281,7 @@ PrefabInstance:
       objectReference: {fileID: 608553677}
     - target: {fileID: 1106122756545828676, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GunSwitch
+      value: GunChange
       objectReference: {fileID: 0}
     - target: {fileID: 2154515472693255485, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Camera
@@ -1292,14 +1290,6 @@ PrefabInstance:
     - target: {fileID: 2175821404344068657, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_TagString
       value: joyStick_Aim
-      objectReference: {fileID: 0}
-    - target: {fileID: 2255136180253673506, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 608553677}
-    - target: {fileID: 2255136180253673506, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PauseGame
       objectReference: {fileID: 0}
     - target: {fileID: 4667477370517959083, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Pivot.x
@@ -1381,6 +1371,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5523869298458229254, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.61992
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523869298458229254, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.61992
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523869298458229254, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.61992
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523869298458229254, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -21.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5523869298458229254, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6021400271648513482, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_TagString
       value: joyStick_Movement
@@ -1393,14 +1403,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Zoom
       objectReference: {fileID: 0}
-    - target: {fileID: 7765987866614050757, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 608553677}
-    - target: {fileID: 7765987866614050757, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GunChange
-      objectReference: {fileID: 0}
     - target: {fileID: 8207764532521119303, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1409,10 +1411,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BombSwitch
       objectReference: {fileID: 0}
-    - target: {fileID: 8748422818422707640, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8794500964532771129, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1420,34 +1418,6 @@ PrefabInstance:
     - target: {fileID: 8794500964532771129, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PunchButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 608553677}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ReloadGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8824567586345032115, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8895049856590354318, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Name
@@ -1733,14 +1703,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4442634132940899081, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 608553677}
-    - target: {fileID: 4442634132940899081, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LeaveMatchButton
-      objectReference: {fileID: 0}
     - target: {fileID: 5210937033776386079, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1953,10 +1915,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 589049751}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
-      propertyPath: BombImage
-      value: 
-      objectReference: {fileID: 1563284865}
-    - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: LifeCount
       value: 
       objectReference: {fileID: 564243653}
@@ -1967,7 +1925,7 @@ PrefabInstance:
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: BombAmount
       value: 
-      objectReference: {fileID: 240845361}
+      objectReference: {fileID: 47817430}
     - target: {fileID: 6136101363808931736, guid: 748c7915cea779740be5f20eead2ea55, type: 3}
       propertyPath: LeaveMatch
       value: 

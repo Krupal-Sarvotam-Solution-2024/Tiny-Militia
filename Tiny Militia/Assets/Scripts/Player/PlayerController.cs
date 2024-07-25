@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private int alternateGunIndex = -1;
     public int maxbomb;
     public int[] bombsamount;
+    
     private int totoalmomb = 3;
     public Bomb.bombtype selectedbomb;
     public GameObject[] arrow;
