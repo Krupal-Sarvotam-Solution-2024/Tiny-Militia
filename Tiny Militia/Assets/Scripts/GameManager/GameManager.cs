@@ -30,10 +30,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool isRespawning; // Boolen for reducing the timing of respawn time for text
 
     [HideInInspector]
-    public bool isDead; // Boolen for checking that player life line is over not
+    public bool isLifeLineOver; // Boolen for checking that player life line is over not
+    
+    [HideInInspector]
+    public int isDead = 0; // Int for player death only 1 time
 
     [HideInInspector]
     public int Lifes = 3; // When players is in Survival Mode
+
+    public GameObject TempPlayer;
     /* *-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----* */
 
     private void Awake()
@@ -138,6 +143,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
 
             UIManager.instance.playerController = PlayerManager;
+
+            isDead = 0;
         }
     }
 
@@ -178,13 +185,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (isDead)
+        if (isLifeLineOver)
         {
             UIManager.instance.RespawnTime_Text.text = "Open Menu in " + RespawnTime.ToString("00") + " Second";
             RespawnTime -= Time.deltaTime;
             if (RespawnTime <= 0)
             {
-                isDead = false;
+                isLifeLineOver = false;
                 SceneManager.LoadScene("Menu");
                 RespawnTime = 4;
             }

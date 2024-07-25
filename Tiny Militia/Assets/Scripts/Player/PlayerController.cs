@@ -7,10 +7,10 @@ using Photon.Realtime;
 using TMPro;
 
 
-public class PlayerController : MonoBehaviourPunCallbacks 
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     #region All Variables
- 
+
     [Space(5)]
     [Header("// Variables For Movements")]
     [Space(2)]
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("// Variables for Score Counter")]
     [Space(2)]
     public int Kill_Count;
-    public int Score_Count; 
+    public int Score_Count;
 
     #endregion
 
@@ -130,8 +130,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Gun Gun = guns[currentGunIndex];
         Camera.main.orthographicSize = Gun.maxScope;
         UIManager.instance.AmmoInfo_text.text = Gun.currentAmmoInMagazine.ToString() + " / " + Gun.currentTotalAmmo.ToString();
+
         movementJoystick = GameObject.FindWithTag("joyStick_Movement").GetComponent<FixedJoystick>();
         aimJoystick = GameObject.FindWithTag("joyStick_Aim").GetComponent<FixedJoystick>();
+
         UpdateHealthImage();
 
         // Initialize all guns
@@ -150,6 +152,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         }
         StartCoroutine(AutoHealthRecovery());
+
+
+
     }
 
     // Update method for User Controls
@@ -169,26 +174,28 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     }
+
     public void ArrowDirectionShowing()
     {
 
-        for (int i = 0; i < PhotonNetwork.PhotonViews.Length; i++)
+        PhotonView[] photonViews = PhotonNetwork.PhotonViews;
+        for (int i = 0; i < photonViews.Length; i++)
         {
-            if (PhotonNetwork.PhotonViews[i].IsMine)
+            if (photonViews[i].IsMine)
             {
-                for (int j = 0; j < PhotonNetwork.PhotonViews.Length; j++)
+                for (int j = 0; j < photonViews.Length; j++)
                 {
 
-                    float distance = Vector3.Distance(PhotonNetwork.PhotonViews[j].gameObject.transform.position, this.gameObject.transform.position);
+                    float distance = Vector3.Distance(photonViews[j].gameObject.transform.position, this.gameObject.transform.position);
                     Debug.Log(distance);
-                    PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(PhotonNetwork.PhotonViews[j].gameObject.transform.position);
+                    photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(photonViews[j].gameObject.transform.position);
                     if (distance > 40 || distance < 10)
                     {
-                        PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(0, 82, 100, 0);
+                        photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
                     }
                     else
                     {
-                        PhotonNetwork.PhotonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(0, 82, 100, 5 / (distance * 2));
+                        photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1F / (distance * 2));
                     }
 
                 }
@@ -198,6 +205,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         }
     }
+
     // Collision Enter Method for CHecking the Player is in Which State
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -212,9 +220,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
             currentHealth -= botGun.damagePerBullet;
             UpdateHealthImage();
 
-            if (currentHealth <= 0)
+            if (currentHealth <= 0 && GameManager.Instance.isDead == 0)
             {
+
+                Debug.Log(GameManager.Instance.isDead);
+                GameManager.Instance.isDead = 1;
                 Die();
+                Debug.Log(GameManager.Instance.isDead);
+
             }
         }
 
@@ -272,28 +285,32 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<GunsData>().currentData.gunName == guns[0].gunName)
+        if (view.IsMine)
         {
-            if (guns[0].currentTotalAmmo < guns[0].maxAmmo)
+
+            if (collision.GetComponent<GunsData>().currentData.gunName == guns[0].gunName)
             {
-                guns[0].currentTotalAmmo = guns[0].maxAmmo;
-                UIManager.instance.AmmoInfo_text.text = guns[0].currentAmmoInMagazine.ToString() + " / " + guns[0].currentTotalAmmo.ToString();
+                if (guns[0].currentTotalAmmo < guns[0].maxAmmo)
+                {
+                    guns[0].currentTotalAmmo = guns[0].maxAmmo;
+                    UIManager.instance.AmmoInfo_text.text = guns[0].currentAmmoInMagazine.ToString() + " / " + guns[0].currentTotalAmmo.ToString();
+                }
             }
-        }
-        else if (collision.GetComponent<GunsData>().currentData.gunName == guns[1].gunName)
-        {
-            if (guns[1].currentTotalAmmo < guns[1].maxAmmo)
+            else if (collision.GetComponent<GunsData>().currentData.gunName == guns[1].gunName)
             {
-                guns[1].currentTotalAmmo = guns[1].maxAmmo;
-                UIManager.instance.AmmoInfo_text.text = guns[1].currentAmmoInMagazine.ToString() + " / " + guns[1].currentTotalAmmo.ToString();
+                if (guns[1].currentTotalAmmo < guns[1].maxAmmo)
+                {
+                    guns[1].currentTotalAmmo = guns[1].maxAmmo;
+                    UIManager.instance.AmmoInfo_text.text = guns[1].currentAmmoInMagazine.ToString() + " / " + guns[1].currentTotalAmmo.ToString();
+                }
             }
-        }
-        else if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
-            collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
-        {
-            UIManager.instance.GunChangeButton.gameObject.SetActive(true);
-            UIManager.instance.GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = collision.GetComponent<GunsData>().currentData.GunSprite;
-            UIManager.instance.changingGunData = collision.GetComponent<GunsData>();
+            else if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
+                collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
+            {
+                UIManager.instance.GunChangeButton.gameObject.SetActive(true);
+                UIManager.instance.GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = collision.GetComponent<GunsData>().currentData.GunSprite;
+                UIManager.instance.changingGunData = collision.GetComponent<GunsData>();
+            }
         }
     }
 
@@ -369,7 +386,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput);
             currentJetpackFuel -= jetpackFuelConsumptionRate * Time.deltaTime;
         }
-        else if (isGrounded)
+        else/* if (isGrounded)*/
         {
             currentJetpackFuel = Mathf.Min(jetpackFuel, currentJetpackFuel + jetpackFuelRechargeRate * Time.deltaTime);
         }
@@ -516,7 +533,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
-                             //   photonView.RPC("ShowingDirection", RpcTarget.All, view.ViewID);
+                                //   photonView.RPC("ShowingDirection", RpcTarget.All, view.ViewID);
                             }
                             else
                             {
@@ -553,9 +570,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
     }
-
-
-
 
     // Method for shooting in offilne and online mode
     [PunRPC]
@@ -783,21 +797,29 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             if (GameManager.Instance.Lifes != 0)
             {
-                GameManager.Instance.Lifes -= 1;
+                if (GameManager.Instance.isDead == 1)
+                {
+                    Debug.Log(GameManager.Instance.isDead);
 
-                UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
+                    GameManager.Instance.isDead = 2;
+                    Debug.Log(GameManager.Instance.isDead);
 
-                GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.transform.GetComponent<PlayerController>());
+                    GameManager.Instance.Lifes -= 1;
 
-                UIManager.instance.Pause.gameObject.SetActive(true);
+                    UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
 
-                UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+                    GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.transform.GetComponent<PlayerController>());
 
-                UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+                    UIManager.instance.Pause.gameObject.SetActive(true);
 
-                UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+                    UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
-                GameManager.Instance.isRespawning = true;
+                    UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                    UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+
+                    GameManager.Instance.isRespawning = true;
+                }
             }
             else
             {
@@ -809,12 +831,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 UIManager.instance.PauseExitButton.gameObject.SetActive(false);
 
-                GameManager.Instance.isDead = true;
+                GameManager.Instance.isLifeLineOver = true;
             }
-            GameObject Temp = Instantiate(gameObject);
+            GameObject Temp = Instantiate(GameManager.Instance.TempPlayer);
 
             Temp.transform.tag = "Player";
-
 
             Destroy(this.gameObject);
         }
@@ -1004,7 +1025,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #region Methods which is Secoandary for Photon Which is not In Use
 
 
-  
+
     #endregion
 }
 
