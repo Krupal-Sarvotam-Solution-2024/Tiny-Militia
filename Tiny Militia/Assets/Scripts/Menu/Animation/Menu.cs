@@ -25,7 +25,11 @@ public class Menu : MonoBehaviour
         var requst = new LoginWithCustomIDRequest
         {
             CustomId = SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true
+            CreateAccount = true,
+
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams {
+                GetPlayerProfile = true,
+            }
 
         };
         PlayFabClientAPI.LoginWithCustomID(requst, loginSuccess, PlayFab_Error);
@@ -86,7 +90,7 @@ public class Menu : MonoBehaviour
         string name;
         name = null;
         Debug.Log(obj.InfoResultPayload);
-        if (obj.InfoResultPayload != null)
+        if (obj.InfoResultPayload.PlayerProfile != null)
         {
             name = obj.InfoResultPayload.PlayerProfile.DisplayName;
         }
