@@ -1027,10 +1027,10 @@ MonoBehaviour:
   - {fileID: 8595090941047270994, guid: 74bd1c5ea69459d4d8c55d3506421c56, type: 3}
   - {fileID: 8595090941047270994, guid: fc9544ac7c6f0b4409b9d09299d3b8a7, type: 3}
   abletoShoot: 0
-  jetpackForce: 5
+  jetpackForce: 2
   jetpackFuel: 50
   jetpackFuelConsumptionRate: 6
-  jetpackFuelRechargeRate: 5
+  jetpackFuelRechargeRate: 6
   maxHealth: 100
   currentHealth: 0
   guns:

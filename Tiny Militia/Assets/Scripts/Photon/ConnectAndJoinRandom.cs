@@ -5,7 +5,8 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
- 
+using JetBrains.Annotations;
+
 public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
@@ -28,8 +29,8 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
             ConnectInUpdate = false;
             PhotonNetwork.ConnectUsingSettings();
-           
-         //   PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, "1", "cluster3");       // connecting to a specific cluster may be necessary, when regions get sharded and you support friends
+
+            //   PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, "1", "cluster3");       // connecting to a specific cluster may be necessary, when regions get sharded and you support friends
         }
 
         Debug.Log(PhotonNetwork.InRoom);
@@ -39,7 +40,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     // below, we implement some callbacks of PUN
     // you can find PUN's callbacks in the class PunBehaviour or in enum PhotonNetworkingMessage
 
-    
+
 
     public override void OnJoinedLobby()
     {
@@ -59,7 +60,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         Debug.LogError("Cause: " + cause);
     }
 
-    public  override void OnJoinedRoom()
+    public override void OnJoinedRoom()
     {
         view.RPC("PlayerJoined", RpcTarget.All);
         Debug.Log("player joined room");
@@ -67,20 +68,28 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-     //   PhotonNetwork.CreateRoom();
+        //   PhotonNetwork.CreateRoom();
     }
 
 
     [PunRPC]
     void PlayerJoined()
     {
-        GameObject Temp = Instantiate(PlayerInformation);
-        Temp.transform.parent = PlayersList.transform;
-        Temp.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
-        Temp.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[PhotonNetwork.PlayerList.Length - 1].NickName;
-        PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
+        for(int d = PlayersList.transform.childCount; d > 0;d--)
+        {
+            Debug.Log(PlayersList.transform.childCount);
+            Destroy(PlayersList.transform.GetChild(d-1).gameObject);
+        }
+        for (int k = 0; k < PhotonNetwork.PlayerList.Length; k++)
+        {
+            GameObject Temp = Instantiate(PlayerInformation);
+            Temp.transform.parent = PlayersList.transform;
+            Temp.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            Temp.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[k].NickName;
+            PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
+        }
         Debug.Log("Other Player Joined");
-        if(PhotonNetwork.CurrentRoom.PlayerCount==2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             //srart the time 
             Debug.Log("minimum player joined the room can go to play");
@@ -93,7 +102,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRandomRoom();
         Debug.Log("player is trying to join room");
-    } 
+    }
 
     IEnumerator GoToFight()
     {

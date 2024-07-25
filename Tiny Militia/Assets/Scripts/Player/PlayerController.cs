@@ -187,7 +187,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
 
                     float distance = Vector3.Distance(photonViews[j].gameObject.transform.position, this.gameObject.transform.position);
-                    Debug.Log(distance);
                     photonViews[i].gameObject.GetComponent<PlayerController>().arrow[j].transform.LookAt(photonViews[j].gameObject.transform.position);
                     if (distance > 40 || distance < 10)
                     {
@@ -382,11 +381,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         float moveInput = movementJoystick.Vertical;
         if (moveInput > 0 && !isGrounded && currentJetpackFuel > 0)
         {
-
             rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput);
             currentJetpackFuel -= jetpackFuelConsumptionRate * Time.deltaTime;
         }
-        else/* if (isGrounded)*/
+        else if (moveInput <= 0)
         {
             currentJetpackFuel = Mathf.Min(jetpackFuel, currentJetpackFuel + jetpackFuelRechargeRate * Time.deltaTime);
         }
