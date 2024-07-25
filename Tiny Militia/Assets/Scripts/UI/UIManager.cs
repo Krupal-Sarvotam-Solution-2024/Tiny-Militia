@@ -7,7 +7,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class UIManager : MonoBehaviour
     
     public Image GunImage; // 
 
-    public Image bomb_inage;
+    public Image BombImage;
 
     public Image ReloadImage;
     
@@ -256,11 +255,6 @@ public class UIManager : MonoBehaviour
         {
             //playerController.TakeDamage(playerController.guns[playerController.currentGunIndex].damagePerBullet * 2,);
         }
-    }
-
-    public void BombChange()
-    {
-
     }
 
     public void LeaveMatchButton()

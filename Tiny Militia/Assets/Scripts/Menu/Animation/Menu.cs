@@ -19,10 +19,11 @@ public class Menu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI player_nametext;
     [SerializeField] private GameObject Playername_panel;
     [SerializeField] private GameObject nameErrorText;
+    
 
     private void Awake()
     {
-        var requst = new LoginWithCustomIDRequest
+        var request = new LoginWithCustomIDRequest
         {
             CustomId = SystemInfo.deviceUniqueIdentifier,
             CreateAccount = true,
@@ -32,7 +33,7 @@ public class Menu : MonoBehaviour
             }
 
         };
-        PlayFabClientAPI.LoginWithCustomID(requst, loginSuccess, PlayFab_Error);
+        PlayFabClientAPI.LoginWithCustomID(request, loginSuccess, PlayFab_Error);
     }
 
     public void playButton()
@@ -99,10 +100,13 @@ public class Menu : MonoBehaviour
         {
             Playername_panel.SetActive(true);
             PhotonNetwork.NickName = name;
+
         }
         else
         {
+            PhotonNetwork.NickName = name;
             Playername_panel.SetActive(false);
+            player_nametext.text = name;
         }
         Debug.Log("Login Sucessfull");
     }

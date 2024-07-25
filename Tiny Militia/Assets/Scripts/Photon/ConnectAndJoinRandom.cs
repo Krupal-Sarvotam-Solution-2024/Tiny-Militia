@@ -16,6 +16,9 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     /// <summary>if we don't want to connect in Start(), we have to "remember" if we called ConnectUsingSettings()</summary>
     private bool ConnectInUpdate = true;
     public PhotonView view;
+    public GameObject PlayerInformation;
+    public GameObject PlayersList;
+    public TextMeshProUGUI PlayerCount;
 
     public virtual void Update()
     {
@@ -71,6 +74,11 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     [PunRPC]
     void PlayerJoined()
     {
+        GameObject Temp = Instantiate(PlayerInformation);
+        Temp.transform.parent = PlayersList.transform;
+        Temp.transform.localScale = new Vector3(0.8f,0.8f,0.8f);
+        Temp.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[PhotonNetwork.PlayerList.Length - 1].NickName;
+        PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
         Debug.Log("Other Player Joined");
         if(PhotonNetwork.CurrentRoom.PlayerCount==2)
         {
