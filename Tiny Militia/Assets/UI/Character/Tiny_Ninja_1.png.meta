@@ -1,0 +1,279 @@
+fileFormatVersion: 2
+guid: 546d61ad054f46242bf1cf77d3913b5a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tiny_Ninja_1_0
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 25
+        width: 559
+        height: 812
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones:
+      - name: bone_1
+        guid: 60dcb0a8063a6cf4cac9840c39e43ca1
+        position: {x: 139.80359, y: 134.37296, z: 0}
+        rotation: {x: 0, y: 0, z: -0.695858, w: 0.7181794}
+        length: 114.195145
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4278190335
+      - name: bone_2
+        guid: cb9c912bdfcf0f349a7fca7aeca62e17
+        position: {x: 432.95862, y: 122.3584, z: 0}
+        rotation: {x: 0, y: 0, z: -0.6723313, w: 0.74025047}
+        length: 100.18292
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4278255615
+      - name: bone_3
+        guid: 243e1e7d289a0f04f9a980e44ad8fced
+        position: {x: 148.70145, y: 135.02602, z: 0}
+        rotation: {x: 0, y: 0, z: -0.014436332, w: 0.9998958}
+        length: 277.99304
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4278255360
+      - name: bone_4
+        guid: f98f9d05841ece340b1d753288b7d598
+        position: {x: 37.332443, y: 129.25412, z: 0}
+        rotation: {x: 0, y: 0, z: 0.55156356, w: 0.83413285}
+        length: 181.32365
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4294967040
+      - name: bone_5
+        guid: 6e0c8d35806fd434b8871b943d94e079
+        position: {x: 181.32367, y: -0.0000013364643, z: 0}
+        rotation: {x: 0, y: 0, z: 0.10867415, w: 0.99407744}
+        length: 101.5659
+        parentId: 3
+        color:
+          serializedVersion: 2
+          rgba: 4294901760
+      - name: bone_6
+        guid: ecb0ac2931ff0ae4e86849a3d8c933d5
+        position: {x: 519.2331, y: 144.34122, z: 0}
+        rotation: {x: 0, y: 0, z: 0.77431875, w: 0.63279575}
+        length: 169.35027
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4294902015
+      - name: bone_7
+        guid: fee4ac10d8b4b3f4b8b978a64cfe56a0
+        position: {x: 169.35028, y: -0.000005165789, z: 0}
+        rotation: {x: 0, y: 0, z: 0.054502297, w: 0.9985137}
+        length: 103.42544
+        parentId: 5
+        color:
+          serializedVersion: 2
+          rgba: 4278223103
+      - name: bone_8
+        guid: a9119515cbff8c94ab8d92d1751d72ff
+        position: {x: 305.00385, y: 382.65952, z: 0}
+        rotation: {x: 0, y: 0, z: 0.7201657, w: 0.69380206}
+        length: 404.89215
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4278255488
+      - name: bone_9
+        guid: a23ac1f3bbaac8340b39f323246ac2dd
+        position: {x: 404.89218, y: -0.00005236927, z: 0}
+        rotation: {x: 0, y: 0, z: 0.77353376, w: 0.63375515}
+        length: 174.30945
+        parentId: 7
+        color:
+          serializedVersion: 2
+          rgba: 4286643968
+      - name: bone_10
+        guid: 41e707ba263b2a14fb6d91752334d06e
+        position: {x: 305.5843, y: 371.0495, z: 0}
+        rotation: {x: 0, y: 0, z: -0.6948764, w: 0.7191292}
+        length: 236.98473
+        parentId: -1
+        color:
+          serializedVersion: 2
+          rgba: 4294934528
+      spriteID: 05c08f3d11f80e24bbda9b28d50c515b
+      internalID: -295853853
+      vertices:
+      - {x: 0, y: 0}
+      - {x: 559, y: 0}
+      - {x: 0, y: 812}
+      - {x: 559, y: 812}
+      indices: 000000000200000001000000010000000200000003000000
+      edges:
+      - {x: 0, y: 1}
+      - {x: 0, y: 2}
+      - {x: 1, y: 3}
+      - {x: 2, y: 3}
+      weights:
+      - weight[0]: 0
+        weight[1]: 0
+        weight[2]: 0
+        weight[3]: 0
+        boneIndex[0]: 0
+        boneIndex[1]: 0
+        boneIndex[2]: 0
+        boneIndex[3]: 0
+      - weight[0]: 0
+        weight[1]: 0
+        weight[2]: 0
+        weight[3]: 0
+        boneIndex[0]: 0
+        boneIndex[1]: 0
+        boneIndex[2]: 0
+        boneIndex[3]: 0
+      - weight[0]: 0
+        weight[1]: 0
+        weight[2]: 0
+        weight[3]: 0
+        boneIndex[0]: 0
+        boneIndex[1]: 0
+        boneIndex[2]: 0
+        boneIndex[3]: 0
+      - weight[0]: 0
+        weight[1]: 0
+        weight[2]: 0
+        weight[3]: 0
+        boneIndex[0]: 0
+        boneIndex[1]: 0
+        boneIndex[2]: 0
+        boneIndex[3]: 0
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Tiny_Ninja_1_0: -295853853
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

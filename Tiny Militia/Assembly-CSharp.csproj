@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Assets\Joystick\Hyper casual mobile GUI\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
-    <Compile Include="Assets\Scripts\Menu\Animation\Menu.cs" />
     <Compile Include="Assets\Joystick\Hyper casual mobile GUI\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\Joystick\Hyper casual mobile GUI\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\Guns\GunsData.cs" />
     <Compile Include="Assets\Scripts\Guns\Gun.cs" />
+    <Compile Include="Assets\Scripts\Menu\Menu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
