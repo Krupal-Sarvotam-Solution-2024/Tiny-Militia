@@ -63,15 +63,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI RespawnTime_Text;
 
     public TextMeshProUGUI BombAmount;
-    public Image switchbombimage;
-    public Image throughBombImage;
 
     public PlayerController playerController;
 
     [HideInInspector]
     public GunsData changingGunData;
 
-    [SerializeField] private Sprite[] allbombsprite; 
 
 
 
@@ -98,21 +95,17 @@ public class UIManager : MonoBehaviour
     public void BombSwitch()
     {
         int corrent_bombtype = (int)playerController.selectedbomb;
-
-        bool bombreset = true;
-        for (int i = corrent_bombtype +1 ; i < playerController.bombsamount.Length; i++)
+       
+        for (int i = corrent_bombtype+1 % 3; i < playerController.bombsamount.Length; i++)
         {
             if(playerController.bombsamount[i] > 0)
             {
                 corrent_bombtype = i;
-                bombreset = false;
                 break;
             }
 
-
         }
-        if (bombreset)
-            corrent_bombtype = 0;
+
         //playerController.selectedbomb = (corrent_bombtype)Bomb.bombtype;
         switch (corrent_bombtype)
         {
@@ -127,7 +120,8 @@ public class UIManager : MonoBehaviour
                 break;
 
         }
-        UI_Updates();
+
+
 
 
     }
@@ -170,7 +164,6 @@ public class UIManager : MonoBehaviour
         {
             playerController.ThrowBomb(view.ViewID);
         }
-        UI_Updates();
       //  BombAmount.text = playerController.bom
     }
 
@@ -264,7 +257,7 @@ public class UIManager : MonoBehaviour
             //playerController.TakeDamage(playerController.guns[playerController.currentGunIndex].damagePerBullet * 2,);
         }
     }
-    
+
     public void LeaveMatchButton()
     {
         Time.timeScale = 1f;
@@ -280,9 +273,6 @@ public class UIManager : MonoBehaviour
 
     public void UI_Updates()
     {
-        throughBombImage.sprite = allbombsprite[(int)playerController.selectedbomb];
-        switchbombimage.sprite = allbombsprite[(int)playerController.selectedbomb];
-        BombAmount.text = "X" + playerController.bombsamount[(int)playerController.selectedbomb];
         AmmoInfo_text.text = playerController.guns[playerController.currentGunIndex].currentAmmoInMagazine.ToString() + " / " + playerController.guns[playerController.currentGunIndex].currentTotalAmmo.ToString();
         CurrentGunImage.GetComponent<Image>().sprite = playerController.guns[playerController.currentGunIndex].GunSprite;
         ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";
