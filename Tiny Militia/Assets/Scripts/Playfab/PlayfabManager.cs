@@ -10,6 +10,7 @@ public class PlayfabManager : MonoBehaviour
 {
     public static PlayfabManager Instance;
 
+    
 
     private void Awake()
     {
@@ -32,9 +33,9 @@ public class PlayfabManager : MonoBehaviour
     void OnDataRecived(GetUserDataResult result)
     {
         Debug.Log("Recived user data!");
-        if(result.Data != null && result.Data.ContainsKey("HighScore"))
+        if (result.Data != null && result.Data.ContainsKey("HighScore"))
         {
-            DataShow.Instance. SetApperanceHighScore(int.Parse(result.Data["HighScore"].Value));
+            DataShow.Instance.SetApperanceHighScore(int.Parse(result.Data["HighScore"].Value));
         }
 
     }
@@ -45,7 +46,8 @@ public class PlayfabManager : MonoBehaviour
         {
             Data = new Dictionary<string, string>
                 {
-                    {"HighScore", HighScore.ToString() }
+                    {"HighScore", HighScore.ToString() },
+                    {"TotalKill", HighScore.ToString() }
                 }
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
