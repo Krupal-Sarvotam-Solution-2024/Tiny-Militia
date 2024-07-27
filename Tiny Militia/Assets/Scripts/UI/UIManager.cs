@@ -231,9 +231,11 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            PlayfabManager.Instance.GetApperance();
+
             Score.text = playerController.Score_Count.ToString();
             Kill.text = playerController.Kill_Count.ToString();
-            High_Score.text = PlayerPrefs.GetInt("HighScore").ToString();
+            High_Score.text = DataShow.Instance.High_Score_Count.ToString();
             Time.timeScale = 0;
             Pause.gameObject.SetActive(true);
             PauseExitButton.gameObject.SetActive(true);

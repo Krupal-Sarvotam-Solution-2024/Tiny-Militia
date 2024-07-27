@@ -15,7 +15,7 @@ MonoBehaviour:
   GunSprite: {fileID: 21300000, guid: bad7d6cc530e7b34f9d27a3346a64d58, type: 3}
   gunName: MP5
   gunType: SMG
-  damagePerBullet: 6
+  damagePerBullet: 100
   damageType: Single
   reloadTime: 3
   magazineSize: 50
@@ -23,6 +23,6 @@ MonoBehaviour:
   maxScope: 9
   shootCooldown: 0.1
   ObjectTag: Gun_MP5
-  currentAmmoInMagazine: 399
-  currentTotalAmmo: 400
-  lastShotTime: 3.8634574
+  currentAmmoInMagazine: 27
+  currentTotalAmmo: 324
+  lastShotTime: 99.92749

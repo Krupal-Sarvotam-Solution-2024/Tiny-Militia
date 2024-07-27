@@ -18,7 +18,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private Transform battlebutton, customBattle, Servivalmode;
     [SerializeField] private Transform Playbutton;
     [SerializeField] private TMP_InputField Player_name;
-    [SerializeField] private TextMeshProUGUI player_nametext;
+    [SerializeField] public TextMeshProUGUI player_nametext;
     [SerializeField] private GameObject Playername_panel;
     [SerializeField] private GameObject nameErrorText;
 
@@ -68,7 +68,7 @@ public class Menu : MonoBehaviour
             player_nametext.text = PhotonNetwork.NickName;
             var request = new UpdateUserTitleDisplayNameRequest
             {
-                DisplayName = Player_name.text
+                DisplayName = Player_name.text,
 
             }; PlayFabClientAPI.UpdateUserTitleDisplayName(request, NameData_addedSuccessfully, PlayFab_Error);
             nameErrorText.SetActive(false);
@@ -121,7 +121,8 @@ public class Menu : MonoBehaviour
 
     public void ProfilePageOpen()
     {
-        PlayfabManager.Instance.ProfileData_Showing();
+        DataShow.Instance.SetApperancePlayerName();
+        PlayfabManager.Instance.GetApperance();
     }
 
 }

@@ -65,6 +65,7 @@
     <Compile Include="Assets\Joystick\Hyper casual mobile GUI\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\Joystick\Hyper casual mobile GUI\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Playfab\DataShow.cs" />
     <Compile Include="Assets\Scripts\Photon\ConnectAndJoinRandom.cs" />
     <Compile Include="Assets\Scripts\Menu\RoomGenarator.cs" />
     <Compile Include="Assets\Scripts\Bot Scripts\BotSpawner.cs" />

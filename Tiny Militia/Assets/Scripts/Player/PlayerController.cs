@@ -5,6 +5,8 @@ using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.SocialPlatforms.Impl;
 
 
 public class PlayerController : MonoBehaviourPunCallbacks
@@ -778,6 +780,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
         else
         {
+            UIManager.instance.Score.text = UIManager.instance.playerController.Score_Count.ToString();
+            UIManager.instance.Kill.text = UIManager.instance.playerController.Kill_Count.ToString();
+            UIManager.instance.High_Score.text = DataShow.Instance.High_Score_Count.ToString();
             if (GameManager.Instance.Lifes != 0)
             {
                 if (GameManager.Instance.isDead == 1)
@@ -813,6 +818,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
                 UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+
 
                 GameManager.Instance.isLifeLineOver = true;
             }

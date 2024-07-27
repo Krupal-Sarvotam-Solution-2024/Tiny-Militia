@@ -89,12 +89,20 @@ public class BotController : MonoBehaviour
     {
         // Handle bot death logic here (e.g., play death animation, spawn particles)
         PlayerController player;
+       
         player = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerController>();
+        
         player.Kill_Count += 1;
+        
         player.Score_Count += DeathScore;
-        if (PlayerPrefs.GetInt("HighScore") < player.Score_Count)
-        {
-            PlayerPrefs.SetInt("HighScore",player.Score_Count);
+
+        if (DataShow.Instance.High_Score_Count < player.Score_Count)
+        {     
+            UIManager.instance.High_Score.text = player.Score_Count.ToString();
+           
+            DataShow.Instance.SetApperanceHighScore(player.Score_Count);
+            
+            PlayfabManager.Instance.SaveApperance(player.Score_Count);// High Score,
         }
         Destroy(gameObject);
     }

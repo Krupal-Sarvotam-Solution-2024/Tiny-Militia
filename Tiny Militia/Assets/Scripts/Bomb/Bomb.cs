@@ -82,7 +82,6 @@ public class Bomb : MonoBehaviour
             foreach (var item in allplayer)
             {
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
-                Debug.Log(Distance);
                 if (Distance < range)
                 {
                     float damageCount = damage / Distance;

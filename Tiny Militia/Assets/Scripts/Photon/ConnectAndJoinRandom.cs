@@ -33,7 +33,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
             //   PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, "1", "cluster3");       // connecting to a specific cluster may be necessary, when regions get sharded and you support friends
         }
 
-        Debug.Log(PhotonNetwork.InRoom);
     }
 
 
