@@ -35,34 +35,71 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log("Recived user data!");
         if (result.Data != null && result.Data.ContainsKey("HighScore"))
         {
-            DataShow.Instance.SetApperanceHighScore(int.Parse(result.Data["HighScore"].Value));
+            DataShow.Instance.Set_and_Show_ApperanceHighScore(int.Parse(result.Data["HighScore"].Value));
+        }
+
+        if (result.Data != null && result.Data.ContainsKey("Total_Matches"))
+        {
+            DataShow.Instance.Set_and_Show_ApperanceTotalMatches(int.Parse(result.Data["Total_Matches"].Value));
+
+        }
+
+        if (result.Data != null && result.Data.ContainsKey("Total_Deaths"))
+        {
+            DataShow.Instance.Set_and_Show_ApperanceTotalDeaths(int.Parse(result.Data["Total_Deaths"].Value));
+
         }
 
     }
 
-    public void SaveApperance(int HighScore)
+    // Save the HighScore Data to the Server
+    public void SaveApperance_HighScore(int HighScore)
     {
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>
                 {
                     {"HighScore", HighScore.ToString() },
-                    {"TotalKill", HighScore.ToString() }
                 }
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
     }
 
+    // Save the Total Match Played by User in Server
+    public void SaveApperance_TotalMatches(int TotalMatches)
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+                {
+                    {"Total_Matches", TotalMatches.ToString() },
+                }
+        };
+        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+    }
+
+    // SAVE the Total Death Count of User
+    public void SaveApperance_TotalDeath(int TotalDeaths)
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+                {
+                    {"Total_Deaths", TotalDeaths.ToString() },
+                }
+        };
+        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+    }
+    
+    // When Getting Error on Get Data From Server
     private void OnError(PlayFabError error)
     {
-        Debug.Log("Data didn't Send Successfully");
         throw new NotImplementedException();
     }
 
+    // When Get Data Successfully From Server
     void OnDataSend(UpdateUserDataResult result)
     {
-        Debug.Log("Data send successfully");
+        Debug.Log("Result of Getting Data :\n" + result);
     }
-
-
 }

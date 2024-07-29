@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public PlayerController PlayerManager; // Player Controller
 
-    public float Timer = 1000; // Timer which Selected by User For Multiplaying
+    public float Timer; // Timer which Selected by User For Multiplaying
 
     float RespawnTime = 4; // Float for Respawn time text
 
@@ -48,10 +48,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        Timer = DataShow.Instance.GameTime;
         MainCamera = Camera.main;
         if (PhotonNetwork.InRoom)
         {
-            StartCoroutine(GameTimer(1000));
+            StartCoroutine(GameTimer(Timer));
         }
         playerSpawn();
     }
@@ -153,6 +154,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         isTiming = true;
         yield return new WaitForSeconds(time);
+        PhotonNetwork.LeaveRoom();
         isTiming = false;
         SceneManager.LoadScene("Menu");
     }

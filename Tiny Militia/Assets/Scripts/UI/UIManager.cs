@@ -19,45 +19,45 @@ public class UIManager : MonoBehaviour
     public List<GameObject> PlayersData;
 
     public Image boosterLevelImage; // Player Booster
-    
+
     public Image healthImage; // Player Health
-    
+
     public Image GunImage; // 
 
     public Image BombImage;
 
     public Image ReloadImage;
-    
+
     public Image CurrentGunImage;
-    
+
     public Button ReloadButton;
-    
+
     public Button GunChangeButton;
 
     public Button PauseExitButton;
 
     public Button LeaveMatch;
-    
+
     public int GunIndex;
-      
+
     public Canvas Pause;
 
     public Canvas Info;
 
     public TextMeshProUGUI killing_text; // Text Which Show Who killed Whom
-    
+
     public TextMeshProUGUI AmmoInfo_text;
-    
+
     public TextMeshProUGUI ScopeText;
-    
+
     public TextMeshProUGUI Timer;
-    
+
     public TextMeshProUGUI LifeCount;
-    
+
     public TextMeshProUGUI Score;
-    
+
     public TextMeshProUGUI Kill;
-    
+
     public TextMeshProUGUI High_Score;
 
     public TextMeshProUGUI RespawnTime_Text;
@@ -95,10 +95,10 @@ public class UIManager : MonoBehaviour
     public void BombSwitch()
     {
         int corrent_bombtype = (int)playerController.selectedbomb;
-       
-        for (int i = corrent_bombtype+1 % 3; i < playerController.bombsamount.Length; i++)
+
+        for (int i = corrent_bombtype + 1 % 3; i < playerController.bombsamount.Length; i++)
         {
-            if(playerController.bombsamount[i] > 0)
+            if (playerController.bombsamount[i] > 0)
             {
                 corrent_bombtype = i;
                 break;
@@ -116,7 +116,7 @@ public class UIManager : MonoBehaviour
                 playerController.selectedbomb = Bomb.bombtype.timebomb;
                 break;
             case 2:
-                playerController.selectedbomb =Bomb.bombtype.poisionbomb;
+                playerController.selectedbomb = Bomb.bombtype.poisionbomb;
                 break;
 
         }
@@ -164,7 +164,7 @@ public class UIManager : MonoBehaviour
         {
             playerController.ThrowBomb(view.ViewID);
         }
-      //  BombAmount.text = playerController.bom
+        //  BombAmount.text = playerController.bom
     }
 
     public void GunSwitch()
@@ -191,17 +191,17 @@ public class UIManager : MonoBehaviour
         Gun TempGunData;
 
         TempGunData = playerController.guns[playerController.currentGunIndex];
-        
+
         playerController.guns[playerController.currentGunIndex] = changingGunData.currentData;
-        
+
         changingGunData.currentData = TempGunData;
 
         Gun currentGun = playerController.guns[playerController.currentGunIndex];
-        
+
         playerController.leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
 
         GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = changingGunData.currentData.GunSprite;
-        
+
         UI_Updates();
     }
 
@@ -243,7 +243,7 @@ public class UIManager : MonoBehaviour
             LeaveMatch.gameObject.SetActive(true);
         }
     }
-        
+
     public void PunchButton()
     {
         PhotonView view = playerController.view;
@@ -262,9 +262,16 @@ public class UIManager : MonoBehaviour
 
     public void LeaveMatchButton()
     {
-        Time.timeScale = 1f;
-
-        SceneManager.LoadScene("Menu");
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            SceneManager.LoadScene("Menu");
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     public void ContinueMatch()

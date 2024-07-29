@@ -100,9 +100,9 @@ public class BotController : MonoBehaviour
         {     
             UIManager.instance.High_Score.text = player.Score_Count.ToString();
            
-            DataShow.Instance.SetApperanceHighScore(player.Score_Count);
+            DataShow.Instance.Set_and_Show_ApperanceHighScore(player.Score_Count);
             
-            PlayfabManager.Instance.SaveApperance(player.Score_Count);// High Score,
+            PlayfabManager.Instance.SaveApperance_HighScore(player.Score_Count);// High Score,
         }
         Destroy(gameObject);
     }

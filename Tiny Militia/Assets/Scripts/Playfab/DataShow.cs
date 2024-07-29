@@ -6,13 +6,14 @@ public class DataShow : MonoBehaviour
 {
     public static DataShow Instance;
 
-    public int High_Score_Count;//
-    public int Total_Kill_Count;//
-    public int Total_Death_Count;//
-    public int Win_Matches_Count;
-    public int Total_Matches_Count;
-    public int KD_Count;
-    public int Rank_Count;
+    public int High_Score_Count;    // Set to the Server Successfully
+    public int Total_Kill_Count;    // Not Set Yet
+    public int Total_Death_Count;   // Not Set Yet
+    public int Win_Matches_Count;   // Not Set Yet
+    public int Total_Matches_Count; // Set to the Server Successfully
+    public int KD_Count;            // Not Set Yet
+    public int Rank_Count;          // Not Set Yet
+    public float GameTime;
 
 
     private void Awake()
@@ -28,52 +29,52 @@ public class DataShow : MonoBehaviour
         }
     }
 
-   
-    // For High Score
-    public void SetApperanceHighScore(int HighScore)
+    // For Showing High Score
+    public void Set_and_Show_ApperanceHighScore(int HighScore)
     {
         Menu.Instance.High_Score.text = HighScore.ToString();
         High_Score_Count = HighScore;
     }
 
-    // For Total Kills
-    public void SetApperanceTotalKills(int TotalKills)
+    // For Showing Total Kills
+    public void Set_and_Show_ApperanceTotalKills(int TotalKills)
     {
         Menu.Instance.Total_KillCount.text = TotalKills.ToString();
         Total_Kill_Count = TotalKills;
     }
 
-    // For Total Deaths
-    public void SetApperanceTotalDeaths(int TotalDeaths)
+    // For Showing Total Deaths
+    public void Set_and_Show_ApperanceTotalDeaths(int TotalDeaths)
     {
-        Menu.Instance.High_Score.text = TotalDeaths.ToString();
+        Menu.Instance.Total_DeathCount.text = TotalDeaths.ToString();
         Total_Death_Count = TotalDeaths;
     }
 
-    // For Total Win Matches
-    public void SetApperanceTotalWinMatches(int TotalWinMatches)
+    // For Showing Total Win Matches
+    public void Set_and_Show_ApperanceTotalWinMatches(int TotalWinMatches)
     {
         Menu.Instance.Win_Matches.text = TotalWinMatches.ToString();
         Win_Matches_Count = TotalWinMatches;
     }
 
-    // For Total Matches
-    public void SetApperanceTotalMatches(int TotalMatches)
+    // For Showing Total Matches
+    public void Set_and_Show_ApperanceTotalMatches(int TotalMatches)
     {
         Menu.Instance.Total_Matches.text = TotalMatches.ToString();
         Total_Matches_Count = TotalMatches;
     }
 
-    // For KD Count
-    public void SetApperanceKD(int KD)
+    // For Showing KD Count
+    public void Set_and_Show_ApperanceKD(int KD)
     {
         Menu.Instance.KD_ratio.text = KD.ToString();
         KD_Count = KD;
     }
 
-    // For Player Name
-    public void SetApperancePlayerName()
+    // For Showing Player Name
+    public void Set_and_Show_ApperancePlayerName()
     {
         Menu.Instance.PlayerName.text = Menu.Instance.player_nametext.text;
     }
+
 }

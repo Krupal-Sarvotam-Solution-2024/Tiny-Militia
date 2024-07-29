@@ -48,6 +48,7 @@ public class Menu : MonoBehaviour
 
         };
         PlayFabClientAPI.LoginWithCustomID(request, loginSuccess, PlayFab_Error);
+
     }
 
     public void playButton()
@@ -117,12 +118,13 @@ public class Menu : MonoBehaviour
             Playername_panel.SetActive(false);
             player_nametext.text = name;
         }
+        PlayfabManager.Instance.GetApperance();
     }
 
     public void ProfilePageOpen()
     {
-        DataShow.Instance.SetApperancePlayerName();
         PlayfabManager.Instance.GetApperance();
+        DataShow.Instance.Set_and_Show_ApperancePlayerName();
     }
 
 }

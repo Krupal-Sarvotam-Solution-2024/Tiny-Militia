@@ -776,6 +776,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             *     
             */
 
+            DataShow.Instance.Total_Death_Count++;
+            PlayfabManager.Instance.SaveApperance_TotalDeath(DataShow.Instance.Total_Death_Count);
             PhotonNetwork.Destroy(this.gameObject);
         }
         else

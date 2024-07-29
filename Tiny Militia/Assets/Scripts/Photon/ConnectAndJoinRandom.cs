@@ -100,14 +100,16 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public void Battle()
     {
         PhotonNetwork.JoinRandomRoom();
+        DataShow.Instance.GameTime = 300f;
         Debug.Log("player is trying to join room");
     }
 
     IEnumerator GoToFight()
     {
         yield return new WaitForSeconds(3f);
+        DataShow.Instance.Total_Matches_Count++;
+        PlayfabManager.Instance.SaveApperance_TotalMatches(DataShow.Instance.Total_Matches_Count);
         SceneManager.LoadScene("Survival_PVP");
-
     }
 
     public void SurvivalOpen()
