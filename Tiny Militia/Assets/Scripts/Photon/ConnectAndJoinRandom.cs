@@ -20,17 +20,25 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public GameObject PlayerInformation;
     public GameObject PlayersList;
     public TextMeshProUGUI PlayerCount;
+    bool isMatchMaking;
+    float MatchMakingTime = 3f;
 
     public virtual void Update()
     {
         if (ConnectInUpdate && AutoConnect && !PhotonNetwork.IsConnected)
         {
-            Debug.Log("Update() was called by Unity. Scene is loaded. Let's connect to the Photon Master Server. Calling: PhotonNetwork.ConnectUsingSettings();");
-
             ConnectInUpdate = false;
             PhotonNetwork.ConnectUsingSettings();
-
-            //   PhotonNetwork.ConnectToRegion(CloudRegionCode.eu, "1", "cluster3");       // connecting to a specific cluster may be necessary, when regions get sharded and you support friends
+        }
+        if (isMatchMaking == true)
+        {
+            MatchMakingTime -= Time.deltaTime;
+            Menu.Instance.MatchmakingTime_text.text = "Match Start in Just " + MatchMakingTime.ToString("00") + " Second";
+        }
+        else
+        {
+            MatchMakingTime = 3;
+            Menu.Instance.MatchmakingTime_text.text = "Finding other players";
         }
 
     }
@@ -62,7 +70,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         view.RPC("PlayerJoined", RpcTarget.All);
-        Debug.Log("player joined room");
     }
 
     public void CreateRoom()
@@ -74,26 +81,28 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     [PunRPC]
     void PlayerJoined()
     {
-        for(int d = PlayersList.transform.childCount; d > 0;d--)
+        for (int d = PlayersList.transform.childCount; d > 0; d--)
         {
             Debug.Log(PlayersList.transform.childCount);
-            Destroy(PlayersList.transform.GetChild(d-1).gameObject);
+            Destroy(PlayersList.transform.GetChild(d - 1).gameObject);
         }
+
         for (int k = 0; k < PhotonNetwork.PlayerList.Length; k++)
         {
             GameObject Temp = Instantiate(PlayerInformation);
+
             Temp.transform.parent = PlayersList.transform;
+
             Temp.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
             Temp.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[k].NickName;
+
             PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
         }
-        Debug.Log("Other Player Joined");
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-        {
-            //srart the time 
-            Debug.Log("minimum player joined the room can go to play");
-            StartCoroutine("GoToFight");
 
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            StartCoroutine("GoToFight");
         }
     }
 
@@ -101,12 +110,13 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRandomRoom();
         DataShow.Instance.GameTime = 300f;
-        Debug.Log("player is trying to join room");
     }
 
     IEnumerator GoToFight()
     {
+        isMatchMaking = true;
         yield return new WaitForSeconds(3f);
+        isMatchMaking = false;
         DataShow.Instance.Total_Matches_Count++;
         PlayfabManager.Instance.SaveApperance_TotalMatches(DataShow.Instance.Total_Matches_Count);
         SceneManager.LoadScene("Survival_PVP");

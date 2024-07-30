@@ -14,14 +14,17 @@ public class Menu : MonoBehaviour
     public static Menu Instance;
 
 
+    [Header("HomePage Variables")]
     /* Home Page Variables */
-    [SerializeField] private Transform battlebutton, customBattle, Servivalmode;
     [SerializeField] private Transform Playbutton;
+    [SerializeField] private Transform BattleButton, CustomButton, SurvivalMode;
     [SerializeField] private TMP_InputField Player_name;
     [SerializeField] public TextMeshProUGUI player_nametext;
     [SerializeField] private GameObject Playername_panel;
     [SerializeField] private GameObject nameErrorText;
 
+    [Space(20)]
+    [Header("ProfilePage Variables")]
     /* Profile Page Variables */
     public Image PlayerRankImage;
     public TextMeshProUGUI PlayerRank;
@@ -32,6 +35,11 @@ public class Menu : MonoBehaviour
     public TextMeshProUGUI Total_DeathCount;
     public TextMeshProUGUI Win_Matches;
     public TextMeshProUGUI KD_ratio;
+    
+    [Space(20)]
+    [Header("MatchmakingPage Variables")]
+    /* Matchmaking Page Variables */
+    public TextMeshProUGUI MatchmakingTime_text;
     
 
     private void Awake()
@@ -54,9 +62,9 @@ public class Menu : MonoBehaviour
     public void playButton()
     {
         Playbutton.DOScale(Vector3.zero, .5f);
-        battlebutton.DOMoveY(Playbutton.position.y, 1f);
-        customBattle.DOMoveY(Playbutton.position.y, 1f);
-        Servivalmode.DOMoveY(Playbutton.position.y, 1f);
+        BattleButton.DOMoveY(Playbutton.position.y, 1f);
+        CustomButton.DOMoveY(Playbutton.position.y, 1f);
+        SurvivalMode.DOMoveY(Playbutton.position.y, 1f);
 
     }
 
