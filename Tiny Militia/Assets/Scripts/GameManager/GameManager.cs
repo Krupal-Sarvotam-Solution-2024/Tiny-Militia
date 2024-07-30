@@ -48,10 +48,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Timer = DataShow.Instance.GameTime;
         MainCamera = Camera.main;
         if (PhotonNetwork.InRoom)
         {
+            Timer = DataShow.Instance.GameTime;
             StartCoroutine(GameTimer(Timer));
         }
         playerSpawn();

@@ -327,14 +327,8 @@ MonoBehaviour:
   High_Score: {fileID: 6854009239830656291}
   RespawnTime_Text: {fileID: 6854009239830656294}
   BombAmount: {fileID: 1750382817}
-  switchbombimage: {fileID: 1889547402}
-  throughBombImage: {fileID: 1035760460}
   playerController: {fileID: 0}
   changingGunData: {fileID: 0}
-  allbombsprite:
-  - {fileID: 21300000, guid: f584c6b65ed9b31438ce03a01e017719, type: 3}
-  - {fileID: 21300000, guid: e7debdca1e8d16642ad70eb6065b3f24, type: 3}
-  - {fileID: 21300000, guid: 84dc4e04a7185954994691324711955d, type: 3}
 --- !u!4 &608553678
 Transform:
   m_ObjectHideFlags: 0
@@ -681,17 +675,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1035760460 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7047356676665729658, guid: d9ca2973975f129489b28662f909088a, type: 3}
-  m_PrefabInstance: {fileID: 1978592056710772166}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1268827108
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +722,7 @@ MonoBehaviour:
   AllGunData: []
   RespawnPoint:
   - {fileID: 635427731}
-  PlayerPrefeb: {fileID: 2259250102884172101, guid: df8d09f1d97d32749a2aefe0e5d95cfb, type: 3}
+  PlayerPrefeb: {fileID: 1845325255933509711, guid: c27e7f6503309304dbc850f2b8f3548d, type: 3}
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
   Timer: 10
@@ -838,17 +821,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1889547402 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2403021375269572349, guid: d9ca2973975f129489b28662f909088a, type: 3}
-  m_PrefabInstance: {fileID: 1978592056710772166}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2124932733

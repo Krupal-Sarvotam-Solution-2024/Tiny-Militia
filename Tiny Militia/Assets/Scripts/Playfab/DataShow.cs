@@ -8,7 +8,7 @@ public class DataShow : MonoBehaviour
 
     public int High_Score_Count;    // Set to the Server Successfully
     public int Total_Kill_Count;    // Not Set Yet
-    public int Total_Death_Count;   // Not Set Yet
+    public int Total_Death_Count;   // Set to the Server Successfully
     public int Win_Matches_Count;   // Not Set Yet
     public int Total_Matches_Count; // Set to the Server Successfully
     public int KD_Count;            // Not Set Yet
@@ -69,6 +69,7 @@ public class DataShow : MonoBehaviour
     {
         Menu.Instance.KD_ratio.text = KD.ToString();
         KD_Count = KD;
+        Debug.Log("in KD");
     }
 
     // For Showing Player Name

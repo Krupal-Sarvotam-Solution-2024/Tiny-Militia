@@ -27,7 +27,9 @@ public class PlayfabManager : MonoBehaviour
 
     public void GetApperance()
     {
+
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecived, OnError);
+        //SaveApperance_KD(5 / DataShow.Instance.Total_Death_Count);// Call this Mwthod Where Kill and Death Count Is Plus 1
     }
 
     void OnDataRecived(GetUserDataResult result)
@@ -47,6 +49,12 @@ public class PlayfabManager : MonoBehaviour
         if (result.Data != null && result.Data.ContainsKey("Total_Deaths"))
         {
             DataShow.Instance.Set_and_Show_ApperanceTotalDeaths(int.Parse(result.Data["Total_Deaths"].Value));
+
+        }
+        
+        if (result.Data != null && result.Data.ContainsKey("KD_Ratio"))
+        {
+            DataShow.Instance.Set_and_Show_ApperanceKD(int.Parse(result.Data["KD_Ratio"].Value));
 
         }
 
@@ -78,7 +86,7 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
     }
 
-    // SAVE the Total Death Count of User
+    // Save the Total Death Count of User
     public void SaveApperance_TotalDeath(int TotalDeaths)
     {
         var request = new UpdateUserDataRequest
@@ -90,7 +98,21 @@ public class PlayfabManager : MonoBehaviour
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
     }
-    
+
+    // Save the Total Death Count of User
+    public void SaveApperance_KD(int KD)
+    {
+        Debug.Log("in Save KD");
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+                {
+                    {"KD_Ratio", KD.ToString() },
+                }
+        };
+        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+    }
+
     // When Getting Error on Get Data From Server
     private void OnError(PlayFabError error)
     {

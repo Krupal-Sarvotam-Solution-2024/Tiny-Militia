@@ -16,25 +16,19 @@ public class LoadingManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.ConnectUsingSettings();
         int Temp = Random.Range(0, LoadingList.Count);
-        GameObject Temo1 = Instantiate(LoadingList[Temp]);
-        Temo1.transform.parent = Canvas.transform;
-        Temo1.transform.localPosition = new Vector3(0, 0, 0);
+        GameObject Temp1 = Instantiate(LoadingList[Temp],Canvas.transform);
+        Temp1.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     private void OnConnectedToServer()
     {
-        Debug.Log("Connected");
-
+        
     }
 
    
 
     public override void OnConnectedToMaster()
     {
-        
         SceneManager.LoadScene("Menu");
-        Debug.Log("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room.");
-
-      
     }
 }

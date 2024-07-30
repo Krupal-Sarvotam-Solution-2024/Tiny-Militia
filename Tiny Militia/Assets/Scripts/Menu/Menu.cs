@@ -100,7 +100,6 @@ public class Menu : MonoBehaviour
     {
         string name;
         name = null;
-        Debug.Log(obj.InfoResultPayload);
         if (obj.InfoResultPayload.PlayerProfile != null)
         {
             name = obj.InfoResultPayload.PlayerProfile.DisplayName;
