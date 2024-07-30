@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Camera MainCamera = Camera.main;
         if (PhotonNetwork.InRoom)
         {
-            Kill_Count = DataShow.Instance.This_Match_Kill_Count;
+          //  Kill_Count = DataShow.Instance.This_Match_Kill_Count;
             UIManager.instance.ScopeText.text = (MainCamera.orthographicSize - 4).ToString() + "x";
 
             leftgunTransform.GetComponent<SpriteRenderer>().sprite = guns[0].GunSprite;
