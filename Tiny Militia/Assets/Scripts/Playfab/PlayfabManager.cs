@@ -54,8 +54,7 @@ public class PlayfabManager : MonoBehaviour
 
         if (result.Data != null && result.Data.ContainsKey("KD_Ratio"))
         {
-            DataShow.Instance.Set_and_Show_ApperanceKD(int.Parse(result.Data["KD_Ratio"].Value));
-
+            DataShow.Instance.Set_and_Show_ApperanceKD(float.Parse(result.Data["KD_Ratio"].Value));
         }
 
         if (result.Data != null && result.Data.ContainsKey("Total_Kills"))
@@ -105,7 +104,7 @@ public class PlayfabManager : MonoBehaviour
     }
 
     // Save the Total Death Count of User
-    public void SaveApperance_KD(int KD)
+    public void SaveApperance_KD(float KD)
     {
         Debug.Log("in Save KD");
         var request = new UpdateUserDataRequest

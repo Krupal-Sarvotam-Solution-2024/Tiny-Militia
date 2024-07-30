@@ -665,6 +665,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     //SaveApperance_KillCount
                     DataShow.Instance.Total_Kill_Count++;
                     PlayfabManager.Instance.SaveApperance_KillCount(DataShow.Instance.Total_Kill_Count);
+                    PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
                 }
 
                 if (this.view.IsMine)
@@ -797,6 +798,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             DataShow.Instance.Total_Death_Count++;
             PlayfabManager.Instance.SaveApperance_TotalDeath(DataShow.Instance.Total_Death_Count);
+            PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
             DataShow.Instance.This_Match_Kill_Count = Kill_Count;
             PhotonNetwork.Destroy(this.gameObject);
         }

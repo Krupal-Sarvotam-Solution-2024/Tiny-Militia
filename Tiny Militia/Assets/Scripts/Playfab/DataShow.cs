@@ -6,13 +6,13 @@ public class DataShow : MonoBehaviour
 {
     public static DataShow Instance;
 
-    public int This_Match_Kill_Count;    // Not Set Yet
+    public int This_Match_Kill_Count;
     public int High_Score_Count;    // Set to the Server Successfully
-    public int Total_Kill_Count;    // Not Set Yet
+    public int Total_Kill_Count;    // Set to the Server Successfully
     public int Total_Death_Count;   // Set to the Server Successfully
     public int Win_Matches_Count;   // Not Set Yet
     public int Total_Matches_Count; // Set to the Server Successfully
-    public int KD_Count;            // Not Set Yet
+    public float KD_Count;          // Set to the Server Successfully
     public int Rank_Count;          // Not Set Yet
     public float GameTime;
 
@@ -66,9 +66,9 @@ public class DataShow : MonoBehaviour
     }
 
     // For Showing KD Count
-    public void Set_and_Show_ApperanceKD(int KD)
+    public void Set_and_Show_ApperanceKD(float KD)
     {
-        Menu.Instance.KD_ratio.text = KD.ToString();
+        Menu.Instance.KD_ratio.text = KD.ToString(".00");
         KD_Count = KD;
     }
 
