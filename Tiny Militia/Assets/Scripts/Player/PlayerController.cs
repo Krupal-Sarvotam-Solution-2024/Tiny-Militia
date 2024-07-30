@@ -5,8 +5,8 @@ using Photon.Pun;
 using UnityEngine.UI;
 using Photon.Realtime;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.SocialPlatforms.Impl;
+using PlayFab;
+using System.Runtime.CompilerServices;
 
 
 public class PlayerController : MonoBehaviourPunCallbacks
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private int alternateGunIndex = -1;
     public int maxbomb;
     public int[] bombsamount;
-    
+
     private int totoalmomb = 3;
     public Bomb.bombtype selectedbomb;
     public GameObject[] arrow;
@@ -99,15 +99,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public bool isPunching;
 
-
-
     [Space(5)]
-    [Header("// Variable for Stop the Coroutine")]
+    [Header("// Variables for Stop the Coroutine")]
     [Space(2)]
     public Coroutine reload_co;
 
     [Space(5)]
-    [Header("// Variable for Sitting Position")]
+    [Header("// Variables for Sitting Position")]
     [Space(2)]
     public Transform Leftleg;
     public Transform Rightleg;
@@ -117,6 +115,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(2)]
     public int Kill_Count;
     public int Score_Count;
+
+    [Space(5)]
+    [Header("// Variables For taking List of All Player")]
+    public List<PlayerController> allPlayer;
 
     #endregion
 
@@ -147,7 +149,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Camera MainCamera = Camera.main;
         if (PhotonNetwork.InRoom)
         {
-
+            Kill_Count = DataShow.Instance.This_Match_Kill_Count;
             UIManager.instance.ScopeText.text = (MainCamera.orthographicSize - 4).ToString() + "x";
 
             leftgunTransform.GetComponent<SpriteRenderer>().sprite = guns[0].GunSprite;
@@ -442,25 +444,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (aimDirection.x > 0)
         {
             leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
-           
+
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
-            
+
             UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 5f));
-            
-            transform.localScale = new Vector3(-0.30f, 0.30f, 1);
-            
+
+            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+
             //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
         }
         else if (aimDirection.x < 0)
         {
             leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
-            
+
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
-            
+
             UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 6f));
-            
-            transform.localScale = new Vector3(0.30f, 0.30f, 1);
-            
+
+            transform.localScale = new Vector3(0.15f, 0.15f, 1);
+
             //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
         }
     }
@@ -474,13 +476,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // Flip character and gun based on aim direction
 
-      //  UIManager.instance.AimObject.transform.position = firePoint.transform.position;
+        //  UIManager.instance.AimObject.transform.position = firePoint.transform.position;
 
         if (aimDirection.x > 0)
         {
             player.leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
-      
+
 
 
             player.transform.localScale = new Vector3(-0.15f, 0.15f, 1);
@@ -489,7 +491,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             player.leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
-          
+
 
 
             player.transform.localScale = new Vector3(0.15f, 0.15f, 1);
@@ -637,15 +639,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         totoalmomb++;
         bombsamount[(int)type]++;
-      
+
     }
 
     #endregion
 
     #region Methods for Taking Damage and Death Function
 
+    //Method For Taking damage from player through bullet in offline and online mode
     [PunRPC]
-    public void TakeDamageFromHit(int damageAmount, int hitedplayer_id)// called hiter
+    public void TakeDamageFromHit(int damageAmount, int hitedplayer_id)
     {
         if (PhotonNetwork.InRoom)
         {
@@ -657,22 +660,29 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (currentHealth <= 0)
             {
                 Hiterplayer.Kill_Count++;
+                if (Hiterplayer.view.IsMine)
+                {
+                    //SaveApperance_KillCount
+                    DataShow.Instance.Total_Kill_Count++;
+                    DataShow.Instance.This_Match_Kill_Count++;
+                    PlayfabManager.Instance.SaveApperance_KillCount(DataShow.Instance.Total_Kill_Count);
+                }
+
                 if (this.view.IsMine)
                 {
-                    // UIManager.instance.killing_text.text = "You were killed by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
                     Die();
                 }
 
                 if (view.Controller.NickName == PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName)
                 {
                     UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated";
-                    UIManager.instance.killing_text.color = Color.white;
 
+                    UIManager.instance.killing_text.color = Color.white;
                 }
                 else
                 {
-
                     UIManager.instance.killing_text.text = view.Controller.NickName + " Eliminated by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
+
                     UIManager.instance.killing_text.color = Color.white;
                 }
 
@@ -681,14 +691,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     }
 
-
-    // Method For Taking damage in offline and online mode
+    //Method For Taking damage from player through bomb in offline and online mode
     [PunRPC]
     public void TakeDamage(int damageAmount, int Health_ID)
     {
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("damage tager  " +Health_ID +" damage giver  "+ view.ViewID);
+            Debug.Log("damage tager  " + Health_ID + " damage giver  " + view.ViewID);
             PlayerController Health;
             Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
             Health.currentHealth -= damageAmount;
@@ -696,7 +705,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
             {
-               
+
                 Kill_Count++;
                 Debug.Log("im dying");
                 Health.Die();
@@ -714,7 +723,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    public List<PlayerController> allPlayer;
     // Method for Checking the health and apply the Death Function To Player
     void Die()
     {
@@ -745,10 +753,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if (playerObject != null)
                 {
                     PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
-                    if (playerControllers != null)
-                    {
-                        Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
-                    }
+                    //if (playerControllers != null)
+                    //{
+                    //    Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
+                    //}
                     allPlayer.Add(playerControllers);
                 }
             }
@@ -909,7 +917,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     // Mehtod for Handle the gun switching in offlie mode
     public void HandleGunSwitching()
     {
-        if (reload_co != null)
+        if (PhotonNetwork.InRoom)
+        {
+            if (view.IsMine && reload_co != null)
+            {
+                StopCoroutine(reload_co);
+            }
+        }
+        if (reload_co != null && !PhotonNetwork.InRoom)
         {
             StopCoroutine(reload_co);
         }
@@ -952,6 +967,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         UIManager.instance.GunIndex = currentGunIndex;
 
         UIManager.instance.UI_Updates();
+
 
     }
 
@@ -1019,17 +1035,4 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
-    #region Methods which is Secoandary for Photon Which is not In Use
-
-
-
-    #endregion
-}
-
-[System.Serializable]
-public class PlayersData
-{
-    public int Kill;
-    public string NickName;
 }

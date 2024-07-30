@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         isTiming = true;
         yield return new WaitForSeconds(time);
         PhotonNetwork.LeaveRoom();
+        DataShow.Instance.This_Match_Kill_Count = 0;
         isTiming = false;
         SceneManager.LoadScene("Menu");
     }

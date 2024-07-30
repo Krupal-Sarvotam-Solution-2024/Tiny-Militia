@@ -10,7 +10,7 @@ public class PlayfabManager : MonoBehaviour
 {
     public static PlayfabManager Instance;
 
-    
+
 
     private void Awake()
     {
@@ -51,13 +51,18 @@ public class PlayfabManager : MonoBehaviour
             DataShow.Instance.Set_and_Show_ApperanceTotalDeaths(int.Parse(result.Data["Total_Deaths"].Value));
 
         }
-        
+
         if (result.Data != null && result.Data.ContainsKey("KD_Ratio"))
         {
             DataShow.Instance.Set_and_Show_ApperanceKD(int.Parse(result.Data["KD_Ratio"].Value));
 
         }
 
+        if (result.Data != null && result.Data.ContainsKey("Total_Kills"))
+        {
+            DataShow.Instance.Set_and_Show_ApperanceTotalKills(int.Parse(result.Data["Total_Kills"].Value));
+
+        }
     }
 
     // Save the HighScore Data to the Server
@@ -109,6 +114,19 @@ public class PlayfabManager : MonoBehaviour
                 {
                     {"KD_Ratio", KD.ToString() },
                 }
+        };
+        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+    }
+
+    public void SaveApperance_KillCount(int TotalKills)
+    {
+        Debug.Log("Saved");
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                {"Total_Kills",TotalKills.ToString() },
+            }
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
     }

@@ -722,7 +722,7 @@ MonoBehaviour:
   AllGunData: []
   RespawnPoint:
   - {fileID: 635427731}
-  PlayerPrefeb: {fileID: 1845325255933509711, guid: c27e7f6503309304dbc850f2b8f3548d, type: 3}
+  PlayerPrefeb: {fileID: 2259250102884172101, guid: df8d09f1d97d32749a2aefe0e5d95cfb, type: 3}
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
   Timer: 10
