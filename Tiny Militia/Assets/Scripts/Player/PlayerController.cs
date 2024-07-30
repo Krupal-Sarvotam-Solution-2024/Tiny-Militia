@@ -983,7 +983,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void GettingData(int data)
     {
-        Debug.Log("its coming under the getting data");
+        Debug.Log("its coming under the getting data" + Kill_Count + " "+ data);
+
         Kill_Count = data;
         Debug.Log("getting data" + this.GetComponent<PhotonView>().ViewID);
     }
