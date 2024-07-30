@@ -979,6 +979,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     #endregion
 
+
+    [PunRPC]
+    public void GettingData(int data)
+    {
+        Kill_Count = data;
+        Debug.Log("getting data" + view.ViewID);
+    }
+
     #region Enumeretor Methods
 
     // Coroutine For Auto Health Recovery
