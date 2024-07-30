@@ -1403,6 +1403,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2608458907360062110, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 608553677}
+    - target: {fileID: 2608458907360062110, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ContinueMatch
+      objectReference: {fileID: 0}
     - target: {fileID: 3268828028487844103, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

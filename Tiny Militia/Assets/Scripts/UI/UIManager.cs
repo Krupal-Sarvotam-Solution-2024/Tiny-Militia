@@ -213,7 +213,7 @@ public class UIManager : MonoBehaviour
             LeaveMatch.gameObject.SetActive(true);
             RespawnTime_Text.gameObject.SetActive(false);
             PauseExitButton.gameObject.SetActive(true);
-
+            playerController.SoringPlayerBoard();
             /* 
              * Add All Player Information 
              * Ex.1 Player Name                     Kill
@@ -277,8 +277,15 @@ public class UIManager : MonoBehaviour
 
     public void ContinueMatch()
     {
-        Time.timeScale = 1f;
-        Pause.gameObject.SetActive(false);
+        if (PhotonNetwork.InRoom)
+        {
+            Pause.gameObject.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            Pause.gameObject.SetActive(false);
+        }
     }
 
     public void UI_Updates()

@@ -644,7 +644,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region Methods for Taking Damage and Death Function
+    #region Methods for Taking Damage , Death and Soring List
 
     //Method For Taking damage from player through bullet in offline and online mode
     [PunRPC]
@@ -664,7 +664,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     //SaveApperance_KillCount
                     DataShow.Instance.Total_Kill_Count++;
-                    DataShow.Instance.This_Match_Kill_Count++;
                     PlayfabManager.Instance.SaveApperance_KillCount(DataShow.Instance.Total_Kill_Count);
                 }
 
@@ -723,6 +722,42 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
+    public void SoringPlayerBoard()
+    {
+        // Get the dictionary of players in the current room
+        Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+        allPlayer.Clear();
+        foreach (var playerEntry in players)
+        {
+            Player player = playerEntry.Value;
+            GameObject playerObject = GetPlayerGameObject(player);
+            if (playerObject != null)
+            {
+                PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
+                //if (playerControllers != null)
+                //{
+                //    Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
+                //}
+                allPlayer.Add(playerControllers);
+            }
+        }
+
+
+        // Sort players by Kill_Count in descending order
+        allPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(x.GetComponent<PlayerController>().Kill_Count));
+
+        // Update UI with sorted player data
+        for (int k = 0; k < allPlayer.Count; k++)
+        {
+            PlayerController playerController = allPlayer[k].GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                UIManager.instance.PlayersData[k].GetComponent<TextMeshProUGUI>().text = allPlayer[k].GetComponent<PhotonView>().Owner.NickName;
+                UIManager.instance.PlayersData[k].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerController.Kill_Count.ToString("00");
+            }
+        }
+    }
+
     // Method for Checking the health and apply the Death Function To Player
     void Die()
     {
@@ -743,39 +778,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             GameManager.Instance.isRespawning = true;
 
-            // Get the dictionary of players in the current room
-            Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
-            allPlayer.Clear();
-            foreach (var playerEntry in players)
-            {
-                Player player = playerEntry.Value;
-                GameObject playerObject = GetPlayerGameObject(player);
-                if (playerObject != null)
-                {
-                    PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
-                    //if (playerControllers != null)
-                    //{
-                    //    Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
-                    //}
-                    allPlayer.Add(playerControllers);
-                }
-            }
-
-
-            // Sort players by Kill_Count in descending order
-            allPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(x.GetComponent<PlayerController>().Kill_Count));
-
-            // Update UI with sorted player data
-            for (int k = 0; k < allPlayer.Count; k++)
-            {
-                PlayerController playerController = allPlayer[k].GetComponent<PlayerController>();
-                if (playerController != null)
-                {
-                    UIManager.instance.PlayersData[k].GetComponent<TextMeshProUGUI>().text = allPlayer[k].GetComponent<PhotonView>().Owner.NickName;
-                    UIManager.instance.PlayersData[k].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerController.Kill_Count.ToString("00");
-                }
-            }
-
+            SoringPlayerBoard();
 
             /* 
             * Add All Player Information 
@@ -794,6 +797,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             DataShow.Instance.Total_Death_Count++;
             PlayfabManager.Instance.SaveApperance_TotalDeath(DataShow.Instance.Total_Death_Count);
+            DataShow.Instance.This_Match_Kill_Count = Kill_Count;
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
