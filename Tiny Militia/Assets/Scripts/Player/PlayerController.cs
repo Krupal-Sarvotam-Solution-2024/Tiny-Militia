@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Space(5)]
     [Header("")]
     [Space(2)]
-    public int currentHealth;
+    public float currentHealth;
     //public float healthRecoveryRate = 2f;
 
     [Space(5)]
@@ -620,6 +620,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         PlayerController FirePOINT;
         if (PhotonNetwork.InRoom)
         {
+            Debug.Log("Throwing bomb in the room");
             FirePOINT = PhotonNetwork.GetPhotonView(firePoint_ID).transform.GetComponent<PlayerController>();
         }
         else
@@ -693,7 +694,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     //Method For Taking damage from player through bomb in offline and online mode
     [PunRPC]
-    public void TakeDamage(int damageAmount, int Health_ID)
+    public void TakeDamage(float damageAmount, int Health_ID)
     {
         if (PhotonNetwork.InRoom)
         {

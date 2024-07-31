@@ -36,7 +36,7 @@ public class Bomb : MonoBehaviour
             StartCoroutine(waitTillExplode());
     }
     
-    [PunRPC]
+
     public IEnumerator waitTillExplode()
     {
         yield return new WaitForSeconds(timeToExplode);
@@ -56,8 +56,9 @@ public class Bomb : MonoBehaviour
 
                 if (Distance < 3)
                 {
+                    float damageamount =  damage / Distance;
 
-                    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage / Distance, item.GetComponent<PhotonView>().ViewID);// -= damage;
+                    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damageamount, item.GetComponent<PhotonView>().ViewID);// -= damage;
 
                 }
             }
@@ -151,7 +152,6 @@ public class Bomb : MonoBehaviour
             }
             return;
         }
-
         if (type == bombtype.poisionbomb )
         {
             if (exploded)
