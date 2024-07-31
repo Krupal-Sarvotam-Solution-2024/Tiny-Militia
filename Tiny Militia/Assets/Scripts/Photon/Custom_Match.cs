@@ -38,10 +38,17 @@ public class Custom_Match : MonoBehaviourPunCallbacks
 
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 6;
-        options.IsOpen = false;
-        options.IsVisible = false;
+        //options.IsOpen = false;
+        //options.IsVisible = false;
         PhotonNetwork.CreateRoom(RoomCode,options);
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
+    }
+
+
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("Room Creation Successfully");
+        base.OnCreatedRoom();   
     }
 
     public void onJoinedRoom_Code()
