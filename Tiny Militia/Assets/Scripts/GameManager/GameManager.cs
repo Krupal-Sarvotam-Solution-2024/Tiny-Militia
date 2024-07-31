@@ -159,8 +159,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         DataShow.Instance.This_Match_Kill_Count = 0;
         isTiming = false;
-        SceneManager.LoadScene("Menu");
+        PlayerManager.SoringPlayerBoard();
         Debug.Log(PlayerManager.allPlayer[0].view.Controller.NickName);
+        SceneManager.LoadScene("Menu");
     }
 
     // Timer Showing in UI Manageer
