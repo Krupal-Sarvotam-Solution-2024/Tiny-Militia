@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIAnimation : MonoBehaviour
 {
@@ -21,27 +22,27 @@ public class UIAnimation : MonoBehaviour
     IEnumerator HeadingAnimation()
     {
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "T";
+        Heading.transform.GetComponent<Text>().text = "T";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TI";
+        Heading.transform.GetComponent<Text>().text = "TI";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TIN";
+        Heading.transform.GetComponent<Text>().text = "TIN";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY";
+        Heading.transform.GetComponent<Text>().text = "TINY";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nM";
+        Heading.transform.GetComponent<Text>().text = "TINY \nM";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nMI";
+        Heading.transform.GetComponent<Text>().text = "TINY \nMI";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nMIL";
+        Heading.transform.GetComponent<Text>().text = "TINY \nMIL";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nMILI";
+        Heading.transform.GetComponent<Text>().text = "TINY \nMILI";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nMILIT";
+        Heading.transform.GetComponent<Text>().text = "TINY \nMILIT";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nMILITI";
+        Heading.transform.GetComponent<Text>().text = "TINY \nMILITI";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<TextMeshProUGUI>().text = "TINY \nMILITIA";
+        Heading.transform.GetComponent<Text>().text = "TINY \nMILITIA";
         yield return new WaitForSeconds(30f);
         StartCoroutine(HeadingAnimation());
 

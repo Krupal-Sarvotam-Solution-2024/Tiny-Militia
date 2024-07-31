@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
+using TMPro;
 
 public class Custom_Match : MonoBehaviourPunCallbacks
 {
     string RoomCode = "1234567";
     string characters = "ABCDEFGHIJKLMOPQRSTUVWXYZ0123456789";
-
+    public TMP_InputField inputField_RoomCode;
     public void onGenerateRoom_Code()
     {
         char[] chars = RoomCode.ToCharArray();
@@ -39,6 +41,13 @@ public class Custom_Match : MonoBehaviourPunCallbacks
         options.IsOpen = false;
         options.IsVisible = false;
         PhotonNetwork.CreateRoom(RoomCode,options);
+        PhotonNetwork.JoinRoom(RoomCode);
+        ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
+    }
 
+    public void onJoinedRoom_Code()
+    {
+        PhotonNetwork.JoinRoom(inputField_RoomCode.text);
+        ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
     }
 }

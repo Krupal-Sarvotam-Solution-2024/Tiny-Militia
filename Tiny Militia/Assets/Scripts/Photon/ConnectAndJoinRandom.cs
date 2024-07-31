@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
+    public static ConnectAndJoinRandom Instance;
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
     public bool AutoConnect = true;
     byte maxPlayer = 2;
@@ -22,6 +23,11 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI PlayerCount;
     bool isMatchMaking;
     float MatchMakingTime = 3f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public virtual void Update()
     {
@@ -83,7 +89,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         for (int d = PlayersList.transform.childCount; d > 0; d--)
         {
-            Debug.Log(PlayersList.transform.childCount);
             Destroy(PlayersList.transform.GetChild(d - 1).gameObject);
         }
 
