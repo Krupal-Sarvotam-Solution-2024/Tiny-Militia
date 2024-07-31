@@ -100,7 +100,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
             PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
         }
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             StartCoroutine("GoToFight");
         }
@@ -109,7 +109,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public void Battle()
     {
         PhotonNetwork.JoinRandomRoom();
-        DataShow.Instance.GameTime = 300f;
+        DataShow.Instance.GameTime = 60;
     }
 
     IEnumerator GoToFight()
