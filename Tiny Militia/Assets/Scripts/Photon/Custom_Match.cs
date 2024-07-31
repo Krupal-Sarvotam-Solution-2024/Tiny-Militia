@@ -41,7 +41,6 @@ public class Custom_Match : MonoBehaviourPunCallbacks
         options.IsOpen = false;
         options.IsVisible = false;
         PhotonNetwork.CreateRoom(RoomCode,options);
-        PhotonNetwork.JoinRoom(RoomCode);
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
     }
 
