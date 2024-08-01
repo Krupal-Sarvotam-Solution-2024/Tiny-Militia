@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Camera MainCamera = Camera.main;
         if (PhotonNetwork.InRoom)
         {
-          //  Kill_Count = DataShow.Instance.This_Match_Kill_Count;
+            //  Kill_Count = DataShow.Instance.This_Match_Kill_Count;
             UIManager.instance.ScopeText.text = (MainCamera.orthographicSize - 4).ToString() + "x";
 
             leftgunTransform.GetComponent<SpriteRenderer>().sprite = guns[0].GunSprite;
@@ -871,6 +871,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
         return null;
     }
 
+    public void onGameOver()
+    {
+        UIManager.instance.Pause.gameObject.SetActive(true);
+
+        UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+
+        UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+        UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+
+        this.transform.GetComponent<Rigidbody2D>().isKinematic = true;
+
+        SoringPlayerBoard();
+
+    }
+
     #endregion
 
     #region Methods for Gun and Bomb Changing in Both Mode (Onlline and Offline)
@@ -980,15 +996,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region Method for Getting Data
 
     [PunRPC]
     public void GettingData(int data)
     {
-        Debug.Log("its coming under the getting data" + Kill_Count + " "+ data);
-
         Kill_Count = data;
-        Debug.Log("getting data" + this.GetComponent<PhotonView>().ViewID);
     }
+
+    #endregion
 
     #region Enumeretor Methods
 

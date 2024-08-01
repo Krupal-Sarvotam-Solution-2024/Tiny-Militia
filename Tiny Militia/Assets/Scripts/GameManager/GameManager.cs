@@ -161,7 +161,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         isTiming = false;
         PlayerManager.SoringPlayerBoard();
         Debug.Log(PlayerManager.allPlayer[0].view.Controller.NickName);
-        SceneManager.LoadScene("Menu");
+        PlayerManager.onGameOver();
+        //SceneManager.LoadScene("Menu");
     }
 
     // Timer Showing in UI Manageer
