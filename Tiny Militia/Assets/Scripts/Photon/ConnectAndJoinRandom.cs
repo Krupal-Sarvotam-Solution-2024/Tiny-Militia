@@ -9,6 +9,9 @@ using JetBrains.Annotations;
 
 public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
+
+    public int[] alltimeSelection;
+    public int selectedtime;
     public bool customRoom_selected;
     public static ConnectAndJoinRandom Instance;
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
@@ -23,12 +26,16 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public GameObject PlayersList;
     public TextMeshProUGUI PlayerCount;
     bool isMatchMaking;
-    float MatchMakingTime = 3f;
+    float MatchMakingTime = 5f;
     public Custom_Match cumstomMatch;
 
     public void CustionRoom_selected()
     {
         customRoom_selected = true;
+    }
+    public void RandomJoin_selected()
+    {
+        customRoom_selected = false;
     }
 
     private void Awake()
@@ -50,7 +57,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
         else
         {
-            MatchMakingTime = 3;
+            MatchMakingTime = 4;
             Menu.Instance.MatchmakingTime_text.text = "Finding other players";
         }
 
@@ -116,9 +123,20 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         {
             StartCoroutine("GoToFight");
         }
+
+        if(customRoom_selected && PhotonNetwork.IsMasterClient)
+        {
+            view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
+        }
     }
 
 
+
+    [PunRPC]
+    void GetingMasterTime(int time)
+    {
+        DataShow.Instance.GameTime = time;
+    }
 
     public void Battle()
     {
@@ -129,8 +147,11 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
         else
         {
-            DataShow.Instance.GameTime = 60;
+            DataShow.Instance.GameTime = alltimeSelection[selectedtime];
+
+            
             cumstomMatch.onGenerateRoom_Code();
+
 
         }
     }

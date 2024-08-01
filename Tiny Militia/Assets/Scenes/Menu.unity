@@ -7651,6 +7651,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb541ee233eeeec4dbdcbc60a6c9535d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alltimeSelection: 50000000320000001e000000
+  selectedtime: 0
   customRoom_selected: 0
   AutoConnect: 1
   Version: 1
@@ -18216,6 +18218,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 727869117}
+        m_TargetAssemblyTypeName: ConnectAndJoinRandom, Assembly-CSharp
+        m_MethodName: RandomJoin_selected
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

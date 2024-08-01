@@ -37,13 +37,15 @@ public class Custom_Match : MonoBehaviourPunCallbacks
         }
 
         RoomOptions options = new RoomOptions();
+        
         options.MaxPlayers = 6;
         //options.IsOpen = false;
         //options.IsVisible = false;
         PhotonNetwork.CreateRoom(RoomCode,options);
+        ConnectAndJoinRandom.Instance.view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
     }
-
+   
 
     public override void OnCreatedRoom()
     {
@@ -54,6 +56,8 @@ public class Custom_Match : MonoBehaviourPunCallbacks
     public void onJoinedRoom_Code()
     {
         PhotonNetwork.JoinRoom(inputField_RoomCode.text);
+        GameManager.Instance.Timer = 60;
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
+        //ConnectAndJoinRandom.Instance.view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
     }
 }
