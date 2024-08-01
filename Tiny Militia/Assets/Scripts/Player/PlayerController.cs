@@ -434,7 +434,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // Calculate the aim direction
         Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        UIManager.instance.AimObject.transform.position = firePoint.transform.position;
 
         if (PhotonNetwork.InRoom)
         {
@@ -448,9 +448,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
 
-            transform.localScale = new Vector3(0.15f, 0.15f, 1);
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 17.7f));
 
-            //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
+            transform.localScale = new Vector3(0.15f, 0.15f, 1);
         }
         else if (aimDirection.x < 0)
         {
@@ -458,9 +458,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
 
-            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 7f));
 
-            //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
+            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
         }
     }
 
