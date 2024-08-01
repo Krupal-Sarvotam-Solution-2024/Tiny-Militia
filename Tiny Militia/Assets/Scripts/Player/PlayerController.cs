@@ -175,6 +175,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Sitting();
             UpdateBoosterLevel();
             ArrowDirectionShowing();
+            SoringPlayerBoard();
         }
 
 
@@ -875,11 +876,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         UIManager.instance.Pause.gameObject.SetActive(true);
 
-        UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
+        UIManager.instance.RespawnTime_Text.gameObject.SetActive(false);
 
         UIManager.instance.PauseExitButton.gameObject.SetActive(false);
 
-        UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+        UIManager.instance.LeaveMatch.gameObject.SetActive(true);
+
+        UIManager.instance.LeaveMatch.gameObject.GetComponentInChildren<Text>().text = "Menu";
 
         this.transform.GetComponent<Rigidbody2D>().isKinematic = true;
 
