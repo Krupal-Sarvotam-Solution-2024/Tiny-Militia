@@ -23,7 +23,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public GameObject PlayersList;
     public TextMeshProUGUI PlayerCount;
     bool isMatchMaking;
-    float MatchMakingTime = 3f;
+    float MatchMakingTime = 5f;
     public Custom_Match cumstomMatch;
 
     public void CustionRoom_selected()
@@ -50,7 +50,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
         else
         {
-            MatchMakingTime = 3;
+            MatchMakingTime = 5;
             Menu.Instance.MatchmakingTime_text.text = "Finding other players";
         }
 

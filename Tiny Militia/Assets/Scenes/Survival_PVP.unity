@@ -1411,10 +1411,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 608553677}
-    - target: {fileID: 2608458907360062110, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ContinueMatch
-      objectReference: {fileID: 0}
     - target: {fileID: 3268828028487844103, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1547,10 +1543,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 608553677}
-    - target: {fileID: 4442634132940899081, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LeaveMatchButton
-      objectReference: {fileID: 0}
     - target: {fileID: 5210937033776386079, guid: c6c8d422016eb24449139778fa6de26d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
