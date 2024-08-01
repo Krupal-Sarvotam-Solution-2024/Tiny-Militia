@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player_Life_Information: {fileID: 1275691930}
-  AimObject: {fileID: 0}
+  AimObject: {fileID: 8374689404308807}
   PlayersData: []
   boosterLevelImage: {fileID: 5155753799936539538}
   healthImage: {fileID: 7671742285463736468}
