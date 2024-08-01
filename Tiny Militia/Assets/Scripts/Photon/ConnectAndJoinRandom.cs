@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
+    public bool customRoom_selected;
     public static ConnectAndJoinRandom Instance;
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
     public bool AutoConnect = true;
@@ -23,6 +24,12 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI PlayerCount;
     bool isMatchMaking;
     float MatchMakingTime = 3f;
+    public Custom_Match cumstomMatch;
+
+    public void CustionRoom_selected()
+    {
+        customRoom_selected = true;
+    }
 
     private void Awake()
     {
@@ -111,13 +118,24 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
     }
 
+
+
     public void Battle()
     {
-        PhotonNetwork.JoinRandomRoom();
-        DataShow.Instance.GameTime = 60;
+        if (!customRoom_selected)
+        {
+            PhotonNetwork.JoinRandomRoom();
+            DataShow.Instance.GameTime = 60;
+        }
+        else
+        {
+            DataShow.Instance.GameTime = 60;
+            cumstomMatch.onGenerateRoom_Code();
+
+        }
     }
 
-    IEnumerator GoToFight()
+        IEnumerator GoToFight()
     {
         isMatchMaking = true;
         yield return new WaitForSeconds(3f);

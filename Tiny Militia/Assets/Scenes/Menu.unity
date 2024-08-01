@@ -4374,6 +4374,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 727869117}
+        m_TargetAssemblyTypeName: ConnectAndJoinRandom, Assembly-CSharp
+        m_MethodName: CustionRoom_selected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &527234802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5986,7 +5998,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 105.79639, y: 319.3553}
+  m_SizeDelta: {x: 105.50195, y: 319.3553}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &654906358
 MonoBehaviour:
@@ -6394,7 +6406,7 @@ RectTransform:
   m_Father: {fileID: 1976158804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.9099449, y: 1}
+  m_AnchorMax: {x: 0.91019547, y: 1}
   m_AnchoredPosition: {x: NaN, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7639,6 +7651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb541ee233eeeec4dbdcbc60a6c9535d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customRoom_selected: 0
   AutoConnect: 1
   Version: 1
   contingtext: {fileID: 0}
@@ -7646,6 +7659,7 @@ MonoBehaviour:
   PlayerInformation: {fileID: 6532039318961269050, guid: 36e65bdaf1469f148a8629b198c6541b, type: 3}
   PlayersList: {fileID: 1022673523}
   PlayerCount: {fileID: 1321530171}
+  cumstomMatch: {fileID: 1565247102}
 --- !u!114 &727869118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15513,9 +15527,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1565247102}
-        m_TargetAssemblyTypeName: Custom_Match, Assembly-CSharp
-        m_MethodName: onGenerateRoom_Code
+      - m_Target: {fileID: 727869117}
+        m_TargetAssemblyTypeName: ConnectAndJoinRandom, Assembly-CSharp
+        m_MethodName: Battle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16549,7 +16563,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 698635842}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9099449
+  m_Size: 0.91019547
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
