@@ -724,22 +724,37 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void SoringPlayerBoard()
     {
         // Get the dictionary of players in the current room
-        Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+        PhotonView[] photonViews = PhotonNetwork.PhotonViews;
         allPlayer.Clear();
-        foreach (var playerEntry in players)
+        for (int i = 0; i < photonViews.Length; i++)
         {
-            Player player = playerEntry.Value;
-            GameObject playerObject = GetPlayerGameObject(player);
-            if (playerObject != null)
+            if (photonViews[i].gameObject.TryGetComponent<PlayerController>(out PlayerController obj))//all player
             {
-                PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
-                //if (playerControllers != null)
-                //{
-                //    Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
-                //}
-                allPlayer.Add(playerControllers);
+
+                allPlayer.Add(obj);
+
+
+
             }
+
         }
+        // Get the dictionary of players in the current room
+        //    Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
+        //allPlayer.Clear();
+        //foreach (var playerEntry in players)
+        //{
+        //    Player player = playerEntry.Value;
+        //    GameObject playerObject = GetPlayerGameObject(player);
+        //    if (playerObject != null)
+        //    {
+        //        PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
+        //        //if (playerControllers != null)
+        //        //{
+        //        //    Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
+        //        //}
+        //        allPlayer.Add(playerControllers);
+        //    }
+        //}
 
 
         // Sort players by Kill_Count in descending order
