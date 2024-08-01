@@ -62,6 +62,11 @@ public class PlayfabManager : MonoBehaviour
             DataShow.Instance.Set_and_Show_ApperanceTotalKills(int.Parse(result.Data["Total_Kills"].Value));
 
         }
+
+        if(result.Data != null && result.Data.ContainsKey("Total_Win_Matches"))
+        {
+            DataShow.Instance.Set_and_Show_ApperanceTotalWinMatches(int.Parse(result.Data["Total_Win_Matches"].Value));
+        }
     }
 
     // Save the HighScore Data to the Server
@@ -119,7 +124,6 @@ public class PlayfabManager : MonoBehaviour
 
     public void SaveApperance_KillCount(int TotalKills)
     {
-        Debug.Log("Saved");
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>
@@ -128,6 +132,18 @@ public class PlayfabManager : MonoBehaviour
             }
         };
         PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+    }
+
+    public void SaveApperance_WinMatches(int WinMatches)
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                {"Total_Win_Matches", WinMatches.ToString()}
+            }
+        };
+        PlayFabClientAPI.UpdateUserData (request, OnDataSend, OnError);
     }
 
     // When Getting Error on Get Data From Server

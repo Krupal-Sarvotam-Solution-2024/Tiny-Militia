@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Rogue_01
+  m_Name: Ninja
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -241,10 +241,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102000014048108726}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_Position: {x: 40, y: 430, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102000011735121254}
-    m_Position: {x: 235, y: 65, z: 0}
+    m_Position: {x: 0, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102000010253880934}
     m_Position: {x: 270, y: 130, z: 0}
@@ -253,13 +253,13 @@ AnimatorStateMachine:
     m_Position: {x: 290, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102000010324523364}
-    m_Position: {x: 340, y: 260, z: 0}
+    m_Position: {x: 20, y: 370, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102000013238937152}
     m_Position: {x: 375, y: 325, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102000012107980820}
-    m_Position: {x: 410, y: 390, z: 0}
+    m_Position: {x: 10, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102000011872400444}
     m_Position: {x: 445, y: 455, z: 0}

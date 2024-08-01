@@ -175,7 +175,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Sitting();
             UpdateBoosterLevel();
             ArrowDirectionShowing();
+            if(PhotonNetwork.InRoom)
+            {
             SoringPlayerBoard();
+            }
         }
 
 
@@ -433,9 +436,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
         //gunTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        UIManager.instance.AimObject.transform.position = firePoint.transform.position;
-
-
         if (PhotonNetwork.InRoom)
         {
             view.RPC("RPCAim", RpcTarget.Others, view.ViewID, aimDirection, angle);
@@ -448,9 +448,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
 
-            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 5f));
-
-            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+            transform.localScale = new Vector3(0.15f, 0.15f, 1);
 
             //  gunTransform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -460,9 +458,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
 
-            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 6f));
-
-            transform.localScale = new Vector3(0.15f, 0.15f, 1);
+            transform.localScale = new Vector3(-0.15f, 0.15f, 1);
 
             //   gunTransform.localScale = new Vector3(-1f, -1f, 1f);
         }
@@ -543,7 +539,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         }
                         else
                         {
-                            leftgunTransform.GetComponentInChildren<Animator>().Play("Fire");
+                            leftgunTransform.GetComponentInChildren<Animator>().Play("Fire");   
                             if (PhotonNetwork.InRoom)
                             {
                                 view.RPC("FireBullet", RpcTarget.All, view.ViewID);
@@ -882,12 +878,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         UIManager.instance.LeaveMatch.gameObject.SetActive(true);
 
-        UIManager.instance.LeaveMatch.gameObject.GetComponentInChildren<Text>().text = "Menu";
+        UIManager.instance.LeaveMatch.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Menu";
 
         this.transform.GetComponent<Rigidbody2D>().isKinematic = true;
 
         SoringPlayerBoard();
 
+        if (allPlayer[0].view.IsMine)
+        {
+            DataShow.Instance.Win_Matches_Count++;
+            PlayfabManager.Instance.SaveApperance_WinMatches(DataShow.Instance.Win_Matches_Count);
+        }
     }
 
     #endregion

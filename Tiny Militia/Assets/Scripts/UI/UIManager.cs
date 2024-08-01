@@ -14,8 +14,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject Player_Life_Information; // Life Line Information of Player
 
-    public GameObject AimObject;
-
     public List<GameObject> PlayersData;
 
     public Image boosterLevelImage; // Player Booster
