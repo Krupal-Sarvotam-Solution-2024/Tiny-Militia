@@ -799,7 +799,7 @@ MonoBehaviour:
   - {fileID: 2124932735}
   - {fileID: 1025740509}
   - {fileID: 1337087927}
-  PlayerPrefeb: {fileID: 2259250102884172101, guid: df8d09f1d97d32749a2aefe0e5d95cfb, type: 3}
+  PlayerPrefeb: {fileID: 1619984018987348014, guid: 801029d8dbbe15a4992628d9c6a38578, type: 3}
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
   Timer: 0

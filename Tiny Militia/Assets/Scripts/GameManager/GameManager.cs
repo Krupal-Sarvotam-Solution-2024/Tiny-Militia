@@ -160,7 +160,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         DataShow.Instance.This_Match_Kill_Count = 0;
         isTiming = false;
         PlayerManager.SoringPlayerBoard();
-        Debug.Log(PlayerManager.allPlayer[0].view.Controller.NickName);
         PlayerManager.onGameOver();
         //SceneManager.LoadScene("Menu");
     }
