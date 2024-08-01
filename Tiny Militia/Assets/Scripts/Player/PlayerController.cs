@@ -898,7 +898,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void HandleGunSwitching(int playerID)
     {
-        StopCoroutine(reload_co);
+        if (reload_co != null)
+        {
+            StopCoroutine(reload_co);
+        }
 
         UIManager.instance.ReloadImage.fillAmount = 0f;
 
