@@ -983,10 +983,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 608553677}
-    - target: {fileID: 1401903585505513674, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 608553677}
     - target: {fileID: 2154515472693255485, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1075,10 +1071,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6001600219437378943, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_Name
-      value: Bomb Amount
-      objectReference: {fileID: 0}
     - target: {fileID: 7233398038726746894, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1091,10 +1083,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 608553677}
-    - target: {fileID: 8207764532521119303, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BombSwitch
-      objectReference: {fileID: 0}
     - target: {fileID: 8794500964532771129, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1102,10 +1090,6 @@ PrefabInstance:
     - target: {fileID: 8895049856590354318, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Name
       value: PlayerDetails
-      objectReference: {fileID: 0}
-    - target: {fileID: 8895049856590354318, guid: d9ca2973975f129489b28662f909088a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
