@@ -96,16 +96,23 @@ public class UIManager : MonoBehaviour
     {
         int corrent_bombtype = (int)playerController.selectedbomb;
 
-        for (int i = corrent_bombtype + 1 % 3; i < playerController.bombsamount.Length; i++)
+        
+      
+
+        for (int i = corrent_bombtype + 1; i < playerController.bombsamount.Length; i++)
         {
+            i = i % 2;
             if (playerController.bombsamount[i] > 0)
             {
                 corrent_bombtype = i;
                 break;
             }
-
+            Debug.Log(i);
+            
+            Debug.Log(i);
         }
-
+        BombImage.sprite = playerController.bombPrefab[corrent_bombtype].GetComponent<SpriteRenderer>().sprite;
+        BombAmount.text =  "x "+playerController.bombsamount[corrent_bombtype].ToString();
         //playerController.selectedbomb = (corrent_bombtype)Bomb.bombtype;
         switch (corrent_bombtype)
         {
@@ -164,6 +171,7 @@ public class UIManager : MonoBehaviour
         {
             playerController.ThrowBomb(view.ViewID);
         }
+       
         //  BombAmount.text = playerController.bom
     }
 

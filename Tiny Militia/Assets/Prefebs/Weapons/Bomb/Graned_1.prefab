@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3921462341244875050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 16.7661, y: 16.7661, z: 16.7661}
+  m_LocalPosition: {x: 0.000001405, y: 5.1, z: 0}
+  m_LocalScale: {x: 37.0612, y: 37.0612, z: 37.0612}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2255064969501811711}
@@ -234,10 +234,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  damagetime: 0.07
   timeToExplode: 3
   damage: 90
   range: 3
   blast: {fileID: 3921462341244875050}
+  playerController: {fileID: 0}
 --- !u!58 &7604543521715702451
 CircleCollider2D:
   m_ObjectHideFlags: 0

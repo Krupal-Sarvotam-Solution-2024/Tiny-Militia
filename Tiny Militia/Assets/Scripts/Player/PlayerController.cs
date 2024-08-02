@@ -13,12 +13,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
 {
     #region All Variables
 
+    [SerializeField]private Animator anime;
+
     [Space(5)]
     [Header("// Variables For Movements")]
     [Space(2)]
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
+
+    public GameObject leftbost, rightbost;
     [Space(5)]
     [Header("// Variables For Shooting")]
     [Space(2)]
@@ -59,6 +63,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("")]
     [Space(2)]
     public float currentHealth;
+    
     //public float healthRecoveryRate = 2f;
 
     [Space(5)]
@@ -127,7 +132,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     // Start method for checking the player's photon view and set the Camera
     void Start()
     {
-
+       // anime = GetComponent<Animator>();
         view = transform.GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
         currentJetpackFuel = jetpackFuel;
@@ -177,7 +182,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             ArrowDirectionShowing();
             if(PhotonNetwork.InRoom)
             {
-            SoringPlayerBoard();
+                SoringPlayerBoard();
             }
         }
 
@@ -371,6 +376,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
 
         float moveInput = movementJoystick.Horizontal;
+        Debug.Log(moveInput);
+        anime.SetFloat("x_postion", moveInput);
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
     }
@@ -390,15 +397,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void Jetpack()
     {
         float moveInput = movementJoystick.Vertical;
+        anime.SetFloat("y_postion", moveInput);
         if (moveInput > 0 && !isGrounded && currentJetpackFuel > 0)
         {
+            leftbost.SetActive(true);
+            rightbost.SetActive(true);
             rb.velocity = new Vector2(rb.velocity.x, jetpackForce * moveInput);
             currentJetpackFuel -= jetpackFuelConsumptionRate * Time.deltaTime;
         }
         else if (moveInput <= 0)
         {
+            leftbost.SetActive(false);
+            rightbost.SetActive(false);
             currentJetpackFuel = Mathf.Min(jetpackFuel, currentJetpackFuel + jetpackFuelRechargeRate * Time.deltaTime);
         }
+       
     }
 
     // Method for Sitting
@@ -615,7 +628,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         totoalmomb--;
         bombsamount[(int)selectedbomb]--;
-
+        UIManager.instance.BombAmount.text ="x "+ bombsamount[(int)selectedbomb].ToString();
         PlayerController FirePOINT;
         if (PhotonNetwork.InRoom)
         {
@@ -711,8 +724,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 if (health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
                 {
-                    if(health.view.ViewID != this.view.ViewID)
-                        Kill_Count++;
+                   // if(health.view.ViewID != this.view.ViewID)
+                    Kill_Count++;
 
                     Debug.Log("im dying");
                     health.Die();

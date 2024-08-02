@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 3921462341244875050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalPosition: {x: -0.05, y: 0.77, z: 0}
+  m_LocalScale: {x: 5.5253325, y: 5.5253325, z: 5.5253325}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2255064969501811711}
@@ -274,3 +274,4 @@ MonoBehaviour:
   damage: 90
   range: 3
   blast: {fileID: 3921462341244875050}
+  playerController: {fileID: 0}

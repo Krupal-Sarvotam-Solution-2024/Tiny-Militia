@@ -122,6 +122,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &143931218 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7047356676665729658, guid: d9ca2973975f129489b28662f909088a, type: 3}
+  m_PrefabInstance: {fileID: 1978592056710772166}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &329560716 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7765987866614050757, guid: d9ca2973975f129489b28662f909088a, type: 3}
@@ -307,7 +318,7 @@ MonoBehaviour:
   boosterLevelImage: {fileID: 5155753799936539538}
   healthImage: {fileID: 7671742285463736468}
   GunImage: {fileID: 981246823663781866}
-  BombImage: {fileID: 0}
+  BombImage: {fileID: 143931218}
   ReloadImage: {fileID: 1978592056710772167}
   CurrentGunImage: {fileID: 981246823663781866}
   ReloadButton: {fileID: 1822104165}
@@ -726,7 +737,7 @@ MonoBehaviour:
   AllGunData: []
   RespawnPoint:
   - {fileID: 635427731}
-  PlayerPrefeb: {fileID: 1619984018987348014, guid: 801029d8dbbe15a4992628d9c6a38578, type: 3}
+  PlayerPrefeb: {fileID: 2581365428183252027, guid: 7ddb4288090a5cd479c3e1fb9feed3d7, type: 3}
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
   Timer: 10
@@ -1064,6 +1075,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6001600219437378943, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_Name
+      value: Bomb Amount
+      objectReference: {fileID: 0}
     - target: {fileID: 7233398038726746894, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1090,7 +1105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8895049856590354318, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -490,7 +490,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619984018987348014}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e5991fe7f89b0bc49ab78bd7d7ed2d5f, type: 2}
   m_CullingMode: 0
@@ -541,7 +541,7 @@ MonoBehaviour:
   bomb: {fileID: 0}
   currentGunIndex: 0
   maxbomb: 0
-  bombsamount: 03000000
+  bombsamount: 030000000300000000000000
   selectedbomb: 0
   arrow:
   - {fileID: 7220059566925413815}
