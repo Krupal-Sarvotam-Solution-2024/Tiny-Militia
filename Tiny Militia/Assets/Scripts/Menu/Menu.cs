@@ -35,12 +35,17 @@ public class Menu : MonoBehaviour
     public TextMeshProUGUI Total_DeathCount;
     public TextMeshProUGUI Win_Matches;
     public TextMeshProUGUI KD_ratio;
-    
+
     [Space(20)]
     [Header("MatchmakingPage Variables")]
     /* Matchmaking Page Variables */
     public TextMeshProUGUI MatchmakingTime_text;
-    
+
+    [Space(20)]
+    [Header("Map Selection Page Variables")]
+    public Slider TimerSlider;
+    public TextMeshProUGUI TimerText;
+
 
     private void Awake()
     {
@@ -50,7 +55,8 @@ public class Menu : MonoBehaviour
             CustomId = SystemInfo.deviceUniqueIdentifier,
             CreateAccount = true,
 
-            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams {
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
                 GetPlayerProfile = true,
             }
 
@@ -128,6 +134,12 @@ public class Menu : MonoBehaviour
         PlayfabManager.Instance.GetApperance();
     }
 
+    public void SliderValueChange()
+    {
+        DataShow.Instance.GameTime = TimerSlider.value * 60;
+        TimerText.text = TimerSlider.value.ToString() + " Minutes";
+        Debug.Log(DataShow.Instance.GameTime);
+    }
     public void ProfilePageOpen()
     {
         PlayfabManager.Instance.GetApperance();

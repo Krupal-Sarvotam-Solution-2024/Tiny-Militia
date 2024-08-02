@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 {
 
-    public int[] alltimeSelection;
     public int selectedtime;
     public bool customRoom_selected;
     public static ConnectAndJoinRandom Instance;
@@ -143,11 +142,11 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         if (!customRoom_selected)
         {
             PhotonNetwork.JoinRandomRoom();
-            DataShow.Instance.GameTime = alltimeSelection[0];
+            DataShow.Instance.GameTime = 600;
         }
         else
         {
-            DataShow.Instance.GameTime = alltimeSelection[selectedtime];
+            DataShow.Instance.GameTime = Menu.Instance.TimerSlider.value;
 
             
             cumstomMatch.onGenerateRoom_Code();
