@@ -883,7 +883,7 @@ MonoBehaviour:
   - {fileID: 2124932735}
   - {fileID: 1025740509}
   - {fileID: 1337087927}
-  PlayerPrefeb: {fileID: 1619984018987348014, guid: 801029d8dbbe15a4992628d9c6a38578, type: 3}
+  PlayerPrefeb: {fileID: 2581365428183252027, guid: 7ddb4288090a5cd479c3e1fb9feed3d7, type: 3}
   MainCamera: {fileID: 519420031}
   PlayerManager: {fileID: 0}
   Timer: 0
