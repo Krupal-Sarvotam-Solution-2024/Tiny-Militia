@@ -515,8 +515,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896e11293d9303b42a9becc0f4cb295a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anime: {fileID: 0}
   moveSpeed: 5
   jumpForce: 10
+  leftbost: {fileID: 0}
+  rightbost: {fileID: 0}
   gunTransform: {fileID: 965887421370301099}
   firePoint: {fileID: 3756797858696240573}
   bulletSpeed: 10
