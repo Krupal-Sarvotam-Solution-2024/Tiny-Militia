@@ -143,7 +143,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         if (!customRoom_selected)
         {
             PhotonNetwork.JoinRandomRoom();
-            DataShow.Instance.GameTime = 600;
+            DataShow.Instance.GameTime = alltimeSelection[0];
         }
         else
         {

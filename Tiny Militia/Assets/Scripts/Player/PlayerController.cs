@@ -480,18 +480,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
             player.leftgunboneTransform.localScale = new Vector3(-1, -1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 57.745f));
 
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 17.7f));
 
 
-            player.transform.localScale = new Vector3(-0.15f, 0.15f, 1);
+            player.transform.localScale = new Vector3(0.15f, 0.15f, 1);
         }
         else if (aimDirection.x < 0)
         {
             player.leftgunboneTransform.localScale = new Vector3(1, 1, 1f);
             player.leftgunboneTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 47.25f));
 
+            UIManager.instance.AimObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 7f));
 
 
-            player.transform.localScale = new Vector3(0.15f, 0.15f, 1);
+            player.transform.localScale = new Vector3(-0.15f, 0.15f, 1);
         }
     }
 
