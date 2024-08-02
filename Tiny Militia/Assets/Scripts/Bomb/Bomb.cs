@@ -22,7 +22,7 @@ public class Bomb : MonoBehaviour
     public float range;
     public GameObject blast;
 
-    PlayerController playerController;
+    public PlayerController playerController;
     bool readtoExplode;
     bool explotion_Started;
     bool exploded;
@@ -31,7 +31,7 @@ public class Bomb : MonoBehaviour
 
     void Start()
     {
-        // playerController =
+        
         if (type == bombtype.explodebomb || type == bombtype.timebomb)
             StartCoroutine(waitTillExplode());
     }
@@ -58,7 +58,7 @@ public class Bomb : MonoBehaviour
                 {
                     float damageamount =  damage / Distance;
 
-                    item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damageamount, item.GetComponent<PhotonView>().ViewID);// -= damage;
+                    playerController.view.RPC("TakeDamage", RpcTarget.All, damageamount, item.GetComponent<PhotonView>().ViewID);// -= damage;
 
                 }
             }

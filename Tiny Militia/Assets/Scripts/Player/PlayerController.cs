@@ -627,6 +627,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             FirePOINT = transform.GetComponent<PlayerController>();
         }
         GameObject bomb = Instantiate(bombPrefab[(int)selectedbomb], firePoint.position, Quaternion.identity);
+        bomb.GetComponent<Bomb>().playerController = this;
         // bomb.tag = "Player_Bomb";
         Rigidbody2D bombRb = bomb.GetComponent<Rigidbody2D>();
         bombRb.isKinematic = false;
