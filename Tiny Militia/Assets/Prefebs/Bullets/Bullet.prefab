@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 1962fa127449c5c438c8fcc9c283b836, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun: {fileID: 0}
   bloodshott: {fileID: 989397133354838665, guid: fe6faf5060bf67b4fbfbabb3a2db2a9c, type: 3}
+  Id: 0
 --- !u!60 &6890893784002338268
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -274,6 +274,7 @@ public class UIManager : MonoBehaviour
         {
             PhotonNetwork.LeaveRoom();
             DataShow.Instance.This_Match_Kill_Count = 0;
+            DataShow.Instance.This_match_death_count = 0;
             SceneManager.LoadScene("Menu");
         }
         else

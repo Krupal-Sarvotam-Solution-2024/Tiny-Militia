@@ -115,7 +115,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
 
             Temp.GetComponent<PlayerController>().Kill_Count = DataShow.Instance.This_Match_Kill_Count;
-            Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count);
+            Temp.GetComponent<PlayerController>().death_count = DataShow.Instance.This_match_death_count;
+            Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
@@ -159,12 +160,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(time);
         PhotonNetwork.LeaveRoom();
         DataShow.Instance.This_Match_Kill_Count = 0;
+        DataShow.Instance.This_match_death_count = 0;
         isTiming = false;
         PlayerManager.SoringPlayerBoard();
         PlayerManager.onGameOver();
         //SceneManager.LoadScene("Menu");
     }
-
+   
     // Timer Showing in UI Manageer
     void TimerShowing()
     {

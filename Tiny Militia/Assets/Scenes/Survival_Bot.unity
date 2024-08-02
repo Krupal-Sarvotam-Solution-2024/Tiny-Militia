@@ -657,7 +657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &921319567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,7 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botPrefab: {fileID: 12170530538726322, guid: 76f43f4028c06f64ba370cbbca3dc863, type: 3}
-  spawnInterval: 0
+  spawnInterval: 5
   spawnPoints:
   - {fileID: 6786385287471506075}
   - {fileID: 2124932735}

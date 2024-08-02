@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("// Variables for Score Counter")]
     [Space(2)]
     public int Kill_Count;
+    public int death_count;
     public int Score_Count;
 
     [Space(5)]
@@ -206,11 +207,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         obj.arrow[j].transform.LookAt(photonViews[j].gameObject.transform.position);
                         if (distance > 40 || distance < 10)
                         {
-                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 0f);
                         }
                         else
                         {
-                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1F / (distance * 2));
+                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
+                           
                         }
                     }
                 }
@@ -443,7 +445,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // Get joystick input for aiming
         float aimHorizontal = aimJoystick.Horizontal;
         float aimVertical = aimJoystick.Vertical;
-
+        if (!UIManager.instance.AimObject.activeInHierarchy)
+            UIManager.instance.AimObject.SetActive(true);
         // Calculate the aim direction
         Vector3 aimDirection = new Vector3(aimHorizontal, aimVertical, 0);
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
@@ -674,16 +677,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (currentHealth <= 0)
             {
                 Hiterplayer.Kill_Count++;
+                death_count++;
                 if (Hiterplayer.view.IsMine)
                 {
                     //SaveApperance_KillCount
                     DataShow.Instance.Total_Kill_Count++;
+                    
                     PlayfabManager.Instance.SaveApperance_KillCount(DataShow.Instance.Total_Kill_Count);
                     PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
                 }
 
                 if (this.view.IsMine)
                 {
+                    DataShow.Instance.Total_Death_Count++;
                     Die();
                 }
 
@@ -728,7 +734,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     Kill_Count++;
 
                     Debug.Log("im dying");
+                    health.death_count++;
                     health.Die();
+                    
                 }
             }
         }
@@ -791,6 +799,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 UIManager.instance.PlayersData[k].GetComponent<TextMeshProUGUI>().text = allPlayer[k].GetComponent<PhotonView>().Owner.NickName;
                 UIManager.instance.PlayersData[k].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerController.Kill_Count.ToString("00");
+                UIManager.instance.PlayersData[k].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = playerController.death_count.ToString("00");
+              //  UIManager.instance.PlayersData[k].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerController.Kill_Count.ToString("00");
             }
         }
     }
@@ -836,6 +846,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             PlayfabManager.Instance.SaveApperance_TotalDeath(DataShow.Instance.Total_Death_Count);
             PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
             DataShow.Instance.This_Match_Kill_Count = Kill_Count;
+            DataShow.Instance.This_match_death_count = death_count;
             PhotonNetwork.Destroy(this.gameObject);
         }
         else
@@ -1044,9 +1055,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #region Method for Getting Data
 
     [PunRPC]
-    public void GettingData(int data)
+    public void GettingData(int data,int deathcount)
     {
         Kill_Count = data;
+        death_count = deathcount;
     }
 
     #endregion

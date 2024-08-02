@@ -15,7 +15,7 @@ MonoBehaviour:
   GunSprite: {fileID: 21300000, guid: bad7d6cc530e7b34f9d27a3346a64d58, type: 3}
   gunName: MP5
   gunType: SMG
-  damagePerBullet: 100
+  damagePerBullet: 6
   damageType: Single
   reloadTime: 3
   magazineSize: 50
