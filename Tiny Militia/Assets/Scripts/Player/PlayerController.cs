@@ -699,17 +699,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             Debug.Log("damage tager  " + Health_ID + " damage giver  " + view.ViewID);
-            PlayerController Health;
-            Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
-            Health.currentHealth -= damageAmount;
-            UpdateHealthImage();
 
-            if (Health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
+            if (PhotonNetwork.GetPhotonView(Health_ID).transform.TryGetComponent<PlayerController>(out PlayerController health))
             {
 
-                Kill_Count++;
-                Debug.Log("im dying");
-                Health.Die();
+
+                
+               // Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
+                health.currentHealth -= damageAmount;
+                UpdateHealthImage();
+
+                if (health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
+                {
+                    if(health != this)
+                        Kill_Count++;
+
+                    Debug.Log("im dying");
+                    health.Die();
+                }
             }
         }
         else

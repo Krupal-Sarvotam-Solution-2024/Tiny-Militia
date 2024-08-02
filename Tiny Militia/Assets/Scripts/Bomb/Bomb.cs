@@ -186,6 +186,7 @@ public class Bomb : MonoBehaviour
         }
         else if (type == bombtype.timebomb)
         {
+            Debug.Log("timeBomb");
             GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
 
             foreach (var item in allplayer)
@@ -199,14 +200,14 @@ public class Bomb : MonoBehaviour
                     if (PhotonNetwork.InRoom)
                     {
 
-                        item.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage, playerController.transform.GetComponent<PhotonView>().ViewID);// -= damage;
+                        playerController.view.RPC("TakeDamage", RpcTarget.All, damage, item.GetComponent<PhotonView>().ViewID);// -= damage;
                     }
                     else
                     {
 
                         explotion_Started = true;
-                     ///  readtoExplode = false;
-                        //  StopAllCoroutines();
+                        ///readtoExplode = false;
+                        //StopAllCoroutines();
                         timeToExplode = .01f;
                         StartCoroutine(waitTillExplode());
                     }
