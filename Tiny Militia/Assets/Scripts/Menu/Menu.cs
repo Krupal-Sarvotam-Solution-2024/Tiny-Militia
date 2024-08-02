@@ -140,10 +140,16 @@ public class Menu : MonoBehaviour
         TimerText.text = TimerSlider.value.ToString() + " Minutes";
         Debug.Log(DataShow.Instance.GameTime);
     }
+
     public void ProfilePageOpen()
     {
         PlayfabManager.Instance.GetApperance();
         DataShow.Instance.Set_and_Show_ApperancePlayerName();
+    }
+
+    public void ExitRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
 }

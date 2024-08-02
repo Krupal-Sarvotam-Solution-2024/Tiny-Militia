@@ -147,8 +147,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
         else
         {
-            DataShow.Instance.GameTime = Menu.Instance.TimerSlider.value;
-
             
             cumstomMatch.onGenerateRoom_Code();
 
