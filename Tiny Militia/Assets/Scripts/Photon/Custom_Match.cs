@@ -56,7 +56,7 @@ public class Custom_Match : MonoBehaviourPunCallbacks
     public void onJoinedRoom_Code()
     {
         PhotonNetwork.JoinRoom(inputField_RoomCode.text);
-        GameManager.Instance.Timer = 60;
+       // GameManager.Instance.Timer = ;
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
         //ConnectAndJoinRandom.Instance.view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
     }

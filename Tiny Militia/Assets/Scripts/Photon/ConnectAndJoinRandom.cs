@@ -132,8 +132,9 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    void GetingMasterTime(int time)
+    void GetingMasterTime(float time)
     {
+        Debug.Log("Time Setting from master");
         DataShow.Instance.GameTime = time;
     }
 

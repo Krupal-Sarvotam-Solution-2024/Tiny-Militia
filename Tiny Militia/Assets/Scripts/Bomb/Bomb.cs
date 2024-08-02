@@ -144,8 +144,8 @@ public class Bomb : MonoBehaviour
             
             if(!readtoExplode)
             {
-                GameObject[] allplayer = GameObject.FindGameObjectsWithTag("Player");
-                float Distance = Vector3.Distance(allplayer[0].transform.position, transform.position);
+               
+                float Distance = Vector3.Distance(playerController.transform.position, transform.position);
                 if(Distance> range)
                 {
                     readtoExplode = true;
