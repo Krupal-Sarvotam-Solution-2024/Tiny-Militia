@@ -117,7 +117,8 @@ public class Bomb : MonoBehaviour
             rb.rotation = 0;
             rb.totalForce = Vector2.zero;
             StopAllCoroutines();
-           
+            timeToExplode = .1f;
+          
 
         }
 
@@ -199,8 +200,12 @@ public class Bomb : MonoBehaviour
                 {
                     if (PhotonNetwork.InRoom)
                     {
+                        explotion_Started = true;
+                        ///readtoExplode = false;
+                        //StopAllCoroutines();
+                        timeToExplode = .01f;
+                        StartCoroutine(waitTillExplode());
 
-                        playerController.view.RPC("TakeDamage", RpcTarget.All, damage, item.GetComponent<PhotonView>().ViewID);// -= damage;
                     }
                     else
                     {

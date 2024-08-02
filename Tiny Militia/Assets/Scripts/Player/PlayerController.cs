@@ -711,7 +711,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 if (health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
                 {
-                    if(health != this)
+                    if(health.view.ViewID != this.view.ViewID)
                         Kill_Count++;
 
                     Debug.Log("im dying");
