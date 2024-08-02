@@ -132,7 +132,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    void GetingMasterTime(int time)
+    void GetingMasterTime(float time)
     {
         DataShow.Instance.GameTime = time;
     }
@@ -146,8 +146,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
         else
         {
-            DataShow.Instance.GameTime = Menu.Instance.TimerSlider.value;
-
             
             cumstomMatch.onGenerateRoom_Code();
 

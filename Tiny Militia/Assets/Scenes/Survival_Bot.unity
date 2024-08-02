@@ -480,6 +480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Uzi
       objectReference: {fileID: 0}
+    - target: {fileID: 4459459010286073147, guid: 5140d2cb890f27840a299b9a4f2a8461, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -747,7 +751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1357103772}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TempPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -923,7 +927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &981246823663781866 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1651493092086411820, guid: d9ca2973975f129489b28662f909088a, type: 3}
@@ -1083,6 +1087,10 @@ PrefabInstance:
     - target: {fileID: 8895049856590354318, guid: d9ca2973975f129489b28662f909088a, type: 3}
       propertyPath: m_Name
       value: PlayerDetails
+      objectReference: {fileID: 0}
+    - target: {fileID: 8895049856590354318, guid: d9ca2973975f129489b28662f909088a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

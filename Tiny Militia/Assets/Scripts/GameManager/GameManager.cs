@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using UnityEditor.Rendering;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -169,13 +170,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (isTiming)
         {
-            float minutes = Timer / 60;
-
-            float seconds = Timer % 60;
-
-            UIManager.instance.Timer.text = minutes.ToString("00") + " : " + seconds.ToString("00");
             Timer -= Time.deltaTime;
-
+            float minutes = Mathf.FloorToInt(Timer / 60);
+            float seconds = Mathf.FloorToInt(Timer % 60);
+            UIManager.instance.Timer.text = string.Format("{00:00}:{01:00}",minutes,seconds);
         }
     }
 

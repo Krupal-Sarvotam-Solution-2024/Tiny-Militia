@@ -17,46 +17,49 @@ public class Custom_Match : MonoBehaviourPunCallbacks
         char[] characters2 = characters.ToCharArray();
         RoomCode = null;
 
-        for(int k = 0; k < chars.Length; k++)
+        for (int k = 0; k < chars.Length; k++)
         {
             chars[k] = characters2[Random.Range(0, characters2.Length)];
             RoomCode += chars[k];
         }
-        
+
         Debug.Log(RoomCode);
 
         List<RoomInfo> roomList = new List<RoomInfo>();
 
-        for(int p = 0;p < PhotonNetwork.CountOfRooms;p++)
+        for (int p = 0; p < PhotonNetwork.CountOfRooms; p++)
         {
-            if (roomList[p].Name == RoomCode)
+            if (roomList.Count > 0)
             {
-                onGenerateRoom_Code();
-                return;
-            }   
+
+                if (roomList[p].Name == RoomCode)
+                {
+                    onGenerateRoom_Code();
+                    return;
+                }
+            }
         }
 
         RoomOptions options = new RoomOptions();
-        
+
         options.MaxPlayers = 6;
         //options.IsOpen = false;
         //options.IsVisible = false;
-        PhotonNetwork.CreateRoom(RoomCode,options);
+        PhotonNetwork.CreateRoom(RoomCode, options);
         ConnectAndJoinRandom.Instance.view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
     }
-   
+
 
     public override void OnCreatedRoom()
     {
         Debug.Log("Room Creation Successfully");
-        base.OnCreatedRoom();   
+        base.OnCreatedRoom();
     }
 
     public void onJoinedRoom_Code()
     {
         PhotonNetwork.JoinRoom(inputField_RoomCode.text);
-        GameManager.Instance.Timer = 60;
         ConnectAndJoinRandom.Instance.view.RPC("PlayerJoined", RpcTarget.All);
         //ConnectAndJoinRandom.Instance.view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
     }
