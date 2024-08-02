@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|c:\\krupal\\tiny-militia\\tiny militia\\assets\\scripts\\bomb\\bomb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bomb\\bomb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3082B75C-93B9-4CB0-B6BC-21581533CA43}|PhotonRealtime.csproj|c:\\krupal\\tiny-militia\\tiny militia\\assets\\photon\\photonrealtime\\code\\loadbalancingclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3082B75C-93B9-4CB0-B6BC-21581533CA43}|PhotonRealtime.csproj|solutionrelative:assets\\photon\\photonrealtime\\code\\loadbalancingclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\player\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|c:\\krupal\\tiny-militia\\tiny militia\\assets\\scripts\\menu\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\menu\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\gamemanager\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\photon\\connectandjoinrandom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\photon\\connectandjoinrandom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\photon\\custom_match.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\photon\\custom_match.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\playfab\\datashow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playfab\\datashow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\gamemanager\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\bomb\\bomb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bomb\\bomb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\player\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\playfab\\playfabmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,20 +43,12 @@
       "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ui\\uimanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\photon\\custom_match.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\photon\\custom_match.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\animation\\uianimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\animation\\uianimation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Library\\PackageCache\\com.unity.textmeshpro@3.0.6\\Scripts\\Runtime\\TMP_Text.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.textmeshpro@3.0.6\\Scripts\\Runtime\\TMP_Text.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\menu\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\menu\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D1B298D-F1BD-3ED4-6CF7-40C5D48D19F1}|Assembly-CSharp.csproj|C:\\Krupal\\Tiny-Militia\\Tiny Militia\\assets\\scripts\\bot scripts\\botcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,11 +70,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "LoadBalancingClient.cs",
+              "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
+              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
+              "ToolTip": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
+              "RelativeToolTip": "Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAxwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-02T07:32:47.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "PlayerController.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Player\\PlayerController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerController.cs",
@@ -83,20 +100,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\GameManager\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager\\GameManager.cs",
               "ToolTip": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\GameManager\\GameManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameManager\\GameManager.cs",
-              "ViewState": "AQIAADYAAAAAAAAAAAAuwKIAAAAjAAAA",
+              "ViewState": "AQIAAKAAAAAAAAAAAAAYwK8AAABbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-05T11:24:27.721Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "UIManager.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\UI\\UIManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\UIManager.cs",
@@ -109,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "UIAnimation.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Animation\\UIAnimation.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Animation\\UIAnimation.cs",
@@ -121,7 +138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "TMP_Text.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Library\\PackageCache\\com.unity.textmeshpro@3.0.6\\Scripts\\Runtime\\TMP_Text.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.textmeshpro@3.0.6\\Scripts\\Runtime\\TMP_Text.cs",
@@ -133,32 +150,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "Custom_Match.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Photon\\Custom_Match.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Photon\\Custom_Match.cs",
               "ToolTip": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Photon\\Custom_Match.cs",
               "RelativeToolTip": "Assets\\Scripts\\Photon\\Custom_Match.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAYwB8AAAAtAAAA",
+              "ViewState": "AQIAACIAAAAAAAAAAAAQwB8AAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-31T05:53:37.302Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Bomb.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Bomb\\Bomb.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Bomb\\Bomb.cs",
               "ToolTip": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Bomb\\Bomb.cs",
               "RelativeToolTip": "Assets\\Scripts\\Bomb\\Bomb.cs",
-              "ViewState": "AQIAALAAAAAAAAAAAIAwwMkAAACsAAAA",
+              "ViewState": "AQIAALEAAAAAAAAAAIAwwNAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T09:07:39.696Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-30T09:07:39.696Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "DataShow.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Playfab\\DataShow.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Playfab\\DataShow.cs",
@@ -170,7 +186,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "PlayfabManager.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Playfab\\PlayfabManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Playfab\\PlayfabManager.cs",
@@ -182,31 +198,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 1,
               "Title": "Menu.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Menu\\Menu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Menu\\Menu.cs",
               "ToolTip": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Menu\\Menu.cs",
               "RelativeToolTip": "Assets\\Scripts\\Menu\\Menu.cs",
-              "ViewState": "AQIAAFwAAAAAAAAAAAAgwBMAAAAzAAAA",
+              "ViewState": "AQIAACYAAAAAAAAAAAAIwJcAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-26T13:26:20.885Z"
+              "WhenOpened": "2024-07-26T13:26:20.885Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ConnectAndJoinRandom.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Photon\\ConnectAndJoinRandom.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Photon\\ConnectAndJoinRandom.cs",
               "ToolTip": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Photon\\ConnectAndJoinRandom.cs",
               "RelativeToolTip": "Assets\\Scripts\\Photon\\ConnectAndJoinRandom.cs",
-              "ViewState": "AQIAAG4AAAAAAAAAAAAmwJEAAAA7AAAA",
+              "ViewState": "AQIAAH8AAAAAAAAAAAAtwIYAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-27T08:34:04.375Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "BotController.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Bot Scripts\\BotController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Bot Scripts\\BotController.cs",
@@ -218,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "InternalEditorBridge.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Library\\PackageCache\\com.unity.2d.common@8.0.2\\Editor\\InternalBridge\\InternalEditorBridge.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.2d.common@8.0.2\\Editor\\InternalBridge\\InternalEditorBridge.cs",
@@ -230,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "LoadingManager.cs",
               "DocumentMoniker": "C:\\Krupal\\Tiny-Militia\\Tiny Militia\\Assets\\Scripts\\Loading Manager\\LoadingManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Loading Manager\\LoadingManager.cs",

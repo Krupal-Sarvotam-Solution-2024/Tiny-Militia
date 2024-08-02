@@ -46,6 +46,10 @@ public class Menu : MonoBehaviour
     public Slider TimerSlider;
     public TextMeshProUGUI TimerText;
 
+    [Space(20)]
+    [Header("Room Selection Page Variables")]
+    public TextMeshProUGUI RoomCodeText;
+
 
     private void Awake()
     {

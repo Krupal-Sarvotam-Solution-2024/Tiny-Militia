@@ -9,7 +9,7 @@ using TMPro;
 public class Custom_Match : MonoBehaviourPunCallbacks
 {
     string RoomCode = "1234567";
-    string characters = "ABCDEFGHIJKLMOPQRSTUVWXYZ";
+    string characters = "ABCDEFGHIJKLMOPQRSTUVWXYZ1234567890";
     public TMP_InputField inputField_RoomCode;
     public void onGenerateRoom_Code()
     {
@@ -23,7 +23,7 @@ public class Custom_Match : MonoBehaviourPunCallbacks
             RoomCode += chars[k];
         }
 
-        Debug.Log(RoomCode);
+        Menu.Instance.RoomCodeText.text = RoomCode;
 
         List<RoomInfo> roomList = new List<RoomInfo>();
 
