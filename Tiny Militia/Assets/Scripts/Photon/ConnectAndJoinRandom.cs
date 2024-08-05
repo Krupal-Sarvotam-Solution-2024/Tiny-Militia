@@ -26,6 +26,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI PlayerCount;
     bool isMatchMaking;
     float MatchMakingTime = 10f;
+    IEnumerator gotofight;
     public Custom_Match cumstomMatch;
 
     public void CustionRoom_selected()
@@ -62,12 +63,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
     }
 
-
-    // below, we implement some callbacks of PUN
-    // you can find PUN's callbacks in the class PunBehaviour or in enum PhotonNetworkingMessage
-
-
-
     public override void OnJoinedLobby()
     {
         Debug.Log("OnJoinedLobby(). This client is connected and does get a room-list, which gets stored as PhotonNetwork.GetRoomList(). This script now calls: PhotonNetwork.JoinRandomRoom();");
@@ -95,7 +90,6 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         //   PhotonNetwork.CreateRoom();
     }
-    IEnumerator gotofight;
 
     [PunRPC]
     void PlayerJoined()
@@ -126,14 +120,14 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
             PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
         }
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount >=2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             gotofight = GoToFight();
-           
+
             StartCoroutine(gotofight);
         }
 
-        if(customRoom_selected && PhotonNetwork.IsMasterClient)
+        if (customRoom_selected && PhotonNetwork.IsMasterClient)
         {
             view.RPC("GetingMasterTime", RpcTarget.Others, DataShow.Instance.GameTime);
         }
@@ -157,7 +151,7 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
         else
         {
-            
+
             cumstomMatch.onGenerateRoom_Code();
 
 
@@ -184,11 +178,21 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
 
             PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
         }
+
+        if (PhotonNetwork.CountOfPlayersInRooms == 0)
+        {
+            if (gotofight != null)
+            {
+                StopCoroutine(gotofight);
+            }
+            isMatchMaking = false;
+            Menu.Instance.MatchmakingTime_text.text = "Finding other players";
+        }
     }
 
     IEnumerator GoToFight()
     {
-       
+
         isMatchMaking = true;
         yield return new WaitForSeconds(10f);
         PhotonNetwork.CurrentRoom.IsOpen = false;
