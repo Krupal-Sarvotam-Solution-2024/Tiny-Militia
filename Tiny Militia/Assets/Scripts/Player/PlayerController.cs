@@ -297,6 +297,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
             if(collision.TryGetComponent<PlayerController>(out PlayerController Player) && !Player.view.IsMine)
             {
+              
                 Gun currentgun;
                 currentgun = guns[currentGunIndex];
 
@@ -307,8 +308,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
                 else
                 {
-                    view.RPC("TakeDamageFromHit", RpcTarget.All, damage, collision.transform.GetComponent<PlayerController>().view.ViewID);
+                   Player.view.RPC("TakeDamageFromHit", RpcTarget.All, damage, view.ViewID);
                 }
+                
 
             }
         
@@ -689,7 +691,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     //Method For Taking damage from player through bullet in offline and online mode
     [PunRPC]
-    public void TakeDamageFromHit(int damageAmount, int hitedplayer_id)
+    public void TakeDamageFromHit(float damageAmount, int hitedplayer_id)
     {
         if (PhotonNetwork.InRoom)
         {

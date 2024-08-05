@@ -7,7 +7,7 @@ public class Gun : ScriptableObject
     public Sprite GunSprite;
     public string gunName;
     public string gunType;
-    public int damagePerBullet;
+    public float damagePerBullet;
     public string damageType;
     public float reloadTime;
     public int magazineSize;

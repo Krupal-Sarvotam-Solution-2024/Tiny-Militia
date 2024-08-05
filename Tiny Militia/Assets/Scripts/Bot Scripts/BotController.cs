@@ -10,7 +10,7 @@ public class BotController : MonoBehaviour
     public Transform player; // Reference to the player's transform
     private Rigidbody2D rb; // Bot's rigidbody
     private float lastShotTime; // Time of last shot
-    public int currentHealth; // Current health of the bot
+    public float currentHealth; // Current health of the bot
 
     public Gun[] guns; // Array of guns the bot can use
     private int currentGunIndex; // Index of the currently equipped gun
@@ -84,7 +84,7 @@ public class BotController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
         if (currentHealth <= 0)
