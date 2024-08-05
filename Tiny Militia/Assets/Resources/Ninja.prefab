@@ -1742,7 +1742,7 @@ MonoBehaviour:
   gunTransform: {fileID: 328821831954999333}
   firePoint: {fileID: 8457736456903431406}
   bulletSpeed: 10
-  rightgunTransform: {fileID: 328821831954999333}
+  rightgunTransform: {fileID: 8862565159879145892}
   leftgunTransform: {fileID: 328821831954999333}
   leftgunboneTransform: {fileID: 8788099319887161230}
   bulletPrefab: {fileID: 2793077112133411170, guid: 65a64bfbf57a6834b97448aa791a4885, type: 3}
