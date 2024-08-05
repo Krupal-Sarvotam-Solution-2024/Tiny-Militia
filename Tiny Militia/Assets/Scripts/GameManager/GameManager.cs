@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
-
+using Photon.Realtime;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager Instance; // Make Script Static
 
+    public List<PlayerController> allplayer = new List<PlayerController>();
+
     public List<Gun> AllGunData; // All Guns Data
+
+    public GameObject[] bombspawn,gunspawn;
+
+    public Gun firstdefaltgun, seconddefaltgun;
+
+    public Transform[] allpostion;
 
     public List<Transform> RespawnPoint; // Respawn Point For Players
 
@@ -47,6 +55,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
+    GameObject privousgunspawn;
+    IEnumerator GunSpawn()
+    {
+        yield return new WaitForSeconds(24f);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            int randomno = Random.Range(0, allpostion.Length);
+            PhotonNetwork.Destroy(privousgunspawn);
+            privousgunspawn = PhotonNetwork.Instantiate(gunspawn[Random.Range(0, gunspawn.Length)].name, allpostion[randomno].position, Quaternion.identity);
+            StartCoroutine(GunSpawn());
+        }
+    }
     private void Start()
     {
         MainCamera = Camera.main;
@@ -56,6 +76,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             StartCoroutine(GameTimer(Timer));
         }
         playerSpawn();
+        StartCoroutine(GunSpawn());
     }
 
     private void Update()
@@ -96,14 +117,20 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("other player left the room");
+        
+        base.OnPlayerLeftRoom(otherPlayer);
+    }
     // Player Respawn after Death
     IEnumerator PlayerRespawn(PlayerController PlayerObject)
-    {
-        if (PhotonNetwork.InRoom)
+    { 
+        if (PhotonNetwork.InRoom && PlayerObject.view.IsMine)
         {
             UIManager.instance.Pause.gameObject.SetActive(true);
         }
-        else
+        else if(!PhotonNetwork.InRoom)
         {
             UIManager.instance.Pause.gameObject.SetActive(true);
         }
@@ -112,11 +139,27 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             UIManager.instance.Pause.gameObject.SetActive(false);
 
-            GameObject Temp = PhotonNetwork.Instantiate(PlayerPrefeb.name, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
 
-            Temp.GetComponent<PlayerController>().Kill_Count = DataShow.Instance.This_Match_Kill_Count;
-            Temp.GetComponent<PlayerController>().death_count = DataShow.Instance.This_match_death_count;
-            Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
+            GameObject Temp = PlayerObject.gameObject;
+
+            Temp.transform.position = RespawnPoint[Random.Range(0, RespawnPoint.Count)].position;
+            Temp.SetActive(true);
+            firstdefaltgun.Initialize();
+            seconddefaltgun.Initialize();
+            PlayerObject.guns[0] = firstdefaltgun;
+            
+            PlayerObject.guns[1] = seconddefaltgun;
+
+            PlayerObject.currentHealth = PlayerObject.maxHealth;
+            PlayerObject.bombsamount[0] = 3;
+            PlayerObject.bombsamount[1] = 3;
+        
+            PlayerObject.guns[1] = seconddefaltgun;
+            UIManager.instance.UI_Updates();
+            PlayerObject.UpdateHealthImage();
+           // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
+           // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
+           // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
@@ -133,13 +176,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             UIManager.instance.Pause.gameObject.SetActive(false);
 
-            GameObject Temp1 = GameObject.FindGameObjectWithTag("Player");
+            //  GameObject Temp1 = GameObject.FindGameObjectWithTag("Player");
 
-            Destroy(Temp1);
+            //  Destroy(Temp1);
 
-            GameObject Temp = Instantiate(PlayerPrefeb, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
+            // GameObject Temp = Instantiate(PlayerPrefeb, RespawnPoint[Random.Range(0, RespawnPoint.Count)].position, Quaternion.identity);
 
-            Temp.tag = "Player";
+            GameObject Temp = PlayerObject.gameObject;
+            Temp.transform.position = RespawnPoint[Random.Range(0, RespawnPoint.Count)].position;
+            Temp.SetActive(true);
+            //Temp.tag = "Player";
 
             MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
 

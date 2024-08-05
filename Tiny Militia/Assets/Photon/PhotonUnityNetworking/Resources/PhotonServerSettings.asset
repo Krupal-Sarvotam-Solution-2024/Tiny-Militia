@@ -54,6 +54,7 @@ MonoBehaviour:
   - KillCountCheck
   - GettingData
   - GetingMasterTime
+  - Die
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

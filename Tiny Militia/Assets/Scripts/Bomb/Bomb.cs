@@ -45,20 +45,23 @@ public class Bomb : MonoBehaviour
         Debug.Log(allplayer.Length);
         GameObject[] allBot = GameObject.FindGameObjectsWithTag("Bot");
         exploded = true;
-        Debug.Log("called");
-        //  PhotonView view = playerController.view;
+
         if (PhotonNetwork.InRoom)
         {
 
             foreach (var item in allplayer)
             {
+
                 float Distance = Vector3.Distance(item.transform.position, transform.position);
 
                 if (Distance < 3)
                 {
                     float damageamount =  damage / Distance;
 
-                    playerController.view.RPC("TakeDamage", RpcTarget.All, damageamount, item.GetComponent<PhotonView>().ViewID);// -= damage;
+                    if (item.GetComponent<PhotonView>())
+                    {
+                        playerController.view.RPC("TakeDamage", RpcTarget.All, damageamount, item.GetComponent<PhotonView>().ViewID);// -= damage;
+                    }
 
                 }
             }

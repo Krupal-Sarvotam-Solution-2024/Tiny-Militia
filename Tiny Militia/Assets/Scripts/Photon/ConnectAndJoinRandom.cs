@@ -95,11 +95,19 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
     {
         //   PhotonNetwork.CreateRoom();
     }
-
+    IEnumerator gotofight;
 
     [PunRPC]
     void PlayerJoined()
     {
+
+        if (gotofight != null)
+        {
+            MatchMakingTime = 10f;
+            StopCoroutine(gotofight);
+
+        }
+
         for (int d = PlayersList.transform.childCount; d > 0; d--)
         {
             Destroy(PlayersList.transform.GetChild(d - 1).gameObject);
@@ -118,9 +126,11 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
             PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
         }
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >=2)
         {
-            StartCoroutine("GoToFight");
+            gotofight = GoToFight();
+           
+            StartCoroutine(gotofight);
         }
 
         if(customRoom_selected && PhotonNetwork.IsMasterClient)
@@ -154,10 +164,12 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
     }
 
-        IEnumerator GoToFight()
+    IEnumerator GoToFight()
     {
+       
         isMatchMaking = true;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         isMatchMaking = false;
         DataShow.Instance.Total_Matches_Count++;
         PlayfabManager.Instance.SaveApperance_TotalMatches(DataShow.Instance.Total_Matches_Count);
