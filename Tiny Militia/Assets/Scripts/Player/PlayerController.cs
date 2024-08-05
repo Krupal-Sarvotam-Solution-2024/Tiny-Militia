@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             UIManager.instance.ScopeText.text = (MainCamera.orthographicSize - 4).ToString() + "x";
 
             leftgunTransform.GetComponent<SpriteRenderer>().sprite = guns[0].GunSprite;
+           Debug.Log(leftgunTransform.GetComponent<SpriteRenderer>().sprite.name);
             rightgunTransform.GetComponent<SpriteRenderer>().sprite = guns[1].GunSprite;
 
         }
@@ -227,7 +228,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
                 if (collision.gameObject.GetComponent<Bullet>().Id == view.ViewID)
                     return;
-
+                
                 //TakeDamage(PlayerGun.damagePerBullet);
                 view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, collision.gameObject.GetComponent<Bullet>().Id);
 

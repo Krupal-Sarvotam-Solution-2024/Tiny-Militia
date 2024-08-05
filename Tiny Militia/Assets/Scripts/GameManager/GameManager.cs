@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
                 // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
                 // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
+                PlayerObject.currentHealth = PlayerObject.maxHealth;
                 if (Temp.GetComponent<PhotonView>().IsMine)
                 {
 
@@ -180,7 +181,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                     PlayerObject.guns[1] = seconddefaltgun;
 
-                    PlayerObject.currentHealth = PlayerObject.maxHealth;
                     PlayerObject.bombsamount[0] = 3;
                     PlayerObject.bombsamount[1] = 3;
 

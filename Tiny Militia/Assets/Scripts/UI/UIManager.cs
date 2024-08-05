@@ -205,6 +205,7 @@ public class UIManager : MonoBehaviour
         changingGunData.currentData = TempGunData;
 
         Gun currentGun = playerController.guns[playerController.currentGunIndex];
+        Debug.Log(playerController.currentGunIndex);
 
         playerController.leftgunTransform.GetComponent<SpriteRenderer>().sprite = currentGun.GunSprite;
 
