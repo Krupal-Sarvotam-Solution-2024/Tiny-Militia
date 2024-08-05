@@ -9,7 +9,7 @@ using PlayFab;
 using System.Runtime.CompilerServices;
 
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
 {
     #region All Variables
 
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public int maxbomb;
     public int[] bombsamount;
 
-    private int totoalmomb = 3;
+   // private int totoalmomb = 3;
     public Bomb.bombtype selectedbomb;
     public GameObject[] arrow;
 
@@ -269,7 +269,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             currentHealth = 0;
             UpdateHealthImage();
-            Die();
+            if (PhotonNetwork.InRoom && view.IsMine)
+            {
+                view.RPC("Die", RpcTarget.All);
+            }
+            else
+                Die();
         }
 
 
@@ -352,7 +357,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
 
     // Method for update Health image in UI
-    void UpdateHealthImage()
+    public void UpdateHealthImage()
     {
         if (PhotonNetwork.InRoom)
         {
@@ -627,10 +632,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ThrowBomb(int firePoint_ID)
     {
-        if (totoalmomb <= 0)
-            return;
-        totoalmomb--;
+        if ( bombsamount[(int)selectedbomb]<= 0)
+           return;
+       // totoalmomb--;
         bombsamount[(int)selectedbomb]--;
+
         UIManager.instance.BombAmount.text ="x "+ bombsamount[(int)selectedbomb].ToString();
         PlayerController FirePOINT;
         if (PhotonNetwork.InRoom)
@@ -652,9 +658,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public void GetBomb(Bomb.bombtype type)
     {
-        if (totoalmomb >= 4)
-            return;
-        totoalmomb++;
+      //  if (totoalmomb >= 4)
+       //     return;
+      //  totoalmomb++;
         bombsamount[(int)type]++;
 
     }
@@ -690,18 +696,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if (this.view.IsMine)
                 {
                     DataShow.Instance.Total_Death_Count++;
-                    Die();
+                    view.RPC("Die", RpcTarget.All);
                 }
 
                 if (view.Controller.NickName == PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName)
                 {
-                    UIManager.instance.killing_text.text = PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated";
+                   UIManager.instance.StartCoroutine(UIManager.instance.Textdeactivationi(PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName + " Eliminated by self"));
 
                     UIManager.instance.killing_text.color = Color.white;
                 }
                 else
                 {
-                    UIManager.instance.killing_text.text = view.Controller.NickName + " Eliminated by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName;
+                    UIManager.instance.StartCoroutine(UIManager.instance.Textdeactivationi(view.Controller.NickName + " Eliminated by " + PhotonNetwork.GetPhotonView(hitedplayer_id).Controller.NickName));
 
                     UIManager.instance.killing_text.color = Color.white;
                 }
@@ -710,6 +716,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
     }
+
+   
 
     //Method For Taking damage from player through bomb in offline and online mode
     [PunRPC]
@@ -735,7 +743,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                     Debug.Log("im dying");
                     health.death_count++;
-                    health.Die();
+                    health.view.RPC("Die",RpcTarget.All);
                     
                 }
             }
@@ -745,7 +753,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             this.currentHealth -= damageAmount;
             UpdateHealthImage();
 
-            if (this.currentHealth <= 0)
+            if (currentHealth <= 0)
             {
                 Die();
             }
@@ -805,6 +813,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     // Method for Checking the health and apply the Death Function To Player
     void Die()
     {
@@ -812,10 +821,33 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
 
             GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.GetComponent<PlayerController>());
+            SoringPlayerBoard();
+            if (view.IsMine)
+            {
+                UIManager.instance.Pause.gameObject.SetActive(true);
+                UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
+                UIManager.instance.PauseExitButton.gameObject.SetActive(false);
+
+                UIManager.instance.LeaveMatch.gameObject.SetActive(false);
+                GameManager.Instance.isRespawning = true;
+                DataShow.Instance.Total_Death_Count++;
+                PlayfabManager.Instance.SaveApperance_TotalDeath(DataShow.Instance.Total_Death_Count);
+                PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
+                DataShow.Instance.This_Match_Kill_Count = Kill_Count;
+                DataShow.Instance.This_match_death_count = death_count;
+            }
+
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Dying ");
+            UIManager.instance.Score.text = UIManager.instance.playerController.Score_Count.ToString();
+            UIManager.instance.Kill.text = UIManager.instance.playerController.Kill_Count.ToString();
+
+            UIManager.instance.High_Score.text = DataShow.Instance.High_Score_Count.ToString();
             UIManager.instance.Pause.gameObject.SetActive(true);
-
-            //UIManager.instance.Info.gameObject.SetActive(false);
 
             UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
 
@@ -823,66 +855,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
-            GameManager.Instance.isRespawning = true;
 
-            SoringPlayerBoard();
-
-            /* 
-            * Add All Player Information 
-            * Ex.1 Player Name                     Kill
-            *      Player1                          10
-            *      Player2                          08
-            *      Player3                          06
-            *      Player4                          04
-            *      Player5                          02
-            *      Player6                          00
-            *      
-            *     ------------------------------------
-            *     NOTE :- Players Position is Set According to Their Kill Count
-            *     
-            */
-
-            DataShow.Instance.Total_Death_Count++;
-            PlayfabManager.Instance.SaveApperance_TotalDeath(DataShow.Instance.Total_Death_Count);
-            PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
-            DataShow.Instance.This_Match_Kill_Count = Kill_Count;
-            DataShow.Instance.This_match_death_count = death_count;
-            PhotonNetwork.Destroy(this.gameObject);
-        }
-        else
-        {
-            UIManager.instance.Score.text = UIManager.instance.playerController.Score_Count.ToString();
-            UIManager.instance.Kill.text = UIManager.instance.playerController.Kill_Count.ToString();
-            UIManager.instance.High_Score.text = DataShow.Instance.High_Score_Count.ToString();
+            GameManager.Instance.isLifeLineOver = true;
             if (GameManager.Instance.Lifes != 0)
             {
-                if (GameManager.Instance.isDead == 1)
-                {
-                    Debug.Log(GameManager.Instance.isDead);
+              
+                Debug.Log(GameManager.Instance.isDead);
 
-                    GameManager.Instance.isDead = 2;
-                    Debug.Log(GameManager.Instance.isDead);
+                GameManager.Instance.isDead = 2;
+                Debug.Log(GameManager.Instance.isDead);
 
-                    GameManager.Instance.Lifes -= 1;
+                GameManager.Instance.Lifes -= 1;
 
-                    UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
+                UIManager.instance.LifeCount.text = "X " + GameManager.Instance.Lifes.ToString();
 
-                    GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.transform.GetComponent<PlayerController>());
-
-                    UIManager.instance.Pause.gameObject.SetActive(true);
-
-                    UIManager.instance.RespawnTime_Text.gameObject.SetActive(true);
-
-                    UIManager.instance.PauseExitButton.gameObject.SetActive(false);
-
-                    UIManager.instance.LeaveMatch.gameObject.SetActive(false);
-
-                    GameManager.Instance.isRespawning = true;
-                }
-            }
-            else
-            {
-                //SceneManager.LoadScene("Menu");
+                GameManager.Instance.StartCoroutine("PlayerRespawn", this.gameObject.transform.GetComponent<PlayerController>());
 
                 UIManager.instance.Pause.gameObject.SetActive(true);
 
@@ -892,14 +879,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 UIManager.instance.LeaveMatch.gameObject.SetActive(false);
 
-
-                GameManager.Instance.isLifeLineOver = true;
+                GameManager.Instance.isRespawning = true;
+                
             }
-            GameObject Temp = Instantiate(GameManager.Instance.TempPlayer);
+            else
+            {
+                //SceneManager.LoadScene("Menu");
 
-            Temp.transform.tag = "Player";
+               
+            }
+           
+            
+        //    GameObject Temp = Instantiate(GameManager.Instance.TempPlayer);
 
-            Destroy(this.gameObject);
+            //Temp.transform.tag = "Player";
+            this.gameObject.SetActive(false);
+          //  Destroy(this.gameObject);
         }
     }
 
@@ -1121,6 +1116,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //UIManager.instance.ReloadImage.gameObject.SetActive(false);
         UIManager.instance.ReloadImage.fillAmount = 1;
         isReloading = false;
+
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+
 
     }
 

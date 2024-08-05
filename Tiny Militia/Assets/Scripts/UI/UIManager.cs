@@ -212,7 +212,13 @@ public class UIManager : MonoBehaviour
 
         UI_Updates();
     }
+    public IEnumerator Textdeactivationi(string text)
+    {
+        killing_text.text = text;
+        yield return new WaitForSeconds(2);
+        killing_text.text = "";
 
+    }
     public void PauseGame()
     {
         if (PhotonNetwork.InRoom)
@@ -299,6 +305,7 @@ public class UIManager : MonoBehaviour
 
     public void UI_Updates()
     {
+
         AmmoInfo_text.text = playerController.guns[playerController.currentGunIndex].currentAmmoInMagazine.ToString() + " / " + playerController.guns[playerController.currentGunIndex].currentTotalAmmo.ToString();
         CurrentGunImage.GetComponent<Image>().sprite = playerController.guns[playerController.currentGunIndex].GunSprite;
         ScopeText.text = (Camera.main.orthographicSize - 4).ToString() + "x";

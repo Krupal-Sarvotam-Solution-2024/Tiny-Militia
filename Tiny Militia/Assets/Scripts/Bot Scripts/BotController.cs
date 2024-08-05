@@ -15,6 +15,7 @@ public class BotController : MonoBehaviour
     public Gun[] guns; // Array of guns the bot can use
     private int currentGunIndex; // Index of the currently equipped gun
 
+    public GameObject gunRotator;//rotoating the bot gun direction of player
     public int DeathScore;
 
     void Start()
@@ -31,9 +32,16 @@ public class BotController : MonoBehaviour
     void Update()
     {
         MoveTowardsPlayer();
+        Aim();
         Shoot();
     }
-
+    public void Aim()
+    {
+        if (player != null)
+        {
+            gunRotator.transform.LookAt(player.transform.position);
+        }
+    }
     void MoveTowardsPlayer()
     {
         if (player != null)
