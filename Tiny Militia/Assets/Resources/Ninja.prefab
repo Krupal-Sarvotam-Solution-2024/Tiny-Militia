@@ -1709,6 +1709,7 @@ MonoBehaviour:
   Leftleg: {fileID: 5390045500894405279}
   Rightleg: {fileID: 562073793989406897}
   Kill_Count: 0
+  death_count: 0
   Score_Count: 0
   allPlayer: []
 --- !u!1 &2735782924781815014
