@@ -165,11 +165,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         StartCoroutine(AutoHealthRecovery());
     }
 
-    private void OnEnable()
-    {
-        
-    }
-
     // Update method for User Controls
     void Update()
     {
@@ -191,8 +186,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     }
-
- 
 
     // Collision Enter Method for CHecking the Player is in Which State
     private void OnCollisionEnter2D(Collision2D collision)
@@ -228,9 +221,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if (collision.gameObject.GetComponent<Bullet>().Id == view.ViewID)
                     return;
 
-                //TakeDamage(PlayerGun.damagePerBullet);
                 view.RPC("TakeDamageFromHit", RpcTarget.All, PlayerGun.damagePerBullet, collision.gameObject.GetComponent<Bullet>().Id);
-
             }
         }
 
