@@ -123,15 +123,23 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        StartCoroutine(WaitForCompleteGameOver());
+
+        base.OnPlayerLeftRoom(otherPlayer);
+    }
+
+    IEnumerator WaitForCompleteGameOver()
+    {
+        yield return new WaitForSeconds(.5f);
         Debug.Log("other player left the room");
+        Debug.Log(PhotonNetwork.CountOfPlayersInRooms);
         if (PhotonNetwork.CountOfPlayersInRooms == 0)
         {
+            Debug.Log("GameOver");
             PlayerManager.onGameOver();
             DataShow.Instance.Win_Matches_Count++;
             PlayfabManager.Instance.SaveApperance_WinMatches(DataShow.Instance.Win_Matches_Count);
         }
-
-        base.OnPlayerLeftRoom(otherPlayer);
     }
     // Player Respawn after Death
     IEnumerator PlayerRespawn(PlayerController PlayerObject)
@@ -148,42 +156,43 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             UIManager.instance.Pause.gameObject.SetActive(false);
-
-
-            GameObject Temp = PlayerObject.gameObject;
-
-            Temp.transform.position = RespawnPoint[Random.Range(0, RespawnPoint.Count)].position;
-            Temp.SetActive(true);
-            firstdefaltgun.Initialize();
-            seconddefaltgun.Initialize();
-            PlayerObject.currentGunIndex = 0;
-            PlayerObject.alternateGunIndex = -1;
-
-            PlayerObject.guns[0] = firstdefaltgun;
-
-            PlayerObject.guns[1] = seconddefaltgun;
-
-            PlayerObject.currentHealth = PlayerObject.maxHealth;
-            PlayerObject.bombsamount[0] = 3;
-            PlayerObject.bombsamount[1] = 3;
-
-            PlayerObject.guns[1] = seconddefaltgun;
-            UIManager.instance.UI_Updates();
-            PlayerObject.UpdateHealthImage();
-            // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
-            // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
-            // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
-            if (Temp.GetComponent<PhotonView>().IsMine)
+            if (PlayerObject)
             {
-                MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
 
-                PlayerManager = Temp.GetComponent<PlayerController>();
+                GameObject Temp = PlayerObject.gameObject;
 
-                UIManager.instance.playerController = PlayerManager;
+                Temp.transform.position = RespawnPoint[Random.Range(0, RespawnPoint.Count)].position;
+                Temp.SetActive(true);
+                firstdefaltgun.Initialize();
+                seconddefaltgun.Initialize();
+                PlayerObject.currentGunIndex = 0;
+                PlayerObject.alternateGunIndex = -1;
 
-                MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
+                PlayerObject.guns[0] = firstdefaltgun;
+
+                PlayerObject.guns[1] = seconddefaltgun;
+
+                PlayerObject.currentHealth = PlayerObject.maxHealth;
+                PlayerObject.bombsamount[0] = 3;
+                PlayerObject.bombsamount[1] = 3;
+
+                PlayerObject.guns[1] = seconddefaltgun;
+                UIManager.instance.UI_Updates();
+                PlayerObject.UpdateHealthImage();
+                // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
+                // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
+                // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
+                if (Temp.GetComponent<PhotonView>().IsMine)
+                {
+                    MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
+
+                    PlayerManager = Temp.GetComponent<PlayerController>();
+
+                    UIManager.instance.playerController = PlayerManager;
+
+                    MainCamera.GetComponent<CameraController>().PlayerTransform = Temp.transform;
+                }
             }
-
         }
         else
         {
