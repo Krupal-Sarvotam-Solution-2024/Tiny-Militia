@@ -1692,6 +1692,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
   bomb: {fileID: 0}
   currentGunIndex: 0
+  alternateGunIndex: -1
   maxbomb: 0
   bombsamount: 030000000300000000000000
   selectedbomb: 0

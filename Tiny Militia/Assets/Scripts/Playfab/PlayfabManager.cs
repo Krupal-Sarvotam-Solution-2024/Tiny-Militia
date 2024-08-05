@@ -111,7 +111,6 @@ public class PlayfabManager : MonoBehaviour
     // Save the Total Death Count of User
     public void SaveApperance_KD(float KD)
     {
-        Debug.Log("in Save KD");
         var request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>
@@ -155,6 +154,6 @@ public class PlayfabManager : MonoBehaviour
     // When Get Data Successfully From Server
     void OnDataSend(UpdateUserDataResult result)
     {
-        Debug.Log("Result of Getting Data :\n" + result);
+        //Debug.Log("Result of Getting Data :\n" + result);
     }
 }
