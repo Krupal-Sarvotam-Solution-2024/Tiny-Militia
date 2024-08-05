@@ -9,7 +9,7 @@ using PlayFab;
 using System.Runtime.CompilerServices;
 
 
-public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     #region All Variables
 
@@ -207,7 +207,6 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
                     if (!photonViews[i].IsMine)
                     {
                         float distance = Vector3.Distance(obj.gameObject.transform.position, this.gameObject.transform.position);
-                        Debug.Log(distance);
 
 
 
@@ -795,25 +794,7 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
             }
 
         }
-        // Get the dictionary of players in the current room
-        //    Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
-        //allPlayer.Clear();
-        //foreach (var playerEntry in players)
-        //{
-        //    Player player = playerEntry.Value;
-        //    GameObject playerObject = GetPlayerGameObject(player);
-        //    if (playerObject != null)
-        //    {
-        //        PlayerController playerControllers = playerObject.GetComponent<PlayerController>();
-        //        //if (playerControllers != null)
-        //        //{
-        //        //    Debug.Log($"Nickname: {playerControllers.view.Controller.NickName}, KillCount: {playerControllers.Kill_Count}");
-        //        //}
-        //        allPlayer.Add(playerControllers);
-        //    }
-        //}
-
-
+        
         // Sort players by Kill_Count in descending order
         allPlayer.Sort((x, y) => y.GetComponent<PlayerController>().Kill_Count.CompareTo(x.GetComponent<PlayerController>().Kill_Count));
 
@@ -862,7 +843,6 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
         }
         else
         {
-            Debug.Log("Dying ");
             UIManager.instance.Score.text = UIManager.instance.playerController.Score_Count.ToString();
             UIManager.instance.Kill.text = UIManager.instance.playerController.Kill_Count.ToString();
 
@@ -944,7 +924,6 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
 
         UIManager.instance.LeaveMatch.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Menu";
 
-        this.transform.GetComponent<Rigidbody2D>().isKinematic = true;
 
         SoringPlayerBoard();
 
@@ -953,6 +932,7 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
             DataShow.Instance.Win_Matches_Count++;
             PlayfabManager.Instance.SaveApperance_WinMatches(DataShow.Instance.Win_Matches_Count);
         }
+        this.transform.GetComponent<Rigidbody2D>().isKinematic = true;
     }
 
     #endregion
@@ -1138,13 +1118,6 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
         isReloading = false;
 
     }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        
-
-
-    }
-
+ 
     #endregion
 }

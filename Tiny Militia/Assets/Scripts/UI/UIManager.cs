@@ -317,7 +317,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         Debug.Log("Punched Successfully");
         playerController.isPunching = false;
-        playerController.leftgunboneTransform.parent.transform.GetComponent<PolygonCollider2D>().enabled = false;
+        playerController.leftgunboneTransform.transform.GetComponent<PolygonCollider2D>().enabled = false;
     }
 
 }
