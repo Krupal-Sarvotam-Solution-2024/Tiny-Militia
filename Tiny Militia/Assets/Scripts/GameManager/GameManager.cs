@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public List<Gun> AllGunData; // All Guns Data
 
-    public GameObject[] bombspawn,gunspawn;
+    public GameObject[] bombspawn, gunspawn;
 
     public Gun firstdefaltgun, seconddefaltgun;
 
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [HideInInspector]
     public bool isLifeLineOver; // Boolen for checking that player life line is over not
-    
+
     [HideInInspector]
     public int isDead = 0; // Int for player death only 1 time
 
@@ -62,7 +63,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             int randomno = Random.Range(0, allpostion.Length);
-            PhotonNetwork.Destroy(privousgunspawn);
+            if (privousgunspawn != null)
+            {
+                PhotonNetwork.Destroy(privousgunspawn);
+            }
             privousgunspawn = PhotonNetwork.Instantiate(gunspawn[Random.Range(0, gunspawn.Length)].name, allpostion[randomno].position, Quaternion.identity);
             StartCoroutine(GunSpawn());
         }
@@ -120,7 +124,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log("other player left the room");
-        if(PhotonNetwork.CountOfPlayersInRooms == 0)
+        if (PhotonNetwork.CountOfPlayersInRooms == 0)
         {
             PlayerManager.onGameOver();
             DataShow.Instance.Win_Matches_Count++;
@@ -131,12 +135,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     // Player Respawn after Death
     IEnumerator PlayerRespawn(PlayerController PlayerObject)
-    { 
+    {
         if (PhotonNetwork.InRoom && PlayerObject.view.IsMine)
         {
             UIManager.instance.Pause.gameObject.SetActive(true);
         }
-        else if(!PhotonNetwork.InRoom)
+        else if (!PhotonNetwork.InRoom)
         {
             UIManager.instance.Pause.gameObject.SetActive(true);
         }
@@ -156,19 +160,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             PlayerObject.alternateGunIndex = -1;
 
             PlayerObject.guns[0] = firstdefaltgun;
-            
+
             PlayerObject.guns[1] = seconddefaltgun;
 
             PlayerObject.currentHealth = PlayerObject.maxHealth;
             PlayerObject.bombsamount[0] = 3;
             PlayerObject.bombsamount[1] = 3;
-        
+
             PlayerObject.guns[1] = seconddefaltgun;
             UIManager.instance.UI_Updates();
             PlayerObject.UpdateHealthImage();
-           // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
-           // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
-           // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
+            // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
+            // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
+            // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
             if (Temp.GetComponent<PhotonView>().IsMine)
             {
                 MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
@@ -221,7 +225,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerManager.onGameOver();
         //SceneManager.LoadScene("Menu");
     }
-   
+
     // Timer Showing in UI Manageer
     void TimerShowing()
     {
@@ -230,7 +234,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Timer -= Time.deltaTime;
             float minutes = Mathf.FloorToInt(Timer / 60);
             float seconds = Mathf.FloorToInt(Timer % 60);
-            UIManager.instance.Timer.text = string.Format("{00:00}:{01:00}",minutes,seconds);
+            UIManager.instance.Timer.text = string.Format("{00:00}:{01:00}", minutes, seconds);
         }
     }
 

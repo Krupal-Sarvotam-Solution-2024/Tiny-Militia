@@ -164,6 +164,28 @@ public class ConnectAndJoinRandom : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("On Left Call");
+        for (int d = PlayersList.transform.childCount; d > 0; d--)
+        {
+            Destroy(PlayersList.transform.GetChild(d - 1).gameObject);
+        }
+
+        for (int k = 0; k < PhotonNetwork.PlayerList.Length; k++)
+        {
+            GameObject Temp = Instantiate(PlayerInformation);
+
+            Temp.transform.parent = PlayersList.transform;
+
+            Temp.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+
+            Temp.transform.GetChild(1).transform.GetChild(0).transform.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[k].NickName;
+
+            PlayerCount.text = "Total Players : " + PhotonNetwork.PlayerList.Length.ToString();
+        }
+    }
+
     IEnumerator GoToFight()
     {
        

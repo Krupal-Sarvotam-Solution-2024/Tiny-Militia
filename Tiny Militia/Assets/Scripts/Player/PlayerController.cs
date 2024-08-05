@@ -260,7 +260,6 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
         {
             if (view.IsMine)
             {
-                Debug.Log("this player id :-" + view.ViewID + "other player id :-" + collision.gameObject.GetComponent<Bullet>().Id);
 
                 Gun PlayerGun = collision.gameObject.GetComponent<Bullet>().gun;
                 if (collision.gameObject.GetComponent<Bullet>().Id == view.ViewID)
