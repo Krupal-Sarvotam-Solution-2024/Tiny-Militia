@@ -16,7 +16,7 @@ public class DataShow : MonoBehaviour
     public float KD_Count;          // Set to the Server Successfully
     public int Rank_Count;          // Not Set Yet
     public float GameTime;
-
+    public int rank;
 
     private void Awake()
     {
@@ -43,6 +43,8 @@ public class DataShow : MonoBehaviour
     {
         Menu.Instance.Total_KillCount.text = TotalKills.ToString();
         Total_Kill_Count = TotalKills;
+        rank = Total_Kill_Count / 100;
+        Menu.Instance.PlayerRank.text = "Level : " + rank;
     }
 
     // For Showing Total Deaths
@@ -50,6 +52,7 @@ public class DataShow : MonoBehaviour
     {
         Menu.Instance.Total_DeathCount.text = TotalDeaths.ToString();
         Total_Death_Count = TotalDeaths;
+        
     }
 
     // For Showing Total Win Matches

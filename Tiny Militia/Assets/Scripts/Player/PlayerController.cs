@@ -694,7 +694,7 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
                 {
                     //SaveApperance_KillCount
                     DataShow.Instance.Total_Kill_Count++;
-                    
+                    DataShow.Instance.rank = DataShow.Instance.Total_Kill_Count / 100;
                     PlayfabManager.Instance.SaveApperance_KillCount(DataShow.Instance.Total_Kill_Count);
                     PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
                 }
@@ -750,7 +750,19 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
                     Debug.Log("im dying");
                     health.death_count++;
                     health.view.RPC("Die",RpcTarget.All);
-                    
+
+                    if (view.Controller.NickName == PhotonNetwork.GetPhotonView(Health_ID).Controller.NickName)
+                    {
+                        UIManager.instance.StartCoroutine(UIManager.instance.Textdeactivationi(PhotonNetwork.GetPhotonView(Health_ID).Controller.NickName + " Eliminated by self"));
+
+                        UIManager.instance.killing_text.color = Color.white;
+                    }
+                    else
+                    {
+                        UIManager.instance.StartCoroutine(UIManager.instance.Textdeactivationi(view.Controller.NickName + " Eliminated by " + PhotonNetwork.GetPhotonView(Health_ID).Controller.NickName));
+
+                        UIManager.instance.killing_text.color = Color.white;
+                    }
                 }
             }
         }
@@ -843,6 +855,8 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
                 DataShow.Instance.This_Match_Kill_Count = Kill_Count;
                 DataShow.Instance.This_match_death_count = death_count;
             }
+
+
 
             this.gameObject.SetActive(false);
         }

@@ -163,27 +163,30 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 Temp.transform.position = RespawnPoint[Random.Range(0, RespawnPoint.Count)].position;
                 Temp.SetActive(true);
-                firstdefaltgun.Initialize();
-                seconddefaltgun.Initialize();
-                PlayerObject.currentGunIndex = 0;
-                PlayerObject.alternateGunIndex = -1;
-
-                PlayerObject.guns[0] = firstdefaltgun;
-
-                PlayerObject.guns[1] = seconddefaltgun;
-
-                PlayerObject.currentHealth = PlayerObject.maxHealth;
-                PlayerObject.bombsamount[0] = 3;
-                PlayerObject.bombsamount[1] = 3;
-
-                PlayerObject.guns[1] = seconddefaltgun;
-                UIManager.instance.UI_Updates();
-                PlayerObject.UpdateHealthImage();
+                if (PlayerObject.view.IsMine)
+                {
+                }
                 // PlayerObject.Kill_Count = DataShow.Instance.This_Match_Kill_Count;
                 // PlayerObject.death_count = DataShow.Instance.This_match_death_count;
                 // Temp.GetComponent<PhotonView>().RPC("GettingData", RpcTarget.Others, Temp.GetComponent<PlayerController>().Kill_Count, Temp.GetComponent<PlayerController>().death_count);
                 if (Temp.GetComponent<PhotonView>().IsMine)
                 {
+
+                    firstdefaltgun.Initialize();
+                    seconddefaltgun.Initialize();
+                    PlayerObject.currentGunIndex = 0;
+                    PlayerObject.alternateGunIndex = -1;
+                    PlayerObject.guns[0] = firstdefaltgun;
+
+                    PlayerObject.guns[1] = seconddefaltgun;
+
+                    PlayerObject.currentHealth = PlayerObject.maxHealth;
+                    PlayerObject.bombsamount[0] = 3;
+                    PlayerObject.bombsamount[1] = 3;
+
+                    PlayerObject.guns[1] = seconddefaltgun;
+                    UIManager.instance.UI_Updates();
+                    PlayerObject.UpdateHealthImage();
                     MainCamera.transform.position = new Vector3(Temp.transform.position.x, Temp.transform.position.y, Temp.transform.position.z - 10);
 
                     PlayerManager = Temp.GetComponent<PlayerController>();
