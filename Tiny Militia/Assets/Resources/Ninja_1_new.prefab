@@ -543,6 +543,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: daa516fe9b9141d428fda8e1281ffe8d, type: 2}
   bomb: {fileID: 0}
   currentGunIndex: 0
+  alternateGunIndex: -1
   maxbomb: 0
   bombsamount: 030000000300000000000000
   selectedbomb: 0
@@ -561,6 +562,7 @@ MonoBehaviour:
   Leftleg: {fileID: 5141097246900408539}
   Rightleg: {fileID: 5035752555577904818}
   Kill_Count: 0
+  death_count: 0
   Score_Count: 0
   allPlayer: []
 --- !u!50 &7435242932688571518
@@ -702,6 +704,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 3438136634688053746}
   - {fileID: 3187702286137295331}
   - {fileID: 2573130433114331985}
   sceneViewId: 0
