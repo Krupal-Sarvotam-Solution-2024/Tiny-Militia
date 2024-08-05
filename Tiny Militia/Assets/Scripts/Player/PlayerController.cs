@@ -192,43 +192,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     }
 
-    public void ArrowDirectionShowing()
-    {
-
-        PhotonView[] photonViews = PhotonNetwork.PhotonViews;
-        for (int i = 0; i < photonViews.Length; i++)
-        {
-            
-            if (photonViews[i].gameObject.TryGetComponent<PlayerController>(out PlayerController obj))
-            {
-                for (int j = 0; j < arrow.Length; j++)
-                {
-
-                    if (!photonViews[i].IsMine)
-                    {
-                        float distance = Vector3.Distance(obj.gameObject.transform.position, this.gameObject.transform.position);
-
-
-
-                        arrow[j].transform.LookAt(obj.gameObject.transform.position);
-                        if (distance > 10 && distance < 30)
-                        {
-                            arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1f);
-                        }
-                        else
-                        {
-                            arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 0f);
-
-                        }
-                    }
-                }
-
-            
-            }
-
-
-        }
-    }
+ 
 
     // Collision Enter Method for CHecking the Player is in Which State
     private void OnCollisionEnter2D(Collision2D collision)
@@ -286,18 +250,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (isPunching == true)
         {
-            Gun currentgun;
-            currentgun = guns[currentGunIndex];
-
-
-            if (collision.gameObject.transform.TryGetComponent<BotController>(out BotController bot))
-            {
-                bot.currentHealth -= currentgun.damagePerBullet * 2;
-            }
-            else
-            {
-                view.RPC("TakeDamage", RpcTarget.All, currentgun.damagePerBullet * 2, collision.transform.GetComponent<PlayerController>().view.ViewID);
-            }
+          
         }
 
     }
@@ -315,39 +268,62 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (view.IsMine)
         {
+            if (collision.GetComponent<GunsData>())
+            {
+                if (collision.GetComponent<GunsData>().currentData.gunName == guns[0].gunName)
+                {
+                    if (guns[0].currentTotalAmmo < guns[0].maxAmmo)
+                    {
+                        guns[0].currentTotalAmmo = guns[0].maxAmmo;
+                        UIManager.instance.AmmoInfo_text.text = guns[0].currentAmmoInMagazine.ToString() + " / " + guns[0].currentTotalAmmo.ToString();
+                    }
+                }
+                else if (collision.GetComponent<GunsData>().currentData.gunName == guns[1].gunName)
+                {
+                    if (guns[1].currentTotalAmmo < guns[1].maxAmmo)
+                    {
+                        guns[1].currentTotalAmmo = guns[1].maxAmmo;
+                        UIManager.instance.AmmoInfo_text.text = guns[1].currentAmmoInMagazine.ToString() + " / " + guns[1].currentTotalAmmo.ToString();
+                    }
+                }
+                else if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
+                    collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
+                {
+                    UIManager.instance.GunChangeButton.gameObject.SetActive(true);
+                    UIManager.instance.GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = collision.GetComponent<GunsData>().currentData.GunSprite;
+                    UIManager.instance.changingGunData = collision.GetComponent<GunsData>();
+                }
 
-            if (collision.GetComponent<GunsData>().currentData.gunName == guns[0].gunName)
+            }
+            if(collision.TryGetComponent<PlayerController>(out PlayerController Player) && !Player.view.IsMine)
             {
-                if (guns[0].currentTotalAmmo < guns[0].maxAmmo)
+                Gun currentgun;
+                currentgun = guns[currentGunIndex];
+
+                float damage = currentgun.damagePerBullet * 2;
+                if (collision.gameObject.transform.TryGetComponent<BotController>(out BotController bot))
                 {
-                    guns[0].currentTotalAmmo = guns[0].maxAmmo;
-                    UIManager.instance.AmmoInfo_text.text = guns[0].currentAmmoInMagazine.ToString() + " / " + guns[0].currentTotalAmmo.ToString();
+                    bot.currentHealth -= currentgun.damagePerBullet * 2;
                 }
-            }
-            else if (collision.GetComponent<GunsData>().currentData.gunName == guns[1].gunName)
-            {
-                if (guns[1].currentTotalAmmo < guns[1].maxAmmo)
+                else
                 {
-                    guns[1].currentTotalAmmo = guns[1].maxAmmo;
-                    UIManager.instance.AmmoInfo_text.text = guns[1].currentAmmoInMagazine.ToString() + " / " + guns[1].currentTotalAmmo.ToString();
+                    view.RPC("TakeDamageFromHit", RpcTarget.All, damage, collision.transform.GetComponent<PlayerController>().view.ViewID);
                 }
+
             }
-            else if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
-                collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
-            {
-                UIManager.instance.GunChangeButton.gameObject.SetActive(true);
-                UIManager.instance.GunChangeButton.transform.GetChild(0).GetComponent<Image>().sprite = collision.GetComponent<GunsData>().currentData.GunSprite;
-                UIManager.instance.changingGunData = collision.GetComponent<GunsData>();
-            }
+        
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
-            collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
+        if (collision.GetComponent<GunsData>())
         {
-            UIManager.instance.GunChangeButton.gameObject.SetActive(false);
+            if (collision.GetComponent<GunsData>().currentData.gunName != guns[0].gunName ||
+            collision.GetComponent<GunsData>().currentData.gunName != guns[1].gunName)
+            {
+                UIManager.instance.GunChangeButton.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -355,6 +331,43 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     #region Method for Updatae UI
 
+    public void ArrowDirectionShowing()
+    {
+
+        PhotonView[] photonViews = PhotonNetwork.PhotonViews;
+        for (int i = 0; i < photonViews.Length; i++)
+        {
+
+            if (photonViews[i].gameObject.TryGetComponent<PlayerController>(out PlayerController obj))
+            {
+                for (int j = 0; j < arrow.Length; j++)
+                {
+
+                    if (!photonViews[i].IsMine)
+                    {
+                        float distance = Vector3.Distance(obj.gameObject.transform.position, this.gameObject.transform.position);
+
+
+
+                        arrow[j].transform.LookAt(obj.gameObject.transform.position);
+                        if (distance > 10 && distance < 30)
+                        {
+                            arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1f);
+                        }
+                        else
+                        {
+                            arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 0f);
+
+                        }
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
     // Method for update booster image in UI
     void UpdateBoosterLevel()
     {
@@ -734,18 +747,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.GetPhotonView(Health_ID).transform.TryGetComponent<PlayerController>(out PlayerController health))
             {
+              
 
 
-                
-               // Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
+                // Health = PhotonNetwork.GetPhotonView(Health_ID).transform.GetComponent<PlayerController>();
                 health.currentHealth -= damageAmount;
                 UpdateHealthImage();
 
                 if (health.currentHealth <= 0 && PhotonNetwork.GetPhotonView(Health_ID).IsMine)
                 {
+
                    // if(health.view.ViewID != this.view.ViewID)
                     Kill_Count++;
-
+                   
+                    //SaveApperance_KillCount
+                    DataShow.Instance.Total_Kill_Count++;
+                    DataShow.Instance.rank = DataShow.Instance.Total_Kill_Count / 100;
+                    PlayfabManager.Instance.SaveApperance_KillCount(DataShow.Instance.Total_Kill_Count);
+                    PlayfabManager.Instance.SaveApperance_KD(DataShow.Instance.Total_Kill_Count / DataShow.Instance.Total_Death_Count);
+                    
                     Debug.Log("im dying");
                     health.death_count++;
                     health.view.RPC("Die",RpcTarget.All);

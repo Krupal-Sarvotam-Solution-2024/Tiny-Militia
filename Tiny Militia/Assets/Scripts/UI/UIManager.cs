@@ -262,7 +262,7 @@ public class UIManager : MonoBehaviour
     {
         PhotonView view = playerController.view;
         playerController.isPunching = true;
-        playerController.leftgunboneTransform.parent.transform.GetComponent<PolygonCollider2D>().enabled = true;
+        playerController.leftgunboneTransform.transform.GetComponent<PolygonCollider2D>().enabled = true;
         StartCoroutine("PunchingCoroutine", 2f);
         if (PhotonNetwork.InRoom)
         {
