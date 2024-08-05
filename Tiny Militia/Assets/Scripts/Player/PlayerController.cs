@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
     public List<Gun> guns; // List of ScriptableObject Guns
     public Gun bomb;
     public int currentGunIndex = 0;
-    private int alternateGunIndex = -1;
+    public int alternateGunIndex = -1;
     public int maxbomb;
     public int[] bombsamount;
 
@@ -163,9 +163,11 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
 
         }
         StartCoroutine(AutoHealthRecovery());
+    }
 
-
-
+    private void OnEnable()
+    {
+        
     }
 
     // Update method for User Controls
@@ -383,7 +385,6 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
     {
 
         float moveInput = movementJoystick.Horizontal;
-        Debug.Log(moveInput);
         anime.SetFloat("x_postion", moveInput);
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 

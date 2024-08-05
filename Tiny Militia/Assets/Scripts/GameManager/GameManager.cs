@@ -120,7 +120,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log("other player left the room");
-        
+        if(PhotonNetwork.CountOfPlayersInRooms == 0)
+        {
+            PlayerManager.onGameOver();
+            DataShow.Instance.Win_Matches_Count++;
+            PlayfabManager.Instance.SaveApperance_WinMatches(DataShow.Instance.Win_Matches_Count);
+        }
+
         base.OnPlayerLeftRoom(otherPlayer);
     }
     // Player Respawn after Death
@@ -146,6 +152,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             Temp.SetActive(true);
             firstdefaltgun.Initialize();
             seconddefaltgun.Initialize();
+            PlayerObject.currentGunIndex = 0;
+            PlayerObject.alternateGunIndex = -1;
+
             PlayerObject.guns[0] = firstdefaltgun;
             
             PlayerObject.guns[1] = seconddefaltgun;
