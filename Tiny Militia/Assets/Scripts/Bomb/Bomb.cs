@@ -60,7 +60,7 @@ public class Bomb : MonoBehaviour
 
                     if (item.GetComponent<PhotonView>())
                     {
-                        playerController.view.RPC("TakeDamage", RpcTarget.All, damageamount, item.GetComponent<PhotonView>().ViewID);// -= damage;
+                        item.GetComponent<PhotonView>().RPC("TakeDamageFromHit", RpcTarget.All, damageamount, playerController.view.ViewID);// -= damage;
                     }
 
                 }
