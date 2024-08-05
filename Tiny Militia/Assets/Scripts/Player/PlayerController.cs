@@ -198,27 +198,33 @@ public class PlayerController : MonoBehaviourPunCallbacks,IPunObservable
         PhotonView[] photonViews = PhotonNetwork.PhotonViews;
         for (int i = 0; i < photonViews.Length; i++)
         {
-            if (photonViews[i].IsMine)
+            
+            if (photonViews[i].gameObject.TryGetComponent<PlayerController>(out PlayerController obj))
             {
-                for (int j = 0; j < photonViews.Length; j++)
+                for (int j = 0; j < arrow.Length; j++)
                 {
 
-                    float distance = Vector3.Distance(photonViews[j].gameObject.transform.position, this.gameObject.transform.position);
-                    if (photonViews[i].gameObject.TryGetComponent<PlayerController>(out PlayerController obj))
+                    if (!photonViews[i].IsMine)
                     {
-                        obj.arrow[j].transform.LookAt(photonViews[j].gameObject.transform.position);
-                        if (distance > 40 || distance < 10)
+                        float distance = Vector3.Distance(obj.gameObject.transform.position, this.gameObject.transform.position);
+                        Debug.Log(distance);
+
+
+
+                        arrow[j].transform.LookAt(obj.gameObject.transform.position);
+                        if (distance > 10 && distance < 30)
                         {
-                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 0f);
+                            arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 1f);
                         }
                         else
                         {
-                            obj.arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.red;
-                           
+                            arrow[j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1F, 0F, 0F, 0f);
+
                         }
                     }
                 }
 
+            
             }
 
 
