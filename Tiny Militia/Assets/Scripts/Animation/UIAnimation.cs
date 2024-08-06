@@ -42,7 +42,7 @@ public class UIAnimation : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Heading.transform.GetComponent<Text>().text = "TINY \nMILITI";
         yield return new WaitForSeconds(0.5f);
-        Heading.transform.GetComponent<Text>().text = "TINY \nMILITIA";
+        Heading.transform.GetComponent<Text>().text = "TINY MILITIA";
         yield return new WaitForSeconds(30f);
         StartCoroutine(HeadingAnimation());
 
