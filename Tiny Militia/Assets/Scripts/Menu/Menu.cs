@@ -54,6 +54,7 @@ public class Menu : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        LoginWithCustomID();
     }
 
     private void LoginWithCustomID()
