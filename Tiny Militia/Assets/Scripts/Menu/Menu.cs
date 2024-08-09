@@ -54,19 +54,51 @@ public class Menu : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void LoginWithCustomID()
+    {
         var request = new LoginWithCustomIDRequest
         {
             CustomId = SystemInfo.deviceUniqueIdentifier,
             CreateAccount = true,
-
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
                 GetPlayerProfile = true,
             }
-
         };
         PlayFabClientAPI.LoginWithCustomID(request, loginSuccess, PlayFab_Error);
+    }
 
+    private void PlayFab_Error(PlayFabError obj)
+    {
+        Debug.Log("ERRORS");
+
+        throw new NotImplementedException();
+    }
+
+    private void loginSuccess(LoginResult obj)
+    {
+        string name;
+        name = null;
+        if (obj.InfoResultPayload.PlayerProfile != null)
+        {
+            name = obj.InfoResultPayload.PlayerProfile.DisplayName;
+        }
+
+        if (name == null)
+        {
+            Playername_panel.SetActive(true);
+            PhotonNetwork.NickName = name;
+
+        }
+        else
+        {
+            PhotonNetwork.NickName = name;
+            Playername_panel.SetActive(false);
+            player_nametext.text = name;
+        }
+        PlayfabManager.Instance.GetApperance();
     }
 
     public void playButton()
@@ -105,37 +137,6 @@ public class Menu : MonoBehaviour
     {
         Debug.Log("Name Successfully Saved");
         throw new NotImplementedException();
-    }
-
-    private void PlayFab_Error(PlayFabError obj)
-    {
-        Debug.Log("ERRORS");
-
-        throw new NotImplementedException();
-    }
-
-    private void loginSuccess(LoginResult obj)
-    {
-        string name;
-        name = null;
-        if (obj.InfoResultPayload.PlayerProfile != null)
-        {
-            name = obj.InfoResultPayload.PlayerProfile.DisplayName;
-        }
-
-        if (name == null)
-        {
-            Playername_panel.SetActive(true);
-            PhotonNetwork.NickName = name;
-
-        }
-        else
-        {
-            PhotonNetwork.NickName = name;
-            Playername_panel.SetActive(false);
-            player_nametext.text = name;
-        }
-        PlayfabManager.Instance.GetApperance();
     }
 
     public void SliderValueChange()

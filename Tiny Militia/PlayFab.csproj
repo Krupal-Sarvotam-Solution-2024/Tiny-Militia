@@ -55,7 +55,7 @@
     <UnityVersion>2022.3.34f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -73,12 +73,13 @@
     <Compile Include="Assets\PlayFabSDK\Insights\PlayFabInsightsInstanceAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Server\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Insights\PlayFabInsightsModels.cs" />
-    <Compile Include="Assets\PlayFabSDK\Economy\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Internal\PlayFabErrors.cs" />
+    <Compile Include="Assets\PlayFabSDK\Economy\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Public\PluginContractKey.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Internal\Log.cs" />
     <Compile Include="Assets\PlayFabSDK\Client\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Internal\ISerializer.cs" />
+    <Compile Include="Assets\PlayFabSDK\Leaderboards\PlayFabLeaderboardsInstanceAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Matchmaker\PlayFabMatchmakerAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Admin\PlayFabAdminInstanceAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Client\PlayFabClientInstanceAPI.cs" />
@@ -99,12 +100,14 @@
     <Compile Include="Assets\PlayFabSDK\Shared\Models\PlayFabSharedSettings.cs" />
     <Compile Include="Assets\PlayFabSDK\Admin\PlayFabAdminModels.cs" />
     <Compile Include="Assets\PlayFabSDK\Experimentation\PlayFabEvents.cs" />
+    <Compile Include="Assets\PlayFabSDK\Leaderboards\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Internal\SimpleJson.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Public\PlayFabAuthenticationContext.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Public\PlayFabDataGatherer.cs" />
     <Compile Include="Assets\PlayFabSDK\Groups\PlayFabGroupsAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\CloudScript\PlayFabCloudScriptAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Admin\PlayFabAdminAPI.cs" />
+    <Compile Include="Assets\PlayFabSDK\Leaderboards\PlayFabLeaderboardsModels.cs" />
     <Compile Include="Assets\PlayFabSDK\Matchmaker\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Entity\ScreenTimeTracker.cs" />
     <Compile Include="Assets\PlayFabSDK\Admin\PlayFabEvents.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="Assets\PlayFabSDK\Experimentation\PlayFabExperimentationAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Server\PlayFabServerAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Internal\PlayFabHttp\IPlayFabHttp.cs" />
+    <Compile Include="Assets\PlayFabSDK\Leaderboards\PlayFabLeaderboardsAPI.cs" />
     <Compile Include="Assets\PlayFabSDK\Authentication\PlayFabEvents.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Models\SharedModels.cs" />
     <Compile Include="Assets\PlayFabSDK\Shared\Public\PlayFabLogger.cs" />
@@ -483,10 +487,6 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
       <Private>False</Private>
@@ -541,14 +541,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.TextureAssets">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Android.Types">
