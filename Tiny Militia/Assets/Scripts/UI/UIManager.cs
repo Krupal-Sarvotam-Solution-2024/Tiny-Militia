@@ -135,10 +135,12 @@ public class UIManager : MonoBehaviour
     public void ReloadGun()
     {
         Gun currentgun;
+        
         currentgun = playerController.guns[GunIndex];
         if (currentgun.currentAmmoInMagazine < currentgun.magazineSize)
         {
             playerController.reload_co = StartCoroutine(playerController.Reload(currentgun));
+            playerController.gunTransform.GetComponent<AudioSource>().PlayOneShot(currentgun.Relod);
         }
     }
 

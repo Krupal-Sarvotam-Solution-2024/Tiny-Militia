@@ -8,7 +8,6 @@ public class GunsData : MonoBehaviour
 
     SpriteRenderer gunImage;
 
-
     private void Start()
     {
         gunImage = GetComponent<SpriteRenderer>();

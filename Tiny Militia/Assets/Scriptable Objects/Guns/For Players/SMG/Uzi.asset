@@ -26,3 +26,5 @@ MonoBehaviour:
   currentAmmoInMagazine: 35
   currentTotalAmmo: 150
   lastShotTime: -0.3
+  shoot: {fileID: 8300000, guid: 425ca944ffee11f478602eff7be1f4f8, type: 3}
+  Relod: {fileID: 8300000, guid: 557dbee432a63af4a935b10c3f05a8e6, type: 3}

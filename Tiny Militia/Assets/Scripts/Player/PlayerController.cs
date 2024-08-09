@@ -166,10 +166,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         StartCoroutine(AutoHealthRecovery());
     }
 
-    private void OnEnable()
-    {
-        
-    }
+  
 
     // Update method for User Controls
     void Update()
@@ -189,11 +186,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 SoringPlayerBoard();
             }
         }
-
-
     }
 
- 
+
 
     // Collision Enter Method for CHecking the Player is in Which State
     private void OnCollisionEnter2D(Collision2D collision)
@@ -247,7 +242,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             else
                 Die();
         }
-
 
         if (isPunching == true)
         {
@@ -641,6 +635,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         GameObject bullet = Instantiate(bulletPrefab, FirePOINT.firePoint.position, FirePOINT.firePoint.rotation);
 
         bullet.tag = "Player_Bullet";
+        gunTransform.GetComponent<AudioSource>().PlayOneShot(guns[currentGunIndex].shoot);
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.Id = view.ViewID;
         bulletScript.gun = guns[currentGunIndex];  // Pass the current gun reference
@@ -1110,7 +1105,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // Initialize fillAmount to full
         UIManager.instance.ReloadImage.fillAmount = currentFill;
         UIManager.instance.ReloadImage.gameObject.SetActive(true);
-
+        gunTransform.GetComponent<AudioSource>().PlayOneShot(gun.Relod);
 
         float timer = 0f;
 

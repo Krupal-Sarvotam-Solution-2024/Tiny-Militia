@@ -23,6 +23,8 @@ MonoBehaviour:
   maxScope: 9
   shootCooldown: 0.1
   ObjectTag: Gun_MP5
-  currentAmmoInMagazine: 27
-  currentTotalAmmo: 324
-  lastShotTime: 99.92749
+  currentAmmoInMagazine: 50
+  currentTotalAmmo: 400
+  lastShotTime: -0.1
+  shoot: {fileID: 8300000, guid: 7f97cb403650b7e4592f5dacc4502f89, type: 3}
+  Relod: {fileID: 8300000, guid: 557dbee432a63af4a935b10c3f05a8e6, type: 3}

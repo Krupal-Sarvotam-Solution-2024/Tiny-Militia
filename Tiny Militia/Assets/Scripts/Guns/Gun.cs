@@ -23,6 +23,10 @@ public class Gun : ScriptableObject
     [HideInInspector]
     public float lastShotTime;
 
+    [Space(10)]
+    [Header("Sounds")]
+    public AudioClip shoot;
+    public AudioClip Relod;
 
     
 

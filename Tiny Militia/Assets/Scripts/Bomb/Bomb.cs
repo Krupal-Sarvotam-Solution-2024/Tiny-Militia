@@ -26,12 +26,13 @@ public class Bomb : MonoBehaviour
     bool readtoExplode;
     bool explotion_Started;
     bool exploded;
-
+    private AudioSource explotion;
     // Start is called before the first frame update
 
     void Start()
     {
-        
+      explotion  = GetComponent<AudioSource>();
+
         if (type == bombtype.explodebomb || type == bombtype.timebomb)
             StartCoroutine(waitTillExplode());
     }
@@ -45,7 +46,7 @@ public class Bomb : MonoBehaviour
         Debug.Log(allplayer.Length);
         GameObject[] allBot = GameObject.FindGameObjectsWithTag("Bot");
         exploded = true;
-
+        explotion.Play();
         if (PhotonNetwork.InRoom)
         {
 

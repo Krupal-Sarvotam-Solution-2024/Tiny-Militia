@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIAnimation : MonoBehaviour
 {
     public GameObject Heading;
+    public Gradient PersantageColor;
+    public TextMeshProUGUI audioText,soundText;
+
+    public Image audio_filler,sound_filler;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +22,19 @@ public class UIAnimation : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ValueChangeofSound(float value)
+    {
+        soundText.text = value.ToString("0") + " %" ;
+        soundText.color = PersantageColor.Evaluate(value/100);
+        sound_filler.color = PersantageColor.Evaluate(value / 100);
+    } 
+    public void ValueChangeofAudio(float value)
+    {
+        audioText.text = value.ToString("0") + " %" ;
+        audioText.color = PersantageColor.Evaluate(value/100);
+        audio_filler.color = PersantageColor.Evaluate(value / 100);
     }
 
     IEnumerator HeadingAnimation()
